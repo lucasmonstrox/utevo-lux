@@ -598,6 +598,76 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+### `look`
+
+<details>
+<summary><b>NoLiMa</b> — you loaded the whole PR, but will the model use it?</summary>
+
+**Used in** · [`look` › 1. Understand the request and pin the code under review](plugins/utevo-lux/skills/look/SKILL.md#1-understand-the-request-and-pin-the-code-under-review) — loading the full description, linked issues, reviews and inline discussions, and bringing the relevant criterion back at the moment it is checked.
+
+**Benchmark** · [NoLiMa: Long-Context Evaluation Beyond Literal Matching](https://arxiv.org/abs/2502.05167) — Modarressi, Deilamsalehy, Dernoncourt, Bui, Rossi, Yoon & Schütze, ICML 2025 (`arXiv:2502.05167`).
+
+**What it measures.** A needle-in-a-haystack test with the shortcut removed. The needle set is built so that "questions and needles have minimal lexical overlap, requiring models to infer latent associations to locate the needle within the haystack" — the model cannot find the answer by matching words, which is how it usually passes these tests.
+
+**What it reports.** Short context is near-perfect: GPT-4o scores **99.3%**. At 32K tokens it falls to **69.7%**, and **11 of 13** tested models drop below half their short-context performance. The authors attribute it to "the increased difficulty the attention mechanism faces in longer contexts when literal matches are absent".
+
+**Why `look` works this way.** This is the review case exactly. A reviewer comment says "this will break for existing tenants"; the code says `resolveScope(ctx)`. No shared vocabulary, and by the time the diff is being read the requirement is thousands of tokens back. Loading everything is still required — a requirement never read cannot become a finding, and a missing requirement is a finding with no diff line. But having read it is not the same as having it available, which is why the skill now separates coverage from use and asks for the criterion to be restated when it is actually applied.
+
+**Where the benchmark stops.** Synthetic haystacks, not pull requests, and it measures retrieval of one fact rather than judgement across many. Nobody has run the review version: same PR, full context up front versus context routed to the file under review, scored on findings against an adjudicated ground truth.
+
+</details>
+
+<details>
+<summary><b>Expectations versus outcomes in code review</b> — what do reviewers actually produce?</summary>
+
+**Used in** · [`look` › 2. Review along two axes](plugins/utevo-lux/skills/look/SKILL.md#2-review-along-two-axes) — reporting requirements coverage and correctness coverage separately, so one does not hide the other.
+
+**Source** · [Expectations, Outcomes, and Challenges of Modern Code Review](https://sback.it/publications/icse2013.pdf) — Bacchelli & Bird, ICSE 2013. A mixed-methods study at Microsoft: 17 observed developers, 165 manager and 873 programmer survey responses, and a card sort over 570 real review comments.
+
+**What it measures.** Not whether review works, but whether what reviewers *do* matches what they say review is *for*. The comment sample is classified independently of the stated motivations, so the two can be compared.
+
+**What it reports.** Finding defects is the top motivation for **44%** of programmers and 44% of managers. In the comments themselves, code improvements are the most frequent category at **165 (29%)**, while "review comments about defects are few, comprising **one-eighth** of the total in our sample". The paper's conclusion is direct: this is "evidence that the outcome of code review does not match the main expectation of both programmers and managers — finding defects."
+
+**Why `look` works this way.** The two axes exist because they are two different populations, not two labels on one activity. Reported together, the plentiful cheap comments swamp the rare expensive ones and a review with many notes reads as thorough while missing what it was for. Stating each axis separately is what stops style volume from standing in for defect coverage — and it is the same reason the skill gates style findings behind a concrete cost.
+
+**Where the source stops.** One company, 2013, human reviewers. It says nothing about an LLM reviewer's category mix, which could be quite different and is not measured anywhere found. What transfers is the shape of the failure, not its size.
+
+</details>
+
+<details>
+<summary><b>Execution as a filter</b> — should a finding be run before it is asserted?</summary>
+
+**Used in** · [`look` › 3. Verify before asserting](plugins/utevo-lux/skills/look/SKILL.md#3-verify-before-asserting) — reproducing the suspicion or supporting it with an unambiguous chain of code, and keeping a hypothesis separate from a demonstrated defect.
+
+**Benchmark** · [Agentless: Demystifying LLM-based Software Engineering Agents](https://arxiv.org/abs/2407.01489) — Xia, Deng, Dunn & Zhang, 2024 (`arXiv:2407.01489`), on SWE-bench Lite.
+
+**What it measures.** How much of a candidate's apparent correctness survives being executed. Majority voting over generated patches, then a regression-test filter, then a reproduction-test filter, each layered on the same candidates.
+
+**What it reports.** Resolve rate climbs **25.67% → 27.00% → 32.00%**, the largest jump coming from actually running a test that has to flip from failing to passing. The same paper's caution applies here too: of 213 generated reproduction tests, only **94** could distinguish the ground-truth fix from a non-fix.
+
+**Why `look` works this way.** A review's currency is credibility, and an asserted bug that turns out not to happen spends it. Running the project's real checks is what separates "this looks wrong" from "this is wrong", which is why the skill asks for a reproduction or an unambiguous chain of code, and why an unrun check is recorded as a limitation rather than quietly omitted.
+
+**Where the benchmark stops.** This measures patch acceptance, not review precision — nobody has published a false-positive rate for an LLM reviewer's asserted bugs with and without execution. The direction is well supported; the size of the effect for review specifically is unmeasured.
+
+</details>
+
+<details>
+<summary><b>Format restrictions</b> — where should the verdict go?</summary>
+
+**Used in** · [`look` › 4. Deliver the review](plugins/utevo-lux/skills/look/SKILL.md#4-deliver-the-review) — findings first, then criteria and limitations, and the `APPROVE` / `COMMENT` / `REQUEST_CHANGES` recommendation last.
+
+**Benchmark** · [Let Me Speak Freely? A Study on the Impact of Format Restrictions on Performance of Large Language Models](https://arxiv.org/abs/2408.02442) — Tam, Wu, Tsai, Lin, Lee & Chen, 2024 (`arXiv:2408.02442`).
+
+**What it measures.** What a fixed output shape costs the reasoning that has to fill it, across reasoning and classification tasks.
+
+**What it reports.** Claude-3-Haiku falls from **86.5% to 23.4%** on GSM8K in JSON-mode, GPT-3.5-turbo from 76.6% to 49.3%. The cause is ordering, not structure: "100% of GPT 3.5 Turbo JSON-mode responses placed the 'answer' key before the 'reason' key, resulting in zero-shot direct answering instead of zero-shot chain-of-thought reasoning." On classification, the same restriction *helps*.
+
+**Why `look` works this way.** A forced ternary verdict is the exact shape at risk — a categorical field on the most reasoning-heavy decision in the skill. What protects it is where it sits: the review presents findings, then coverage and limitations, and only then recommends. Emitting the verdict first would ask the model to decide and then justify. This is one place the skill was already right, and the evidence explains why rather than changing anything.
+
+**Where the benchmark stops.** Single-answer reasoning tasks, not a structured document a person reads. Nobody has tested a review rendered verdict-first against findings-first, so the safe ordering is predicted by the mechanism rather than measured on this task.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
