@@ -15,7 +15,7 @@ Read local instructions and relevant product documentation where available. Reus
 
 Before the first tool call, write one line: what would settle this question, and what would count as enough evidence. Sometimes that is a single page, opened. Sometimes it is the same criteria applied to options that already have names. Sometimes the options are not known yet and finding them is the work.
 
-Then spend to that line. The cheapest path that settles the question is the right one — spending more is not the same as answering better, and an investigation that outgrows its question is a cost, not a virtue. Keep a short brief alongside it: central question, constraints and what remains open. Ask one question at a time about ambiguity that changes the direction; verify discoverable facts yourself.
+Then spend to that line, in both directions. A question one opened page settles does not deserve a campaign. A question whose options are still unknown is not answered by three searches either — on a broad topic, depth is most of what separates a useful answer from a plausible one, and under-spending is the more expensive mistake because the result still looks finished. Keep a short brief alongside it: central question, constraints and what remains open. Ask one question at a time about ambiguity that changes the direction; verify discoverable facts yourself.
 
 Delegate a track only when it is genuinely independent — separate question, separate sources, nothing to hand back mid-way. Work that shares context or depends on another track in flight belongs in one place. When delegating, give each track its objective, its boundaries and what evidence it must return. Do not require a specific provider, model or agent count.
 

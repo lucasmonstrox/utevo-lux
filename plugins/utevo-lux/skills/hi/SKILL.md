@@ -99,7 +99,7 @@ Perform a **mandatory, current web search** before settling precedents or genera
 
 A precedent is **evidence for a decision**. For each useful one keep `source + context + observed pattern + difference from our scenario`, and classify it as `adopt`, `adapt`, `reject` or `experiment`. Show only the one to three findings that change the current decision, and preserve their URLs in the final brief.
 
-**Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/mission`.
+**Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/mission`. Handing the topic on does not excuse skipping the search here — a decision taken with no precedent at all is worse than one taken on a shallow read.
 
 ### 5. Options: meaningfully different ways to satisfy the intent
 
