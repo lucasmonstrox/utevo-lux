@@ -15,7 +15,7 @@ hi → mission → equip → hunt → look → exura
 |---|---|
 | [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Opens the dialog with the NPC: one decision at a time until the quest and the route are clear. |
 | [mission](plugins/utevo-lux/skills/mission/SKILL.md) | Takes the mission from the quest log: finds answers in code, history, the web, and other sources, with evidence. |
-| [equip](plugins/utevo-lux/skills/equip/SKILL.md) | Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
+| [equip](plugins/utevo-lux/skills/equip/SKILL.md) | <img src="plugins/utevo-lux/assets/magic-sword.gif" alt="Magic Sword" width="20"> Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Attacks the code: executes the plan and loots the proof that it works. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`. |
 | [look](plugins/utevo-lux/skills/look/SKILL.md) | Looks at the item a friend found: PR, issues, and discussions; points out demonstrable problems. |
