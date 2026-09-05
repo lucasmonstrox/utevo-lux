@@ -14,7 +14,7 @@ hi → exiva → pl → hunt → look → exura
 | Skill | What it does |
 |---|---|
 | [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Discusses the idea, one decision at a time, until the problem and direction are settled. |
-| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Tracks code, history, the web, and other sources to investigate with evidence. |
+| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Finds answers in code, history, the web, and other sources; investigates with evidence. |
 | [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Prepares steps, dependencies, acceptance criteria, and verifications. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Executes the plan and proves the result. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Investigates the root cause; fixes it when asked or with `--fix`. |
