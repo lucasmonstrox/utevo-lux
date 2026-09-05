@@ -197,6 +197,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Compositional constraint satisfaction</b> — where does a rule set break, and which rule survives?</summary>
+
+**Used in** · [`hi` › 6. Don'ts](plugins/utevo-lux/skills/hi/SKILL.md#6-donts-make-plausible-mistakes-explicit) — "each constraint must be concrete, local and observable", and the ban on vague constraints and on quotas.
+
+**Benchmark** · [Large Language Models Can Follow Instructions, But Not Many at Once: Phase Transitions in Compositional Constraint Satisfaction](https://arxiv.org/abs/2608.12426) — Vasileva, 2026 (`arXiv:2608.12426`, ARR May 2026 cycle; preprint, not yet a published venue). 15 models, 36 constraint types, 369,753 individual checks.
+
+**What it measures.** Constraints are composed into a single instruction and each one is checked independently, so per-constraint compliance can be separated from all-at-once compliance. A second setting builds deliberately impossible instructions — two rules that cannot both hold — to see which one the model sacrifices.
+
+**What it reports.** Per-constraint satisfaction decays as `mCSR(k) = 72.0% × 0.922^(k−1)` (held-out MAE 0.2pp). At eight constraints the model still passes any given rule about **41%** of the time but satisfies **all eight together only 5.7%** of the time, because "failures are nearly independent, which is what makes the accumulation multiplicative". Reliable following breaks down beyond **five to six** simultaneous constraints. Under forced impossibility, "prohibition beats requirement (N2: 91%, N1: 0%)" and "concrete inclusion beats abstract avoidance (L2: 73%, L1: 0%)".
+
+**Why `hi` works this way.** Two of the skill's rules land exactly here. Constraints must be **concrete, local and observable** — the abstract-avoidance result is what happens to "don't be slow": it is the first thing dropped. And the ban on quotas is the count result: every rule added past what the risk justifies multiplies against all the others, and the set stops holding somewhere around six.
+
+**Where the benchmark stops.** The survival numbers come from artificial impossibility scenarios built on lexical constraints — "no digits" against "sum to an integer", mandatory words against a lipogram. Those are not product invariants, so read the prohibition and concreteness findings as a strong analogy rather than a measurement of design Don'ts. This is also a preprint. And nothing here tests the shape `hi` actually recommends: whether a constraint written as a `wrong → intended` pair survives better than the same rule stated flatly.
+
+</details>
+
 ### `equip`
 
 <details>
