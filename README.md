@@ -48,7 +48,7 @@ npx skills add lucasmonstrox/utevo-lux --agent codex --skill mission
 
 In Claude Code and Cursor, use `/hi`, `/mission`, `/equip`, etc. In Codex, select the skill in the picker or mention `$hi`, `$mission`, `$equip`, etc. The invocation format belongs to the agent; the instructions are the same.
 
-The installer is the [Vercel Skills CLI](https://github.com/vercel-labs/skills). Each skill ships with its references and can be installed separately.
+The installer is the [Vercel Skills CLI](https://github.com/vercel-labs/skills). Each skill can be installed separately and ships with whatever files it references.
 
 ## Install as a plugin from the marketplace
 
