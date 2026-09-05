@@ -302,6 +302,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 </details>
 
 <details>
+<summary><b>Overthinking</b> — does the extra pass cost anything besides time?</summary>
+
+**Used in** · [`mission` › 3. Research external facts when needed](plugins/utevo-lux/skills/mission/SKILL.md#3-research-external-facts-when-needed) — "stop when new results no longer change the decision", and the written pause between search batches.
+
+**Benchmark** · [Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187) — Chen, Xu, Liang, He, Pang, Yu, Song, Liu, Zhou, Zhang, Wang, Tu, Mi & Yu, 2024 (`arXiv:2412.21187`). Measured on QwQ-32B-Preview across GSM8K and MATH500.
+
+**What it measures.** Overthinking is defined as "excessive computational resources… allocated for simple problems with minimal benefit" — continuing to work after the answer has stopped changing. Accuracy and average generated tokens are reported together, so a method cannot look good by simply doing more.
+
+**What it reports.** On GSM8K, cutting the work nearly in half **improves** the answer: **94.8% at 772.8 tokens becomes 96.0% at 416.6 tokens** — 46% fewer tokens and 1.2 points better. On MATH500 the same treatment cuts 45% of the tokens for 0.2 points (93.0% → 92.8%). Continuing past the point of return is not merely expensive; on the easier set it actively degraded the answer.
+
+**Why `mission` works this way.** The stopping rule is not budget discipline dressed up as method. Work that no longer changes the conclusion is not neutral — it accumulates, drifts, and gives the model more chances to talk itself out of a correct finding. Hence stopping when new results stop moving the decision, and the written pause between batches that forces the question to be asked at all.
+
+**Where it stops.** Two gaps, and both matter. This is reasoning tokens on math problems, not search iterations on an open question — the mechanism transfers as an analogy, the numbers do not. And the paper's fix is a *training* method, not a prompt: it shows models that stop early do better, not that instructing a model to stop makes it stop. Whether a written rule produces the same restraint is untested here and everywhere else found.
+
+</details>
+
+<details>
 <summary><b>Intrinsic self-correction</b> — can a model find its own mistake?</summary>
 
 **Used in** · [`mission` › 4. Verify and try to disprove](plugins/utevo-lux/skills/mission/SKILL.md#4-verify-and-try-to-disprove) — attacking the recommendation "from outside the work that produced it", and preferring a check with an independent source of truth.
