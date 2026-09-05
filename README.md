@@ -335,6 +335,25 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+### `hunt`
+
+<details>
+<summary><b>Reflexion</b> — is it the reflecting that helps, or the running?</summary>
+
+**Used in** · [`hunt` › 2. Execute in dependency order](plugins/utevo-lux/skills/hunt/SKILL.md#2-execute-in-dependency-order) — making the smallest change in integrated, verifiable slices and updating each step when its proof passes, rather than batching verification to the end.
+
+**Benchmark** · [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — Shinn, Cassano, Berman, Gopinath, Narasimhan & Yao, 2023 (`arXiv:2303.11366`). The agent writes a reflection in natural language after a failure, keeps it in an episodic memory, and retries.
+
+**What it measures.** The headline is HumanEval pass@1 — **80% for GPT-4, 91% with Reflexion**. The useful part is the ablation on the 50 hardest HumanEval-Rust problems, which separates the two ingredients: reflecting on a failure, and actually running a test to find out there was one.
+
+**What it reports.** Take the tests away and leave the reflection, and the agent lands **below the baseline it started from: 52% against 60%**. The full loop reaches 68%. The paper explains why, and the explanation is the interesting part: without tests "the agent is unable to determine if the current implementation is correct", so it "must participate in all iterations of the run without the option to return early, performing harmful edits to the implementation". It keeps improving code that was already right.
+
+**Why `hunt` works this way.** This is the cleanest statement in the whole section of what the skill is built on. Verification is not a phase at the end; it is what tells the executor to stop. A step whose proof has passed is finished, and an agent with no way to learn that will keep editing until it breaks something. Hence proof attached to each step rather than a review at the end, and hence "an unexecuted check is a limitation, not approval".
+
+**Where the benchmark stops.** Fifty function-level problems in a language with unusually verbose compiler errors, which the authors themselves note makes it a favourable playground. Whether the same margin survives at repository scale, where a slice's proof is slower and less exact than a unit test, is not measured here.
+
+</details>
+
 ### `equip`
 
 <details>
