@@ -11,7 +11,7 @@ The deliverable is an independent review, in the conversation or on the PR when 
 
 ## 1. Understand the request and pin the code under review
 
-- For a PR, read [the GitHub context protocol](references/github-pr.md). Load the **full description, linked issues with their comments, reviews, inline discussions with replies, commits and checks** before concluding what was asked. `gh pr diff` and `gh pr view --comments` are not enough on their own.
+- For a PR, read [the GitHub context protocol](references/github-pr.md). Load the **full description, linked issues with their comments, reviews, inline discussions with replies, commits and checks** before concluding what was asked. `gh pr diff` and `gh pr view --comments` are not enough on their own. Reading it all is what gives coverage: a requirement you never saw cannot be a finding. Using it is a separate problem — what was read early sits far from where it is needed, and a comment rarely uses the same words as the code it is about. Bring the relevant criterion back in front of you at the moment you check it, rather than trusting that having read it once put it in play.
 - Record the repository, the PR, the base SHA, the head SHA and the merge-base. Review the `git diff <base-sha>...<head-sha>` and that change's commits; confirm the checkout you are reading matches the head. Preserve local work by using a separate worktree when needed.
 - For a local review, clarify whether the target is the commit range, the uncommitted changes or both, and capture the matching diff. Do not include local changes in a PR review without verifying they belong to the remote head.
 - Read the `AGENTS.md` files that apply to the changed paths, the documented rules, and the specs or plans they cite. Read the product vision and the feature/impact record where they exist; use the commands the project documents.
@@ -29,7 +29,7 @@ Read the changed functions and the context they need, including consumers, tests
 
 Follow every suspicion to a concrete scenario: input or trigger -> path executed -> incorrect result. Compare against the base to distinguish a regression introduced or worsened by the PR from pre-existing debt. An entirely missing requirement is a finding too, even with no corresponding added line.
 
-Duplication, abstractions and naming only justify a comment when there is a concrete cost or a documented violation. Do not impose personal architectural preferences and do not create findings to fill a quota. Do not repeat comments already open about the same problem: link the discussion and say whether it still holds.
+Duplication, abstractions and naming only justify a comment when there is a concrete cost or a documented violation. Do not impose personal architectural preferences, and do not create findings to fill a quota: `raise three nits so the review looks thorough → report the one demonstrable defect and say the rest was clean`. A review with nothing to report is a result. Do not repeat comments already open about the same problem: link the discussion and say whether it still holds.
 
 ## 3. Verify before asserting
 
