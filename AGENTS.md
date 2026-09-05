@@ -2,7 +2,7 @@
 
 A collection of seven software skills, distributed as Agent Skills and as a plugin for Claude Code, Codex and Cursor.
 
-- Source: `plugins/utevo-lux/skills/`. Names: `hi`, `exiva`, `equip`, `hunt`, `bug`, `look`, `exura`.
+- Source: `plugins/utevo-lux/skills/`. Names: `hi`, `mission`, `equip`, `hunt`, `bug`, `look`, `exura`.
 - Keep all repository content in English: instructions, descriptions, references, templates and README.
 - Skills deliver briefs, research, plans and reports in the conversation. Do not add automatic documentation, wishlist or feature-record creation or updates in consumer projects.
 - Keep instructions portable: no private project paths, mandatory models, agent-specific shell injection or implicit dependencies on other skills.

@@ -2,7 +2,7 @@
 
 Read this reference for identity, authorization, sensitive data, money, public endpoints, webhooks, uploads, secrets, external integrations, privileged actions or plausible harm.
 
-The purpose in `hi` is to give the direction an abuse model and security invariants. Deep regulatory or technical research belongs to `/exiva`.
+The purpose in `hi` is to give the direction an abuse model and security invariants. Deep regulatory or technical research belongs to `/mission`.
 
 ## Minimum model
 

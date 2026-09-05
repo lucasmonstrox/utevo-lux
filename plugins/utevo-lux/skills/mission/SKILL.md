@@ -1,11 +1,11 @@
 ---
-name: exiva
+name: mission
 description: Investigate a software problem through code and Git history, external research and evidence verification. Use to discover what exists, assess feasibility or compare approaches before planning.
 ---
 
-# Exiva
+# Mission
 
-Usage: `/exiva <topic or question>`, or the agent's native skill invocation.
+Usage: `/mission <topic or question>`, or the agent's native skill invocation.
 
 Investigate to answer the request. Deliver research **in the conversation**; do not create or update documentation, wishlists, feature records or product code.
 

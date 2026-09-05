@@ -17,7 +17,7 @@ If web access is unavailable, say so in one sentence and leave precedents as an 
 5. For each useful precedent, keep only `source + context + observed pattern + difference from our scenario`.
 6. Classify its consequence as `adopt`, `adapt`, `reject` or `experiment`.
 
-Do not chase a quota. Stop when new results no longer change the options or recommendation. If a decisive claim remains uncertain, make it a question for `/exiva`.
+Do not chase a quota. Stop when new results no longer change the options or recommendation. If a decisive claim remains uncertain, make it a question for `/mission`.
 
 ## Concise output
 
@@ -25,6 +25,6 @@ Research without narrating each query, opened page or collected source. Show onl
 
 Preserve decisive URLs in the final conversation brief. Do not create research files or wishlists.
 
-## Boundary with `/exiva`
+## Boundary with `/mission`
 
-`/hi` performs a focused, verifiable search for existing solutions. `/exiva` takes over when the decision depends on broad market research, extensive code history, quantitative benchmarks, deep technical feasibility, regulation or adversarial validation. The existence of `/exiva` does not permit skipping the web search in `/hi`.
+`/hi` performs a focused, verifiable search for existing solutions. `/mission` takes over when the decision depends on broad market research, extensive code history, quantitative benchmarks, deep technical feasibility, regulation or adversarial validation. The existence of `/mission` does not permit skipping the web search in `/hi`.

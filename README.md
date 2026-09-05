@@ -7,14 +7,14 @@
 <p align="center">Software skills inspired by Tibia. From the first conversation to the fixed PR.</p>
 
 ```text
-hi → exiva → equip → hunt → look → exura
+hi → mission → equip → hunt → look → exura
                   bug ↗
 ```
 
 | Skill | What it does |
 |---|---|
 | [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Opens the dialog with the NPC: one decision at a time until the quest and the route are clear. |
-| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Casts exiva on the problem: finds answers in code, history, the web, and other sources, with evidence. |
+| [mission](plugins/utevo-lux/skills/mission/SKILL.md) | Takes the mission from the quest log: finds answers in code, history, the web, and other sources, with evidence. |
 | [equip](plugins/utevo-lux/skills/equip/SKILL.md) | Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Attacks the code: executes the plan and loots the proof that it works. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`. |
@@ -39,10 +39,10 @@ To pick one skill or check the catalog before installing:
 
 ```sh
 npx skills add lucasmonstrox/utevo-lux --list
-npx skills add lucasmonstrox/utevo-lux --agent codex --skill exiva
+npx skills add lucasmonstrox/utevo-lux --agent codex --skill mission
 ```
 
-In Claude Code and Cursor, use `/hi`, `/exiva`, `/equip`, etc. In Codex, select the skill in the picker or mention `$hi`, `$exiva`, `$equip`, etc. The invocation format belongs to the agent; the instructions are the same.
+In Claude Code and Cursor, use `/hi`, `/mission`, `/equip`, etc. In Codex, select the skill in the picker or mention `$hi`, `$mission`, `$equip`, etc. The invocation format belongs to the agent; the instructions are the same.
 
 The installer is the [Vercel Skills CLI](https://github.com/vercel-labs/skills). Each skill ships with its references and can be installed separately.
 
@@ -63,7 +63,7 @@ Inside Claude Code:
 
 The first `utevo-lux` identifies the plugin; the second, the marketplace. Choose the install scope in the interface and reload plugins when prompted.
 
-Plugins are namespaced in Claude: `/utevo-lux:hi`, `/utevo-lux:exiva`, etc. To keep `/hi` and the other short names, use the direct skill install above. Avoid installing both forms in the same scope unless you want duplicate commands. [Official documentation](https://code.claude.com/docs/en/plugins)
+Plugins are namespaced in Claude: `/utevo-lux:hi`, `/utevo-lux:mission`, etc. To keep `/hi` and the other short names, use the direct skill install above. Avoid installing both forms in the same scope unless you want duplicate commands. [Official documentation](https://code.claude.com/docs/en/plugins)
 
 ### Codex
 
@@ -86,7 +86,7 @@ The `.cursor-plugin/marketplace.json` catalog prepares the repository for distri
 
 ```text
 /hi I want to improve the sign-up flow
-/exiva Compare the options based on the brief above
+/mission Compare the options based on the brief above
 /equip Plan the direction we chose
 /hunt Execute the plan above
 /bug The form submits twice --fix
@@ -111,7 +111,7 @@ plugins/utevo-lux/
   .codex-plugin/plugin.json
   .cursor-plugin/plugin.json
   assets/logo.png
-  skills/{hi,exiva,equip,hunt,bug,look,exura}/SKILL.md
+  skills/{hi,mission,equip,hunt,bug,look,exura}/SKILL.md
 ```
 
 The seven skills have a single source. The three manifests package the same files. The GitHub references ship with both `look` and `exura` to allow individual installs; the validator checks that the two copies stay identical.

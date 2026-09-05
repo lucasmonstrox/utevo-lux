@@ -32,4 +32,4 @@ Look for silent bypasses, rules that work on only one machine, secrets in config
 
 ## Leave for research and implementation planning
 
-Exact files, final commands, provider APIs, literal configuration, rollout sequences and executable proofs belong to `/exiva` and `/equip`. `hi` decides policies, audiences and operational guarantees.
+Exact files, final commands, provider APIs, literal configuration, rollout sequences and executable proofs belong to `/mission` and `/equip`. `hi` decides policies, audiences and operational guarantees.

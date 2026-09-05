@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN = ROOT / "plugins" / "utevo-lux"
 SKILLS = PLUGIN / "skills"
-NAMES = {"hi", "exiva", "equip", "hunt", "bug", "look", "exura"}
+NAMES = {"hi", "mission", "equip", "hunt", "bug", "look", "exura"}
 
 
 def check():

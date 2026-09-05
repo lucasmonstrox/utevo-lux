@@ -15,7 +15,7 @@ Read local instructions, the request and available briefs/investigations. Consul
 
 - Preserve decisions, constraints, rejected options and established criteria.
 - Check what is implemented. Plan only the missing work.
-- Clarify material open product decisions one at a time, or recommend `exiva` for investigation. Do not hide unresolved research inside implementation steps.
+- Clarify material open product decisions one at a time, or recommend `mission` for investigation. Do not hide unresolved research inside implementation steps.
 - Ask for indispensable missing context. No other skill needs to be installed.
 
 ## 2. Map dependencies and impact

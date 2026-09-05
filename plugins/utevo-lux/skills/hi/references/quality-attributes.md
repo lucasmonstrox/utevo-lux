@@ -15,7 +15,7 @@ For each material attribute, define:
 
 ## Possible perspectives
 
-- **Performance:** perceived and backend latency, throughput, payload, volume/cardinality, frequency, peaks, cost and degradation. Use a range or order of magnitude when an exact number still requires `/exiva`.
+- **Performance:** perceived and backend latency, throughput, payload, volume/cardinality, frequency, peaks, cost and degradation. Use a range or order of magnitude when an exact number still requires `/mission`.
 - **Reliability:** required availability, consistency, tolerable loss, retry/idempotency, recovery, RPO/RTO when applicable and degraded behavior.
 - **Accessibility:** critical tasks without a mouse, sight, color or audio; focus order, semantics, zoom, contrast and assistive technology. Include accessibility when choosing the interaction.
 - **Privacy:** purpose, minimization, visibility, retention, deletion, export, consent and sensitive inferences.

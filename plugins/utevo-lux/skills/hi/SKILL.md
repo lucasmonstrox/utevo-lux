@@ -14,7 +14,7 @@ The result is an **understood and confirmed decision**. Discuss until you can ex
 ## Responsibilities
 
 - **`/hi` decides:** why, for whom, in which scenarios, what behavior we want, which options exist, what must never happen and which costs we accept.
-- **`/exiva` establishes facts:** the actual product/code state, feasibility, market, competitors, patterns and external facts with evidence. `hi` can make focused inquiries to unblock a decision; broad investigation belongs to `/exiva`.
+- **`/mission` establishes facts:** the actual product/code state, feasibility, market, competitors, patterns and external facts with evidence. `hi` can make focused inquiries to unblock a decision; broad investigation belongs to `/mission`.
 - **`/equip` makes it executable:** architecture that fits the repository, paths, symbols, final contracts, steps, proofs, tests and **implementation** `Don't:` constraints next to each function or step.
 - **`/hunt` implements and verifies.** Do not write code during `hi`.
 - Code review belongs to a separate skill.
@@ -43,7 +43,7 @@ Model the conversation as a **decision tree**, but never dump the tree on the us
 2. Keep an internal record of `confirmed`, `provisional`, `rejected`, `factual hypothesis` and `open` items.
 3. Each step contains **exactly one question and one decision**. Give minimal context, ask the question, recommend an answer and wait. Do not advance to or preview the next decisions in the same message.
 4. Verifiable facts are the agent's work. Inspect available sources or label the hypothesis; do not turn "how do competitors do this?" or "does this already exist?" into a preference question. Value, priority and accepted risk belong to the user.
-5. If the user says "you choose," choose, explain the criterion and record the decision. If evidence cannot support a choice, recommend an experiment or `/exiva` instead of false certainty.
+5. If the user says "you choose," choose, explain the criterion and record the decision. If evidence cannot support a choice, recommend an experiment or `/mission` instead of false certainty.
 6. Challenge vague or contradictory premises with concrete scenarios. "Simple," "fast," "intuitive," "secure" and "best practice" only count when expressed as observable behavior or criteria.
 7. Do not repeat answered questions. One answer may close several branches; discard those that no longer matter.
 8. If a question contains two dimensions that could receive different answers, split it. Configuration, surface, automation, scope and risk are separate steps when each can change independently.
@@ -105,7 +105,7 @@ Write each scenario as `actor + trigger + context + action + observable result`.
 
 Perform a **mandatory, current web search** following [references/web-precedents.md](references/web-precedents.md). Model memory is not evidence. Look for competitors, analogous products, public patterns, mature APIs, libraries and established configurations; combine with internal precedents where available. A precedent is **evidence for a decision**. Record the source, context, what works, differences from our audience/scenario, and classify it as `adopt`, `adapt`, `reject` or `experiment`.
 
-**Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/exiva`.
+**Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/mission`.
 
 ### 5. Options: meaningfully different ways to satisfy the intent
 
@@ -152,7 +152,7 @@ Do not force an artificial answer for an irrelevant dimension. The audit should 
 Stop opening branches when:
 
 - no remaining owner decision materially changes experience, contracts, scope or risk;
-- remaining factual uncertainties are named and assigned to a lookup, experiment or `/exiva`;
+- remaining factual uncertainties are named and assigned to a lookup, experiment or `/mission`;
 - direction, constraints and trade-offs are consistent;
 - future ideas are separate from the current scope.
 
@@ -170,11 +170,11 @@ Present a compact, complete brief using the format below and request explicit co
 **Accepted trade-offs:** ...
 **Out of scope / later:** ...
 **How we will know it worked:** ...
-**Hypotheses and questions for `/exiva`:** ...
+**Hypotheses and questions for `/mission`:** ...
 ```
 
 ## Handoff
 
 The confirmed brief stays in the conversation. Keep hypotheses labeled; do not invent priority, urgency or approved scope.
 
-Recommend `exiva` for open factual questions and `equip` when the direction is supported and ready for implementation planning. If another skill is not installed, the brief must still support continuation. Do not create documentation files, install skills or invoke the next stage automatically.
+Recommend `mission` for open factual questions and `equip` when the direction is supported and ready for implementation planning. If another skill is not installed, the brief must still support continuation. Do not create documentation files, install skills or invoke the next stage automatically.
