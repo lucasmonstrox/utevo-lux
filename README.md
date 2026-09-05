@@ -115,7 +115,7 @@ This section collects the papers and benchmarks behind them, one entry per bench
 <details>
 <summary><b>FreshQA</b> — does searching the web beat answering from memory?</summary>
 
-**Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) and [web-precedents.md › Rule](plugins/utevo-lux/skills/hi/references/web-precedents.md#rule) — the mandatory current search, and the line that model memory is not evidence.
+**Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) — the mandatory current search, the line that model memory is not evidence, and the rule to open the page instead of trusting a search snippet.
 
 **Benchmark** · [FreshQA](https://github.com/freshllms/freshqa), released with [FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation](https://arxiv.org/abs/2310.03214) — Vu, Iyyer, Wang, Constant, Wei, Wei, Tar, Sung, Zhou, Le & Luong, 2023 (`arXiv:2310.03214`). The dataset is still maintained; it is revised on a rolling basis so the answers stay current.
 

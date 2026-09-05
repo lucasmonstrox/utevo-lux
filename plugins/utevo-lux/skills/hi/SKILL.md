@@ -21,20 +21,6 @@ The result is an **understood and confirmed decision**. Discuss until you can ex
 
 Do not assume something already exists to "improve." First classify the transformation: a new capability, behavior change, correction, risk reduction, maintenance/refactoring, infrastructure or developer feedback. In a new project, the baseline may simply be "this does not exist yet"; look for adjacent capabilities and constraints instead of inventing a current state.
 
-## Progressive loading
-
-Before the first question, identify the relevant surfaces and material concerns. Read **only** applicable references; combine them when the task crosses layers.
-
-- UI, flow, screen or interaction: [references/frontend-ui.md](references/frontend-ui.md)
-- Endpoint, integration, service, webhook or contract: [references/backend-api.md](references/backend-api.md)
-- Persistence, schema, migration or query: [references/data.md](references/data.md)
-- Infrastructure, deployment, configuration, lint, CI or developer experience: [references/infra-tooling.md](references/infra-tooling.md)
-- Authentication, authorization, sensitive data, money, public endpoints or plausible abuse: [references/security.md](references/security.md)
-- Material performance, reliability, accessibility, privacy, observability or maintainability concerns: [references/quality-attributes.md](references/quality-attributes.md)
-- At the precedents stage, for any surface: [references/web-precedents.md](references/web-precedents.md)
-
-These references are exploration menus, not mandatory checklists. Drop any question that cannot change a decision, risk, scope or success criterion.
-
 ## Discussion mechanics: one decision at a time
 
 Model the conversation as a **decision tree**, but never dump the tree on the user. Ask about a decision only when its premises are settled; among those available, choose the most consequential and address **only that one**. Depth comes from several short steps.
@@ -103,7 +89,15 @@ Write each scenario as `actor + trigger + context + action + observable result`.
 
 ### 4. Precedents: who has solved something comparable?
 
-Perform a **mandatory, current web search** following [references/web-precedents.md](references/web-precedents.md). Model memory is not evidence. Look for competitors, analogous products, public patterns, mature APIs, libraries and established configurations; combine with internal precedents where available. A precedent is **evidence for a decision**. Record the source, context, what works, differences from our audience/scenario, and classify it as `adopt`, `adapt`, `reject` or `experiment`.
+Perform a **mandatory, current web search** before settling precedents or generating options, even when the solution seems familiar. Memory helps formulate queries; it is not evidence. Look for competitors, analogous products, public patterns, mature APIs, libraries and established configurations; combine with internal precedents where available.
+
+- Derive queries from the audience and the concrete scenario, not the feature name. Search other market languages when that improves coverage.
+- **Open the pages.** Search snippets are not proof, and a source the user provided still needs verification when its information may have changed.
+- Prefer primary sources: competitor products and help centers, official documentation, specifications, changelogs, engineering articles and original repositories. Secondary sources help locate primary material.
+- Stop when new results no longer change the options or the recommendation. Do not chase a quota.
+- If web access is unavailable, say so in one sentence and leave precedents as an open question. Do not invent findings or claim verification.
+
+A precedent is **evidence for a decision**. For each useful one keep `source + context + observed pattern + difference from our scenario`, and classify it as `adopt`, `adapt`, `reject` or `experiment`. Show only the one to three findings that change the current decision, and preserve their URLs in the final brief.
 
 **Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/mission`.
 
