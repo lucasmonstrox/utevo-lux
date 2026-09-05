@@ -91,10 +91,10 @@ Write each scenario as `actor + trigger + context + action + observable result`.
 
 Perform a **mandatory, current web search** before settling precedents or generating options, even when the solution seems familiar. Memory helps formulate queries; it is not evidence. Look for competitors, analogous products, public patterns, mature APIs, libraries and established configurations; combine with internal precedents where available.
 
-- Derive queries from the audience and the concrete scenario, not the feature name. Search other market languages when that improves coverage.
+Keep it shallow on purpose. A handful of sources, queried from the audience and the concrete scenario rather than the feature name, is enough to unblock a choice.
+
 - **Open the pages.** Search snippets are not proof, and a source the user provided still needs verification when its information may have changed.
-- Prefer primary sources: competitor products and help centers, official documentation, specifications, changelogs, engineering articles and original repositories. Secondary sources help locate primary material.
-- Stop when new results no longer change the options or the recommendation. Do not chase a quota.
+- Stop as soon as new results stop changing the options. Do not chase a quota and do not start a survey — breadth, competing sources and quantitative comparison are `/mission`'s work.
 - If web access is unavailable, say so in one sentence and leave precedents as an open question. Do not invent findings or claim verification.
 
 A precedent is **evidence for a decision**. For each useful one keep `source + context + observed pattern + difference from our scenario`, and classify it as `adopt`, `adapt`, `reject` or `experiment`. Show only the one to three findings that change the current decision, and preserve their URLs in the final brief.
