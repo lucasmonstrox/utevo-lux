@@ -267,6 +267,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>BEIR and CLARC</b> — does semantic search replace exact match?</summary>
+
+**Used in** · [`mission` › 2. Investigate the repository](plugins/utevo-lux/skills/mission/SKILL.md#2-investigate-the-repository) — searching lexically and semantically without ranking one above the other, and confirming anything decisive with a direct read.
+
+**Benchmarks** · [BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://arxiv.org/abs/2104.08663) — Thakur, Reimers, Rücklé, Srivastava & Gurevych, NeurIPS 2021 Datasets & Benchmarks (`arXiv:2104.08663`), 18 datasets across diverse retrieval tasks. · [CLARC: C/C++ Benchmark for Robust Code Search](https://arxiv.org/abs/2603.04484) — Wang, Huang, Fang & Wang, ICLR 2026 (`arXiv:2603.04484`), six models evaluated on code that has been identifier-anonymized or compiled down to Assembly and WebAssembly.
+
+**What they measure.** BEIR asks how retrieval models behave **out of their training domain** — the situation any tool is in when pointed at a repository it has never seen. CLARC asks a sharper question: when a code-search model finds the right function, is it reading the code or reading the names?
+
+**What they report.** On BEIR, lexical BM25 outperforms DPR on **16 of 18** datasets zero-shot — on TREC-COVID, nDCG@10 **0.656 against 0.332** — and the paper's conclusion is that "BM25 is a robust baseline", with dense models showing "considerable room for improvement in their generalization capabilities". CLARC points the other way first: on ordinary code search the embedding models are far ahead, Voyage-code-3 reaching **86.93 MRR** where BM25 gets **8.20**. Then it removes the names, and reports "sharp drops in retrieval effectiveness" that "highlight the models' persistent reliance on lexical features rather than code semantic understanding".
+
+**Why `mission` works this way.** Read together, neither tool wins. Semantic search finds what you could not name — that is the 86.93 against 8.20. But its advantage leans on the identifiers, so it is the tool that degrades exactly when a rename, a refactor or generated code takes the names away, and exact match is the one that still works there. The skill therefore refuses to rank them, sends identifiers and strings to exact match, and requires a direct read before anything decisive rests on either.
+
+**Where the benchmarks stop.** BEIR is text retrieval, not code, and predates current embedding models. CLARC's degradation varies a great deal by model and by evaluation group, and the tables do not support a single headline drop figure — the reliable claim is the direction and the mechanism, not a magnitude. Neither benchmark evaluates an agent choosing between the two tools, which is the actual decision the skill is instructing.
+
+</details>
+
 ### `equip`
 
 <details>
