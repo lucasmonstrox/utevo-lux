@@ -18,7 +18,7 @@ hi → exiva → pl → hunt → look → exura
 | [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Prepares steps, dependencies, acceptance criteria, and verifications. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Executes the plan and proves the result. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Investigates the root cause; fixes it when asked or with `--fix`. |
-| [look](plugins/utevo-lux/skills/look/SKILL.md) | Reviews the PR, description, issues, and discussions; points out demonstrable problems. |
+| [look](plugins/utevo-lux/skills/look/SKILL.md) | Inspects the PR, its description, issues, and discussions; points out demonstrable problems. |
 | [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR from review feedback, one commit per change, with a reply at the source. |
 
 Use the step the work needs. The sequence is not mandatory, and `pl` keeps that name for now.
