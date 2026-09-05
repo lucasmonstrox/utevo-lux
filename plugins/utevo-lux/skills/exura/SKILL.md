@@ -1,70 +1,70 @@
 ---
 name: exura
-description: Trata pedidos de mudança de um PR lendo descrição, issues, reviews e discussões completas. Corrige e testa cada change em um commit separado, atualiza o PR e responde ao comentário com o commit e a evidência. Use quando o usuário pedir para corrigir feedback ou requests changes de uma revisão.
+description: Address a PR's change requests by reading the full description, issues, reviews and discussions. Fix and test each change in its own commit, update the PR, and reply at the source with the commit and the evidence. Use when the user asks to address review feedback or requested changes.
 ---
 
 # Exura
 
-Uso: `/exura <URL ou número do PR> [--local]`.
+Usage: `/exura <PR URL or number> [--local]`.
 
-O comando explícito pede o ciclo completo: ler os pedidos, corrigir, verificar, criar **um commit por change**, enviar os commits à branch do PR e responder às discussões de origem. `--local` prepara os commits e as respostas sem push nem publicação. Para pedidos em linguagem natural, respeite as ações autorizadas; a seleção automática da skill não amplia a autorização. Complete o trabalho local e prepare as respostas antes de pedir uma autorização de publicação que realmente falte; nunca peça novamente uma já concedida.
+Invoking the command explicitly asks for the whole cycle: read the requests, fix, verify, make **one commit per change**, push those commits to the PR's branch, and reply in the discussions they came from. `--local` prepares the commits and the replies without pushing or publishing. For requests in natural language, respect the actions that were authorized; this skill being selected automatically does not widen that authorization. Finish the local work and draft the replies before asking for a publishing authorization that is genuinely missing; never ask again for one already granted.
 
-## 1. Ler o contexto inteiro
+## 1. Read the whole context
 
-Leia [o protocolo de contexto do GitHub](references/github-pr.md) e reúna o mesmo material de `look`: descrição, issues vinculadas e seus comentários, specs/planos relevantes, commits, diff, reviews completas, comentários gerais, discussões inline com todas as respostas e checks.
+Read [the GitHub context protocol](references/github-pr.md) and gather the same material as `look`: description, linked issues and their comments, relevant specs and plans, commits, diff, complete reviews, general comments, inline discussions with every reply, and checks.
 
-- Registre a base e o head atuais, o repositório/branch de origem do PR e o estado da árvore local. Confirme que o PR está aberto e que a branch que será alterada é a dele, inclusive quando vier de um fork.
-- Leia as instruções do repositório e os arquivos afetados. Leia a documentação de produto e o registro de features/impacto quando existirem; respeite o fluxo de busca das instruções locais.
-- Não use apenas `reviewDecision` ou a última review. Leia o corpo dos **`CHANGES_REQUESTED`**, os pedidos em reviews `COMMENTED`, comentários gerais e threads, considerando respostas e decisões posteriores.
-- Review antiga ou dispensada e thread resolvida são histórico; não reabra sem evidência de que o pedido permanece válido. `isOutdated` só indica que a posição ficou antiga: **não prova que o problema foi corrigido**.
+- Record the current base and head, the PR's source repository and branch, and the state of the local tree. Confirm the PR is open and that the branch you will change is its own, including when it comes from a fork.
+- Read the repository's instructions and the affected files. Read the product documentation and the feature/impact record where they exist; follow the search flow the local instructions describe.
+- Do not rely on `reviewDecision` or the latest review alone. Read the bodies of the **`CHANGES_REQUESTED`** reviews, the requests inside `COMMENTED` reviews, the general comments and the threads, taking later replies and decisions into account.
+- An old or dismissed review and a resolved thread are history; do not reopen them without evidence that the request still stands. `isOutdated` only means the position went stale: **it does not prove the problem was fixed**.
 
-## 2. Transformar feedback em uma fila de changes
+## 2. Turn the feedback into a queue of changes
 
-Uma **change** é um pedido lógico e verificável de alteração. Um comentário com dois pedidos independentes gera duas changes; vários comentários sobre a mesma causa podem apontar para uma única change. Leia as respostas antes de decidir o que o revisor quis dizer.
+A **change** is one logical, verifiable request to alter something. A comment carrying two independent requests produces two changes; several comments about the same cause can point to a single change. Read the replies before deciding what the reviewer meant.
 
-Mantenha uma fila curta na conversa, reconstruível pelos comentários e commits do PR. Não crie documentação ou registros de features:
+Keep a short queue in the conversation, reconstructible from the PR's comments and commits. Do not create documentation or feature records:
 
-| Origem | Pedido | Estado | Commit | Verificação | Resposta |
+| Origin | Request | State | Commit | Verification | Reply |
 |---|---|---|---|---|---|
-| URL/ID do comentário, review ou item | Resultado esperado | pendente / corrigido / já atendido / esclarecimento / discordância / bloqueado | SHA quando existir | Prova ou limitação | URL publicada ou rascunho |
+| URL or ID of the comment, review or item | Expected result | pending / fixed / already met / clarification / disagreement / blocked | SHA once it exists | Proof or limitation | Published URL or draft |
 
-- Confirme cada pedido no código atual. Aplique uma correção que satisfaça a intenção e as regras do projeto, não necessariamente o patch sugerido literalmente.
-- Já atendido: identifique a prova e o commit existente quando localizável; não crie commit vazio.
-- Discordância: explique com evidência por que a sugestão quebra um contrato, contradiz um requisito ou não resolve o problema; não altere só para silenciar o comentário.
-- Ambiguidade que muda comportamento: peça esclarecimento no canal autorizado e siga com changes independentes. Não responda pelo revisor nem declare o pedido resolvido.
-- Diferencie sugestões opcionais de exigências; implemente as incluídas no pedido do usuário e não amplie o PR por conta própria.
+- Confirm each request against the current code. Apply a fix that satisfies the intent and the project's rules, not necessarily the suggested patch literally.
+- Already met: identify the proof and the existing commit where you can locate it; do not create an empty commit.
+- Disagreement: explain with evidence why the suggestion breaks a contract, contradicts a requirement or does not solve the problem; do not change code merely to silence a comment.
+- Ambiguity that changes behavior: ask for clarification in the authorized channel and carry on with the independent changes. Do not answer on the reviewer's behalf or declare the request resolved.
+- Distinguish optional suggestions from requirements; implement the ones the user's request covers and do not widen the PR on your own.
 
-## 3. Corrigir uma change por vez
+## 3. Fix one change at a time
 
-1. Trabalhe sobre o head correto, em checkout limpo ou worktree próprio. Preserve arquivos e commits alheios; não faça stash, reset, rebase ou force-push para limpar o caminho silenciosamente.
-2. Localize a causa e seus consumidores antes do patch. Uma correção em função compartilhada precisa cobrir os callers afetados. Siga as dependências entre changes sem misturar pedidos independentes.
-3. Para bug ou lógica não trivial, obtenha uma prova que falhe antes e passe depois, preferindo o harness/teste existente. Para ajuste trivial, use a verificação proporcional; não crie testes que apenas repitam a implementação.
-4. Faça a menor mudança que resolve o pedido e rode as verificações relevantes. UI exige navegador real. Não crie nem atualize documentação; se o pedido de review depender disso, declare o item pendente e explique a limitação.
-5. Inspecione o diff e o staging. Faça **um commit desta change**, incluindo implementação e testes necessários. Não inclua changes independentes nem trabalho que já estava no workspace. Cada commit deve ser coerente e verificável.
-6. Use a convenção do repositório, com o ID da feature quando aplicável. No corpo do commit, inclua `Review: <URL de origem>` (todas as origens se houver duplicatas) e a verificação executada. Grave o SHA real na fila.
+1. Work on the correct head, in a clean checkout or your own worktree. Preserve other people's files and commits; do not stash, reset, rebase or force-push to quietly clear the way.
+2. Locate the cause and its consumers before the patch. A fix in a shared function has to cover the affected callers. Follow the dependencies between changes without mixing independent requests.
+3. For a bug or non-trivial logic, get a proof that fails before and passes after, preferring the existing harness or test. For a trivial adjustment, use proportionate verification; do not write tests that merely restate the implementation.
+4. Make the smallest change that resolves the request and run the relevant checks. UI requires a real browser. Do not create or update documentation; if the review request depends on that, mark the item pending and explain the limitation.
+5. Inspect the diff and the staging area. Make **one commit for this change**, including the implementation and any tests it needs. Do not include independent changes or work that was already in the workspace. Every commit must be coherent and verifiable.
+6. Follow the repository's convention, with the feature ID where it applies. In the commit body, include `Review: <origin URL>` (every origin, if there are duplicates) and the verification you ran. Record the real SHA in the queue.
 
-Um comentário com vários pedidos pode receber vários links de commit. Um pedido que exige alterar vários arquivos continua sendo uma change. Não use amend ou squash para juntar changes distintas. Se uma change bloquear, registre o motivo e avance apenas nas independentes.
+One comment carrying several requests can receive several commit links. A request that needs several files changed is still one change. Do not use amend or squash to merge distinct changes. If a change is blocked, record why and move on to the independent ones.
 
-## 4. Atualizar o PR e responder
+## 4. Update the PR and reply
 
-- Execute as verificações finais sobre o conjunto dos commits e a lista de impacto. Corrija falhas causadas pelo trabalho antes de anunciar sucesso; falhas preexistentes ou externas precisam de evidência e devem aparecer no resultado.
-- Antes do push, releia o head remoto. Se ele avançou, preserve os novos commits, reconcilie sem reescrever histórico alheio e revalide o que mudou; nunca sobrescreva o head observado anteriormente. Envie apenas os commits esperados à branch de origem do PR, com push normal.
-- Confirme que o PR contém os commits enviados. **Só então** responda a cada discussão com o link do commit e o resultado concreto da verificação. Se push falhar ou estiver em `--local`, mantenha rascunhos; não publique “corrigido” apontando para um commit que o revisor não consegue acessar.
-- Responda a comentários inline na thread original. Pedidos no corpo de uma review ou comentário geral recebem resposta no PR com link direto para a origem e identificação do item; não abra uma discussão inline artificial.
-- Para duplicatas, responda em cada origem apontando para o mesmo commit. Para “já atendido”, discordância ou esclarecimento, responda conforme a evidência, sem simular uma correção.
-- **Deixe a thread aberta para o revisor conferir**, salvo pedido explícito para resolvê-la. Não descarte reviews, aprove o próprio trabalho ou faça merge.
+- Run the final checks over the whole set of commits and the impact list. Fix failures your work caused before announcing success; pre-existing or external failures need evidence and must appear in the result.
+- Before pushing, re-read the remote head. If it moved, preserve the new commits, reconcile without rewriting anyone else's history, and revalidate what changed; never overwrite the head you observed earlier. Push only the expected commits to the PR's source branch, with a normal push.
+- Confirm the PR contains the commits you pushed. **Only then** reply in each discussion with the commit link and the concrete result of the verification. If the push fails, or you are in `--local`, keep the drafts; do not publish "fixed" pointing at a commit the reviewer cannot reach.
+- Reply to inline comments in the original thread. Requests in a review body or a general comment get a reply on the PR with a direct link to the origin and the item addressed; do not open an artificial inline discussion.
+- For duplicates, reply at each origin pointing to the same commit. For "already met", a disagreement or a clarification, reply according to the evidence, without simulating a fix.
+- **Leave the thread open for the reviewer to check**, unless resolving it was explicitly requested. Do not dismiss reviews, approve your own work, or merge.
 
-Formato curto de resposta, adaptado ao idioma da discussão:
+A short reply format, adapted to the language of the discussion:
 
 ```markdown
-Corrigido em [<SHA curto>](<URL do commit>): <o que mudou e como atende ao pedido>.
-Verificação: <comando/cenário e resultado real; limitações, se houver>.
+Fixed in [<short SHA>](<commit URL>): <what changed and how it meets the request>.
+Verification: <command or scenario and the real result; limitations, if any>.
 ```
 
-Antes de repetir qualquer publicação, consulte a thread e a fila: uma retomada ou timeout não pode duplicar resposta ou commit. Use [o protocolo compartilhado](references/github-pr.md) para distinguir IDs de reviews, comentários e threads e conferir o resultado da API.
+Before repeating any publication, check the thread and the queue: a resumed run or a timeout must not duplicate a reply or a commit. Use [the shared protocol](references/github-pr.md) to tell review, comment and thread IDs apart and to check what the API returned.
 
-## 5. Fechar a rodada
+## 5. Close the round
 
-Releia o estado do PR, das discussões e dos checks para identificar changes ainda abertas, novos pedidos e interferências de outra pessoa. Corrigido no código, respondido no GitHub e aceito pelo revisor são estados diferentes.
+Re-read the state of the PR, the discussions and the checks to identify changes still open, new requests, and interference from someone else. Fixed in the code, answered on GitHub, and accepted by the reviewer are three different states.
 
-Entregue a relação **pedido → commit → verificação → resposta**, incluindo já atendidos, discordâncias, bloqueios, novos pedidos e checks pendentes. Não anuncie “tudo resolvido” enquanto houver itens não tratados, publicação faltante ou verificação necessária inconclusiva.
+Deliver the mapping **request -> commit -> verification -> reply**, including items already met, disagreements, blocks, new requests and pending checks. Do not announce "all resolved" while items remain untouched, a publication is missing, or a necessary verification is inconclusive.

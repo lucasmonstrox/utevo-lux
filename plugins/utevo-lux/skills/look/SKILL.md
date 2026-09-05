@@ -1,62 +1,62 @@
 ---
 name: look
-description: Revisa um PR contra sua descrição, issues vinculadas, discussões e regras do repositório. Investiga bugs, regressões e requisitos ausentes com evidências. Use para revisar PR, branch ou diff; para aplicar pedidos de revisão, use exura.
+description: Review a PR against its description, linked issues, discussions and repository rules. Investigate bugs, regressions and missing requirements with evidence. Use to review a PR, branch or diff; to act on review requests, use exura.
 ---
 
 # Look
 
-Uso: `/look <URL ou número do PR> [--publish]`. Também aceita uma referência Git e o escopo informado pelo usuário. Sem alvo, tente identificar o PR da branch atual; pergunte apenas se houver ambiguidade.
+Usage: `/look <PR URL or number> [--publish]`. A Git reference and a scope stated by the user are also accepted. With no target, try to identify the PR for the current branch; ask only if it is ambiguous.
 
-O entregável é uma revisão independente na conversa ou no PR, quando a publicação for solicitada. Não crie arquivos de documentação, execute o plano, altere código nem aplique os próprios achados. O `/hunt` executa o plano; o `/exura` trata correções solicitadas na revisão.
+The deliverable is an independent review, in the conversation or on the PR when publishing was requested. Do not create documentation files, execute the plan, change code or apply your own findings. `/hunt` executes the plan; `/exura` handles the fixes a review asked for.
 
-## 1. Entender o pedido e fixar o código revisado
+## 1. Understand the request and pin the code under review
 
-- Para PR, leia [o protocolo de contexto do GitHub](references/github-pr.md). Carregue **descrição completa, issues vinculadas com seus comentários, reviews, discussões inline com respostas, commits e checks** antes de concluir o que foi pedido. `gh pr diff` e `gh pr view --comments` sozinhos não bastam.
-- Registre repositório, PR, SHA da base, SHA do head e merge-base. Revise o diff `git diff <base-sha>...<head-sha>` e os commits dessa mudança; confirme que o checkout lido corresponde ao head. Preserve trabalho local usando um worktree separado quando necessário.
-- Para uma revisão local, esclareça se o alvo é o intervalo de commits, as mudanças não commitadas ou ambos; capture o diff correspondente. Não inclua mudanças locais numa revisão de PR sem verificar que pertencem ao head remoto.
-- Leia `AGENTS.md` aplicáveis aos arquivos, regras documentadas e as specs/planos citados. Leia a visão do produto e o registro de features/impacto quando existirem; use os comandos documentados pelo projeto.
-- Faça um mapa breve dos critérios esperados e suas fontes. A descrição do PR explica a proposta; a implementação não prova que ela está correta. Uma divergência entre issue, descrição, plano e discussão precisa ser explicada, não resolvida por preferência do agente.
-- Sem issue vinculada, use a descrição e os requisitos disponíveis. Fonte inacessível ou requisito ambíguo vira limitação localizada; continue o que puder revisar e não invente uma especificação.
+- For a PR, read [the GitHub context protocol](references/github-pr.md). Load the **full description, linked issues with their comments, reviews, inline discussions with replies, commits and checks** before concluding what was asked. `gh pr diff` and `gh pr view --comments` are not enough on their own.
+- Record the repository, the PR, the base SHA, the head SHA and the merge-base. Review the `git diff <base-sha>...<head-sha>` and that change's commits; confirm the checkout you are reading matches the head. Preserve local work by using a separate worktree when needed.
+- For a local review, clarify whether the target is the commit range, the uncommitted changes or both, and capture the matching diff. Do not include local changes in a PR review without verifying they belong to the remote head.
+- Read the `AGENTS.md` files that apply to the changed paths, the documented rules, and the specs or plans they cite. Read the product vision and the feature/impact record where they exist; use the commands the project documents.
+- Map the expected criteria and their sources briefly. The PR description explains the proposal; the implementation does not prove it is correct. A divergence between issue, description, plan and discussion has to be explained, not settled by the agent's preference.
+- With no linked issue, use the description and the available requirements. An unreachable source or an ambiguous requirement becomes a local limitation; continue with what you can review and do not invent a specification.
 
-## 2. Revisar por dois eixos
+## 2. Review along two axes
 
-| Eixo | O que verificar |
+| Axis | What to check |
 |---|---|
-| **Requisitos** | Critérios da issue/PR/plano atendidos, omissões, comportamentos incorretos e mudanças de escopo sem justificativa. Considere decisões registradas nas discussões. |
-| **Correção e padrões** | Bugs e regressões no fluxo real, contratos entre consumidores, validação/autorização, integridade de dados, concorrência e erros, conforme a superfície alterada; regras documentadas do repositório. |
+| **Requirements** | Criteria from the issue, PR or plan that are met, omissions, incorrect behavior, and scope changes with no justification. Take decisions recorded in the discussions into account. |
+| **Correctness and standards** | Bugs and regressions in the real flow, contracts between consumers, validation and authorization, data integrity, concurrency and errors, according to the surface that changed; the repository's documented rules. |
 
-Leia as funções alteradas e o contexto necessário, incluindo consumidores, testes e configuração. Use a busca conceitual/LSP disponível e `rg` para confirmar aliases, strings e referências dinâmicas. Sem integração de busca, afunile com busca textual e leitura direcionada; não exija um MCP específico.
+Read the changed functions and the context they need, including consumers, tests and configuration. Use the available conceptual search or LSP tools and `rg` to confirm aliases, strings and dynamic references. With no search integration, narrow with text search and targeted reads; do not require a specific MCP.
 
-Siga cada suspeita até um cenário concreto: entrada/gatilho → caminho executado → resultado incorreto. Compare com a base para distinguir regressão introduzida ou agravada pelo PR de dívida preexistente. Um requisito inteiramente ausente também é achado, mesmo sem linha adicionada correspondente.
+Follow every suspicion to a concrete scenario: input or trigger -> path executed -> incorrect result. Compare against the base to distinguish a regression introduced or worsened by the PR from pre-existing debt. An entirely missing requirement is a finding too, even with no corresponding added line.
 
-Duplicação, abstrações e nomes só justificam apontamento quando houver custo concreto ou violação documentada. Não imponha padrões arquiteturais pessoais nem crie achados para preencher cotas. Não repita comentários já abertos sobre o mesmo problema: vincule a discussão e informe se continua válido.
+Duplication, abstractions and naming only justify a comment when there is a concrete cost or a documented violation. Do not impose personal architectural preferences and do not create findings to fill a quota. Do not repeat comments already open about the same problem: link the discussion and say whether it still holds.
 
-## 3. Verificar antes de afirmar
+## 3. Verify before asserting
 
-- Reproduza a suspeita ou sustente-a com uma cadeia de código inequívoca. Separe hipótese de defeito demonstrado; dúvida sem evidência fica como pergunta, não bloqueio.
-- Execute checks relevantes à mudança e às suspeitas em ambiente isolado. Consulte os scripts reais do projeto. UI exige navegador real; API/dados exigem prova na superfície correspondente. Não transforme revisão em uma implementação de testes dentro do PR.
-- Registre o que executou e o que não conseguiu executar. CI verde é evidência complementar; falha de infraestrutura não é automaticamente bug do PR.
-- Relacione cada achado ao requisito ou regra aplicável e ao SHA revisado. Se não houver defeitos demonstráveis, diga isso sem inventar sugestões.
+- Reproduce the suspicion, or support it with an unambiguous chain of code. Keep a hypothesis separate from a demonstrated defect; a doubt without evidence stays a question, not a blocker.
+- Run the checks relevant to the change and to the suspicions, in an isolated environment. Consult the project's real scripts. UI requires a real browser; API and data require proof on the matching surface. Do not turn the review into an exercise in writing tests inside the PR.
+- Record what you ran and what you could not run. A green CI is complementary evidence; an infrastructure failure is not automatically a bug in the PR.
+- Tie each finding to the applicable requirement or rule and to the reviewed SHA. If there are no demonstrable defects, say so without inventing suggestions.
 
-## 4. Entregar a revisão
+## 4. Deliver the review
 
-Apresente os achados por gravidade, identificando o eixo de cada um. Um problema que afeta ambos aparece uma vez, com as duas etiquetas. Declare separadamente a cobertura de requisitos e a de correção/padrões para uma não esconder a outra.
+Present the findings by severity, identifying the axis of each. A problem that affects both appears once, with both labels. State requirements coverage and correctness/standards coverage separately, so one does not hide the other.
 
-Cada achado contém:
+Each finding contains:
 
-- **Prioridade e título concreto:** P0 crítico e imediato; P1 alto impacto; P2 defeito normal; P3 melhoria menor comprovadamente útil.
-- **Local:** arquivo e menor intervalo suficiente no SHA revisado, ou referência ao requisito ausente.
-- **Problema e impacto:** cenário que falha e consequência observável.
-- **Evidência:** código, requisito/issue/comentário ou resultado de reprodução; direção de correção quando sustentada.
+- **Priority and a concrete title:** P0 critical and immediate; P1 high impact; P2 an ordinary defect; P3 a minor improvement demonstrably worth making.
+- **Location:** the file and the smallest sufficient range at the reviewed SHA, or a reference to the missing requirement.
+- **Problem and impact:** the scenario that fails and the observable consequence.
+- **Evidence:** code, a requirement, issue or comment, or the result of a reproduction; a direction for the fix where it is supported.
 
-Finalize com critérios atendidos/pendentes/inconclusivos, verificações executadas e limitações. Recomende `REQUEST_CHANGES` para problemas que impedem aceitar o PR, `COMMENT` para dúvidas ou revisão inconclusiva e `APPROVE` somente quando o escopo estiver coberto e não houver bloqueios. A recomendação não equivale a uma review publicada.
+Close with criteria met, pending and inconclusive, the checks you ran, and the limitations. Recommend `REQUEST_CHANGES` for problems that prevent accepting the PR, `COMMENT` for questions or an inconclusive review, and `APPROVE` only when the scope is covered and nothing blocks. The recommendation is not the same as a published review.
 
-## 5. Publicar quando solicitado
+## 5. Publish when asked
 
-`--publish` ou pedido explícito de publicar/enviar a revisão autoriza a publicação. Caso contrário, entregue a revisão na conversa. Preserve autorização já dada; a seleção automática desta skill não autoriza mensagens no GitHub.
+`--publish`, or an explicit request to publish or send the review, authorizes publishing. Otherwise, deliver the review in the conversation. Preserve authorization already given; this skill being selected automatically does not authorize messages on GitHub.
 
-Antes de publicar, releia base/head, descrição e discussões. Se mudaram, revise o delta relevante, atualize posições e elimine achados já corrigidos ou duplicados. Publique uma review consolidada no SHA efetivamente revisado, com comentários inline onde houver linha válida e um resumo para achados sem âncora no diff. Use o protocolo compartilhado para payloads, respostas da API e prevenção de duplicatas.
+Before publishing, re-read the base and head, the description and the discussions. If they moved, review the relevant delta, update the positions and drop findings already fixed or duplicated. Publish one consolidated review at the SHA you actually reviewed, with inline comments where a valid line exists and a summary for findings with no anchor in the diff. Use the shared protocol for payloads, API responses and duplicate prevention.
 
-No próprio PR, publique como `COMMENT`, mantendo a recomendação no texto; não tente aprovar ou solicitar mudanças formalmente em nome do próprio autor. Não faça merge nem invoque `exura` automaticamente. Se a API impedir a publicação, preserve o relatório pronto e informe o que falta.
+On the PR itself, publish as `COMMENT`, keeping the recommendation in the text; do not try to formally approve or request changes on behalf of its own author. Do not merge and do not invoke `exura` automatically. If the API prevents publishing, keep the finished report and say what is missing.
 
-Referência de desenho: [code-review de Matt Pocock](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md), especialmente a separação entre requisitos e padrões. Aqui a revisão inclui o contexto completo do PR e consolida achados duplicados.
+Design reference: [Matt Pocock's code-review skill](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md), particularly the separation between requirements and standards. Here the review also loads the PR's full context and consolidates duplicate findings.
