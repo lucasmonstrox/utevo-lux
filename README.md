@@ -231,6 +231,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Grounding in communication</b> — when is confirming worth what it costs?</summary>
+
+**Used in** · [`hi` › Shared understanding gate](plugins/utevo-lux/skills/hi/SKILL.md#shared-understanding-gate) — presenting a compact brief, requesting explicit confirmation, and treating silence or a change of subject as not-confirmed.
+
+**Source** · Clark & Brennan, "Grounding in Communication," in *Perspectives on Socially Shared Cognition* (Resnick, Levine & Teasley, eds.), American Psychological Association, 1991. Read in full from [the author's own faculty page](https://psychology.psy.sunysb.edu/sbrennan-/papers/clarkbrennan.pdf). This is theory and field observation, not a benchmark — it is where the confirm-before-proceeding step comes from, not proof that it works for agents.
+
+**What it describes.** The **grounding criterion**: "that we and our addressees mutually believe that they have understood what we meant well enough for current purposes." Not perfect understanding — enough for the task at hand. The chapter then makes confirming expensive on purpose, naming **eleven costs** that shift with the medium: formulation, production, reception, understanding, start-up, delay, asynchrony, speaker change, display, fault and repair. Over all of it sits the *principle of least collaborative effort*: "participants try to minimize their collaborative effort — the work that both do from the initiation of each contribution to its mutual acceptance."
+
+**What it reports.** In British directory-enquiry calls, customers confirmed the number they were given by repeating it back verbatim **over 70% of the time**, and operators did the same back for names, towns and street addresses. Operators also "always divided numbers of seven or more digits into their conventional groupings" before presenting them. Nobody instructed any of this — it is what people converge on when getting it wrong is expensive and the content is literal.
+
+**Why `hi` works this way.** The gate is that behaviour, made explicit. The brief is the verbatim display: a compact restatement handed back before anyone commits, on exactly the content that is costly to get wrong. And silence not counting as confirmation is the grounding criterion taken seriously — mutual belief has to be demonstrated, not assumed.
+
+**Where it stops.** No controlled study anywhere measures rework, disputes or completion time with a terminal confirmation gate versus without one, for humans or for agents. The 70% figure is about grounding a number mid-conversation, not a one-shot summary at the end. And the cost framework cuts against the gate being unconditional: least collaborative effort predicts its value depends on medium and purpose, so a full nine-field brief for a small, reversible decision may cost more in re-litigation than the risk it guards. `hi`'s always-on template does not model that trade-off.
+
+</details>
+
 ### `equip`
 
 <details>
