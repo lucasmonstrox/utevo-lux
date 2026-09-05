@@ -384,6 +384,10 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 **Why `hunt` works this way.** An agent editing until the checks pass is running the same search, with better priors and the same failure mode. Deleting a guard, widening a type, catching and swallowing an exception — each turns a red check green while destroying something. That is why the skill requires the exact error to be recorded and the cause located before an edit, and why two failed attempts on one hypothesis force a reassessment instead of another mutation.
 
+**Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
+
+</details>
+
 <details>
 <summary><b>Regression test selection</b> — is it enough to retest what you touched?</summary>
 
@@ -401,7 +405,20 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
-**Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
+<details>
+<summary><b>Are solved issues really solved?</b> — does the benchmark agree with the developer?</summary>
+
+**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) — "passing typechecks does not substitute for behavioral proof — and neither does a green suite when the suite never covered the behavior in question".
+
+**Benchmark** · [Are "Solved Issues" in SWE-bench Really Solved Correctly? An Empirical Study](https://arxiv.org/abs/2503.15223) — Wang, Pradel & Liu, 2025 (`arXiv:2503.15223`). Audits patches that SWE-bench counts as resolved, using PatchDiff, a differential tester that "automatically exposes behavioral discrepancies between two patches".
+
+**What it measures.** Not whether the tests pass — they do, that is the premise — but whether a patch that passes actually behaves like the fix a developer wrote. The reason to ask is stated plainly: "because testing is rarely exhaustive, a patch may pass the tests but nevertheless fail to match the developers' expectations."
+
+**What it reports.** **7.8%** of patches counted as correct fail the developer-written test suite outright, a flaw in the harness rather than the patch. Worse for the agent: **29.6%** of plausible patches induce different behavior from the ground-truth patch. Reported resolve rates are inflated by **6.2 absolute points**.
+
+**Why `hunt` works this way.** Nearly a third of the work that clears the gate is doing something other than what the fix was supposed to do, and nothing in the loop says so. That is why a passing check is treated as a filter rather than a verdict, why the surface-matched proof in the verification matrix exists, and why the skill asks what the passing test would still pass under if the fix were wrong.
+
+**Where the benchmark stops.** It audits SWE-bench specifically, whose suites are known to be uneven, and "different from the ground truth" is not the same as "wrong" — a patch can legitimately differ. What survives is narrower and still enough: a green suite is evidence about the suite as much as about the change, and the gap between the two grows with everything the suite never covered.
 
 </details>
 
