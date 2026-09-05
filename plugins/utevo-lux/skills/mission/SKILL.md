@@ -17,7 +17,7 @@ Before the first tool call, write one line: what would settle this question, and
 
 Then spend to that line, in both directions. A question one opened page settles does not deserve a campaign. A question whose options are still unknown is not answered by three searches either — on a broad topic, depth is most of what separates a useful answer from a plausible one, and under-spending is the more expensive mistake because the result still looks finished. Keep a short brief alongside it: central question, constraints and what remains open. Ask one question at a time about ambiguity that changes the direction; verify discoverable facts yourself.
 
-Delegate a track only when it is genuinely independent — separate question, separate sources, nothing to hand back mid-way. Work that shares context or depends on another track in flight belongs in one place. When delegating, give each track its objective, its boundaries and what evidence it must return. Do not require a specific provider, model or agent count.
+Delegate a track only when it is genuinely independent — separate question, separate sources, nothing to hand back mid-way. Work that shares context or depends on another track in flight belongs in one place. Give each track its objective, its boundaries, what it must not cover, and what evidence it must return. A track returns compressed findings and their sources, never finished prose: parallel research with parallel writing produces a report that reads as if several people wrote it, because several did. Compose the answer once, in one pass, from what came back. Do not require a specific provider, model or agent count.
 
 ## 2. Investigate the repository
 
@@ -38,11 +38,11 @@ Search when the answer depends on current APIs, libraries, markets, rules or ext
 - Derive searches from open questions and affected actors.
 - Start broadly and narrow; change terms, language or source type when needed.
 - Prefer official documentation, source code, changelogs, issues and primary research. Secondary sources can help locate or supplement evidence.
-- Read the actual page before relying on a decisive claim. Snippets and model memory are not proof.
+- Read the actual page before relying on a decisive claim. Snippets and model memory are not proof. A URL enters the answer only if it was fetched in this session or appeared verbatim in a search result here — a plausible-looking link assembled from memory is the most common way a research answer turns out to be fiction.
 - Check compatibility, maintenance, licensing, limits and costs where they matter.
 - Distinguish inspiration from requirements: a competitor having something does not establish that this project needs it.
 
-Keep a compact record in the conversation or working notes: answered, still unverified, next search. Stop when new results no longer change the decision or the research budget ends; state the gaps.
+Search in batches, and stop between them. After each batch write three short lines — what is now answered, what is still unverified, what to search next — before running the next query. Searching continuously without that pause is how a session drifts from the question it started on. Stop when new results no longer change the decision or the budget ends; state the gaps.
 
 ## 4. Verify and try to disprove
 
@@ -51,6 +51,8 @@ Label decisive claims as verified, refuted, inferred or inconclusive, and put th
 Cite sources and access dates for facts that age. Check material numbers against independent sources; several articles repeating one announcement are still one origin. Explain disagreements between sources rather than picking the convenient one.
 
 Then attack the recommendation, and do it from outside the work that produced it. Re-reading your own conclusion tends to confirm it. Prefer a check that has an independent source of truth: run the thing, query the data, open the competing document, or delegate the attack to a track that never saw the draft and has to find its own evidence. Look for the adverse scenario, the hidden cost, the incompatibility, the simpler alternative. Do not invent problems to fill quotas.
+
+When the answer is drafted, audit the citations as their own pass rather than trusting the writing to have got them right. Walk the decisive claims one at a time: does the cited source exist, does it say this, and does it still say it. Citation is the weakest part of every research pipeline that has been measured, including the ones built to be careful.
 
 If evidence invalidates the brief's direction, explain the conflict and revisit the decision with the user. Do not silently replace their intent.
 
