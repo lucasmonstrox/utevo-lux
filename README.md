@@ -113,6 +113,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 ### `hi`
 
 <details>
+<summary><b>Sharded instructions</b> — what does asking one question at a time cost?</summary>
+
+**Used in** · [`hi` › Discussion mechanics](plugins/utevo-lux/skills/hi/SKILL.md#discussion-mechanics-one-decision-at-a-time) — one question and one decision per message, and the internal record of what is confirmed, provisional, rejected or still open.
+
+**Benchmark** · [LLMs Get Lost In Multi-Turn Conversation](https://arxiv.org/abs/2505.06120) — Laban, Hayashi, Zhou & Neville, 2025 (`arXiv:2505.06120`). 15 models across eight families, over 200,000 simulated conversations, six generation tasks, ten runs per combination.
+
+**What it measures.** A fully specified instruction is cut into "shards" — the first carries the high-level intent, the rest are clarifications — and at most one shard is revealed per turn. That is compared against delivering the same instruction whole. Two metrics separate the effects: aptitude, the 90th-percentile score, and unreliability, the gap between the 90th and 10th percentiles across repeated runs.
+
+**What it reports.** A **39% average performance drop** in the sharded setting. The split is the useful part: "model aptitude degrades in a non-significant way between the full and sharded settings, with an average drop of 16%. On the other hand, unreliability skyrockets with an average increase of 112%." The cause is named: "LLMs often make assumptions in early turns and prematurely attempt to generate final solutions, on which they overly rely" — and "when LLMs take a wrong turn in a conversation, they get lost and do not recover."
+
+**What it means for `hi`.** This is the closest thing to a direct test of the skill's central mechanic, and it points against it. Asking one question per turn is structurally the sharded condition. What `hi` does about it is keep an explicit internal record across turns and consolidate everything into a single brief at the gate, so the final artifact is delivered whole rather than reconstructed from a drifting conversation. Whether that is enough is not measured anywhere.
+
+**Where the benchmark stops.** In the experiment the information already exists and is deliberately withheld; the model is being starved of something knowable. In `hi` the information does not exist yet — the user has not decided. That is a real difference, and it is why the finding is a warning rather than a verdict. But it does not dissolve the risk: the model still accumulates state across turns and still commits early. No study anywhere compares one-question-per-turn against a batched questionnaire on the quality of the resulting decision.
+
+</details>
+
+<details>
 <summary><b>FreshQA</b> — does searching the web beat answering from memory?</summary>
 
 **Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) — the mandatory current search, the line that model memory is not evidence, and the rule to open the page instead of trusting a search snippet.
