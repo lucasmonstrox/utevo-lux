@@ -15,7 +15,7 @@ The result is an **understood and confirmed decision**. Discuss until you can ex
 
 - **`/hi` decides:** why, for whom, in which scenarios, what behavior we want, which options exist, what must never happen and which costs we accept.
 - **`/exiva` establishes facts:** the actual product/code state, feasibility, market, competitors, patterns and external facts with evidence. `hi` can make focused inquiries to unblock a decision; broad investigation belongs to `/exiva`.
-- **`/pl` makes it executable:** architecture that fits the repository, paths, symbols, final contracts, steps, proofs, tests and **implementation** `Don't:` constraints next to each function or step.
+- **`/equip` makes it executable:** architecture that fits the repository, paths, symbols, final contracts, steps, proofs, tests and **implementation** `Don't:` constraints next to each function or step.
 - **`/hunt` implements and verifies.** Do not write code during `hi`.
 - Code review belongs to a separate skill.
 
@@ -111,7 +111,7 @@ Perform a **mandatory, current web search** following [references/web-precedents
 
 Generate alternatives that change experience, contracts, guarantees, risk, cost or reversibility; cosmetic variations do not count. Include keeping the current state when that is an honest option, and an experiment when uncertainty is central. Compare all options against the same scenarios and criteria.
 
-**Why after precedents:** options combine evidence with context. Settle **what** to do and **how it should behave** here; implementation mechanisms belong to `/pl`.
+**Why after precedents:** options combine evidence with context. Settle **what** to do and **how it should behave** here; implementation mechanisms belong to `/equip`.
 
 ### 6. Don'ts: make plausible mistakes explicit
 
@@ -130,7 +130,7 @@ There are two related layers:
 | Layer | Question it answers | Example | Location |
 |---|---|---|---|
 | **Discussion constraint** | Which behavior, outcome or boundary must the product/system avoid? | "Do not message a lead without human confirmation." | `/hi` brief in the conversation |
-| **Plan `Don't:`** | Which implementation mistake must this function or step prevent? | "Do not dispatch before the transaction commits." | The relevant `/pl` step |
+| **Plan `Don't:`** | Which implementation mistake must this function or step prevent? | "Do not dispatch before the transaction commits." | The relevant `/equip` step |
 
 Keep behavioral constraints here. Do not anticipate function names, file paths or implementation details unless they change the actual decision.
 
@@ -177,4 +177,4 @@ Present a compact, complete brief using the format below and request explicit co
 
 The confirmed brief stays in the conversation. Keep hypotheses labeled; do not invent priority, urgency or approved scope.
 
-Recommend `exiva` for open factual questions and `pl` when the direction is supported and ready for implementation planning. If another skill is not installed, the brief must still support continuation. Do not create documentation files, install skills or invoke the next stage automatically.
+Recommend `exiva` for open factual questions and `equip` when the direction is supported and ready for implementation planning. If another skill is not installed, the brief must still support continuation. Do not create documentation files, install skills or invoke the next stage automatically.

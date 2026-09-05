@@ -46,4 +46,4 @@ Look for duplicate effects on retries, authorization enforced only in the UI, tr
 
 ## Leave for implementation planning
 
-Paths, function names, framework details, final SQL, tests and implementation order belong to `/pl`. `hi` establishes the guarantees those mechanisms must satisfy.
+Paths, function names, framework details, final SQL, tests and implementation order belong to `/equip`. `hi` establishes the guarantees those mechanisms must satisfy.

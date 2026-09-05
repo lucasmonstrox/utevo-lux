@@ -22,4 +22,4 @@ For each material attribute, define:
 - **Observability:** which operational question needs an answer, by whom, using which logs/metrics/traces/events, without leaking data.
 - **Maintainability:** ownership, frequency of change, compatibility, diagnosability, configuration surface and evolution cost.
 
-Vague terms do not settle a decision. "Fast," "resilient," "accessible" and "easy to maintain" need a scenario and observable evidence; `/pl` later defines executable proof that fits the repository.
+Vague terms do not settle a decision. "Fast," "resilient," "accessible" and "easy to maintain" need a scenario and observable evidence; `/equip` later defines executable proof that fits the repository.

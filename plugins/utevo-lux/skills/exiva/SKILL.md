@@ -71,4 +71,4 @@ For a simple lookup: answer, source and limitation. For a broader investigation:
 - decisive sources near the claims they support;
 - questions that still prevent a decision.
 
-Do not write a full implementation plan here. With a supported direction, suggest `pl`; if unavailable, supply enough context to continue. Do not create report files or invoke the next stage automatically.
+Do not write a full implementation plan here. With a supported direction, suggest `equip`; if unavailable, supply enough context to continue. Do not create report files or invoke the next stage automatically.

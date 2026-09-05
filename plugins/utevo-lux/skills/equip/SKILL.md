@@ -1,11 +1,11 @@
 ---
-name: pl
+name: equip
 description: Turn a defined direction into an implementation plan with steps, dependencies, acceptance criteria and executable checks. Deliver it in the conversation without implementing or creating documentation.
 ---
 
-# Pl
+# Equip
 
-Usage: `/pl <task, brief or investigation>`, or the agent's native skill invocation.
+Usage: `/equip <task, brief or investigation>`, or the agent's native skill invocation.
 
 Plan the work that `hunt` will execute. Deliver the plan **in the conversation**. Do not create documents, plan directories, feature records or code.
 

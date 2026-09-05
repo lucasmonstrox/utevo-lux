@@ -7,7 +7,7 @@
 <p align="center">Software skills inspired by Tibia. From the first conversation to the fixed PR.</p>
 
 ```text
-hi → exiva → pl → hunt → look → exura
+hi → exiva → equip → hunt → look → exura
                   bug ↗
 ```
 
@@ -15,13 +15,13 @@ hi → exiva → pl → hunt → look → exura
 |---|---|
 | [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Opens the dialog with the NPC: one decision at a time until the quest and the route are clear. |
 | [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Casts exiva on the problem: finds answers in code, history, the web, and other sources, with evidence. |
-| [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Draws the hunt route: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
+| [equip](plugins/utevo-lux/skills/equip/SKILL.md) | Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Attacks the code: executes the plan and loots the proof that it works. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`. |
 | [look](plugins/utevo-lux/skills/look/SKILL.md) | Inspects the PR like a rare item: description, issues, and discussions; points out demonstrable problems. |
 | [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR from review feedback, one commit per change, with a reply at the source. |
 
-Use the step the work needs. The sequence is not mandatory, and `pl` keeps that name for now.
+Use the step the work needs. The sequence is not mandatory.
 
 Briefs, research, plans, progress, and reports stay **in the conversation**. The skills read existing documentation but do not create or update docs, wishlists, or feature records. They do not require a specific stack, ID system, MCP, or model.
 
@@ -42,7 +42,7 @@ npx skills add lucasmonstrox/utevo-lux --list
 npx skills add lucasmonstrox/utevo-lux --agent codex --skill exiva
 ```
 
-In Claude Code and Cursor, use `/hi`, `/exiva`, `/pl`, etc. In Codex, select the skill in the picker or mention `$hi`, `$exiva`, `$pl`, etc. The invocation format belongs to the agent; the instructions are the same.
+In Claude Code and Cursor, use `/hi`, `/exiva`, `/equip`, etc. In Codex, select the skill in the picker or mention `$hi`, `$exiva`, `$equip`, etc. The invocation format belongs to the agent; the instructions are the same.
 
 The installer is the [Vercel Skills CLI](https://github.com/vercel-labs/skills). Each skill ships with its references and can be installed separately.
 
@@ -87,7 +87,7 @@ The `.cursor-plugin/marketplace.json` catalog prepares the repository for distri
 ```text
 /hi I want to improve the sign-up flow
 /exiva Compare the options based on the brief above
-/pl Plan the direction we chose
+/equip Plan the direction we chose
 /hunt Execute the plan above
 /bug The form submits twice --fix
 /look https://github.com/owner/repo/pull/123
@@ -111,7 +111,7 @@ plugins/utevo-lux/
   .codex-plugin/plugin.json
   .cursor-plugin/plugin.json
   assets/logo.png
-  skills/{hi,exiva,pl,hunt,bug,look,exura}/SKILL.md
+  skills/{hi,exiva,equip,hunt,bug,look,exura}/SKILL.md
 ```
 
 The seven skills have a single source. The three manifests package the same files. The GitHub references ship with both `look` and `exura` to allow individual installs; the validator checks that the two copies stay identical.
@@ -126,4 +126,6 @@ claude plugin validate plugins/utevo-lux
 
 When publishing a plugin update, bump the version in the three manifests and in the catalogs that declare it. Direct-skill users can run `npx skills check` and `npx skills update`; plugin users update through their agent.
 
-References: [Agent Skills](https://agentskills.io/specification), [skills in Claude](https://code.claude.com/docs/en/skills), [skills in Codex](https://learn.chatgpt.com/docs/build-skills), and [skills in Cursor](https://cursor.com/docs/skills). The split between requirements and correctness in `look` is inspired by [Matt Pocock's code-review](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md).
+## Acknowledgments
+
+Thanks to [fbuchetti](https://github.com/fbuchetti), one of the most absurd sorcerers out there: explores every corner of the map and casts pure magic on ontology. I was the knight blocking the creatures so the sorcerer could unleash all those spells and powers.

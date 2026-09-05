@@ -33,4 +33,4 @@ Present them progressively: **one visual hypothesis and one question per message
 
 ## Leave for implementation planning
 
-Do not turn the discussion into choosing components, files, hooks, state managers or CSS classes unless that changes an already identified visible constraint. These mechanisms belong to `/pl`.
+Do not turn the discussion into choosing components, files, hooks, state managers or CSS classes unless that changes an already identified visible constraint. These mechanisms belong to `/equip`.

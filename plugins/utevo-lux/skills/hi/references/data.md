@@ -32,7 +32,7 @@ For each option, make explicit:
 - behavior during migration and rollback;
 - information lost or made ambiguous.
 
-Settle semantics and guarantees in the discussion. Exact indexes, constraints, expand/backfill/contract migrations and queries belong to `/exiva` and `/pl`, guided by the access patterns decided here.
+Settle semantics and guarantees in the discussion. Exact indexes, constraints, expand/backfill/contract migrations and queries belong to `/exiva` and `/equip`, guided by the access patterns decided here.
 
 ## Derive concrete constraints
 

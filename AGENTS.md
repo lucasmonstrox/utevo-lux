@@ -2,11 +2,11 @@
 
 A collection of seven software skills, distributed as Agent Skills and as a plugin for Claude Code, Codex and Cursor.
 
-- Source: `plugins/utevo-lux/skills/`. Names: `hi`, `exiva`, `pl`, `hunt`, `bug`, `look`, `exura`.
+- Source: `plugins/utevo-lux/skills/`. Names: `hi`, `exiva`, `equip`, `hunt`, `bug`, `look`, `exura`.
 - Keep all repository content in English: instructions, descriptions, references, templates and README.
 - Skills deliver briefs, research, plans and reports in the conversation. Do not add automatic documentation, wishlist or feature-record creation or updates in consumer projects.
 - Keep instructions portable: no private project paths, mandatory models, agent-specific shell injection or implicit dependencies on other skills.
 - References must stay inside each skill's directory because skills can be installed individually. Keep both copies of `references/github-pr.md` identical.
-- `pl` plans; `hunt` executes; `look` reviews; `exura` addresses feedback. Preserve their responsibilities and the scope of remote authorization.
+- `equip` plans; `hunt` executes; `look` reviews; `exura` addresses feedback. Preserve their responsibilities and the scope of remote authorization.
 - Preserve all three manifest formats and catalogs. Share the skill source across agents.
 - Run `python scripts/check.py` after changes; validate Claude manifests with `claude plugin validate .` and `claude plugin validate plugins/utevo-lux` when the CLI is available.
