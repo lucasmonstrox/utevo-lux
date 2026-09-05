@@ -130,6 +130,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 </details>
 
 <details>
+<summary><b>Bridge</b> — does a decision structure the user never sees improve the answer?</summary>
+
+**Used in** · [`hi` › Discussion mechanics](plugins/utevo-lux/skills/hi/SKILL.md#discussion-mechanics-one-decision-at-a-time) — modelling the conversation as a decision tree that is never dumped on the user, and the internal record of what is confirmed, provisional, rejected, hypothetical or open.
+
+**Benchmark** · [Bridging the Novice-Expert Gap via Models of Decision-Making: A Case Study on Remediating Math Mistakes](https://arxiv.org/abs/2310.10648) — Wang, Zhang, Robinson, Loeb & Demszky, NAACL 2024 (`arXiv:2310.10648`). Built by cognitive task analysis over 700 real tutoring conversations.
+
+**What it measures.** Experts annotate the decisions they make silently before replying to a student's mistake: error identification, remediation strategy, intention. GPT-4 is then conditioned on that structure — which the student never sees — and its replies are compared against the same model with no structure. A second condition swaps the expert decisions for random ones, holding the format fixed.
+
+**What it reports.** "Responses from GPT4 with expert decisions (e.g., 'simplify the problem') are +76% more preferred than without." With randomised decisions in the same slots, quality falls to **−97% relative to the expert version**. The control is what makes this useful: the benefit comes from what the structure contains, not from having a structure at all.
+
+**Why `hi` works this way.** The skill keeps a running internal record — confirmed, provisional, rejected, factual hypothesis, open — and explicitly forbids dumping the tree on the user, previewing upcoming questions, or narrating the process. Bridge is the closest existing test of that arrangement: state the model reasons over, held out of the reply.
+
+**Where the benchmark stops.** The framework there is expert-authored and specific to math remediation; nothing shows a generic tree helps. And the randomisation result cuts the other way too — a structure filled with the wrong content scored far below having none, so a sloppy internal record is not a free bet. `hi`'s five categories have never been validated as the right ones for a design conversation.
+
+</details>
+
+<details>
 <summary><b>FreshQA</b> — does searching the web beat answering from memory?</summary>
 
 **Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) — the mandatory current search, the line that model memory is not evidence, and the rule to open the page instead of trusting a search snippet.
