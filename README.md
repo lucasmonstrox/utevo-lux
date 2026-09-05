@@ -147,6 +147,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 </details>
 
 <details>
+<summary><b>Ask-before-Plan</b> — should the agent look it up, or ask?</summary>
+
+**Used in** · [`hi` › Discussion mechanics](plugins/utevo-lux/skills/hi/SKILL.md#discussion-mechanics-one-decision-at-a-time) — "verifiable facts are the agent's work… do not turn 'how do competitors do this?' into a preference question. Value, priority and accepted risk belong to the user."
+
+**Benchmark** · [Ask-before-Plan: Proactive Language Agents for Real-World Planning](https://arxiv.org/abs/2406.12639) — Zhang, Deng, Ren, Ng & Chua, EMNLP 2024 Findings (`arXiv:2406.12639`). 1,000 training and 1,000 test samples with 2,800 dialogue turns, built on travel-planning requests that are deliberately missing details.
+
+**What it measures.** Three things an agent has to get right on an underspecified request: predict that clarification is needed and ask for it, call tools to gather what is discoverable without asking, and produce a plan that satisfies the stated constraints. Scored by delivery rate, commonsense pass rate, hard-constraint pass rate and final pass rate.
+
+**What it reports.** Removing the clarification step from the full framework drops hard-constraint pass rate from **19.2% to 8.4%**, delivery rate from 98.8% to 93.3%, and commonsense pass rate from 64.3% to 53.3%. Asking, and looking things up, roughly doubles how often the resulting plan honours what the user actually required.
+
+**Why `hi` works this way.** The skill splits the work by who can settle it. Anything checkable — what a competitor ships, whether something already exists — is the agent's job, resolved or labelled as a hypothesis. Only value, priority and accepted risk go back to the user as a question. This benchmark is the planning-agent version of that split, and it measures the cost of skipping it.
+
+**Where the benchmark stops.** Final pass rate is **0.1% with clarification and 0% without** — one fully passing plan out of 1,000. Clarifying doubles constraint satisfaction on a task that essentially nobody completes, so the direction is trustworthy and the magnitude is not transferable. And only half the rule is tested here: every number measures task accuracy, none measures user burden. Whether resolving facts yourself actually costs the user fewer turns or less patience is unmeasured, in this paper and everywhere else found.
+
+</details>
+
+<details>
 <summary><b>FreshQA</b> — does searching the web beat answering from memory?</summary>
 
 **Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) — the mandatory current search, the line that model memory is not evidence, and the rule to open the page instead of trusting a search snippet.
