@@ -424,6 +424,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Self-verification on planning tasks</b> — can a plan be checked by whoever wrote it?</summary>
+
+**Used in** · [`equip` › 5. Deliver the plan](plugins/utevo-lux/skills/equip/SKILL.md#5-deliver-the-plan) — "could another agent execute without inventing decisions?", and the rule that the question is not answered by re-reading the plan.
+
+**Benchmark** · [On the Self-Verification Limitations of Large Language Models on Reasoning and Planning Tasks](https://arxiv.org/abs/2402.08115) — Stechly, Valmeekam & Kambhampati, 2024 (`arXiv:2402.08115`). GPT-4 on Game of 24, Graph Coloring, Blocksworld and Mystery Blocksworld, 100 instances per domain. These are planning problems, which is what `equip` produces.
+
+**What it measures.** Three conditions on the same problems: answer once; answer and then iteratively critique yourself; answer and be told by a sound external verifier whether the answer is correct. A fourth condition removes critique altogether and simply samples more candidates, to test whether the loop was the active ingredient.
+
+**What it reports.** Self-critique does not merely fail to help. On Graph Coloring, accuracy falls from **16% to 2%**; on Game of 24, 5% to 3%; on Mystery Blocksworld, 4% to 0%. The paper's summary is blunt: "we observe significant performance collapse with self-critique and significant performance gains with sound external verification." The mechanism appears in the verification analysis — false-negative rates are so high that "the system rejects most answers and then times out on a set of later, worse generations". It talks itself out of correct work. With a sound verifier the same model reaches 34–38% on Graph Coloring. And the ablation stings: plain sampling at k=25 reaches **44%** on Graph Coloring with no critique at all, so much of the apparatus can be replaced by trying again.
+
+**Why `equip` works this way.** The final question — could someone else execute this? — used to be answered by reading the plan back. That is the collapsing condition. It is now answered per step, by naming what an executor who never saw the conversation would still have to guess: a decomposed check with an outside referent rather than a global re-read. `hunt`'s later execution is the sound verifier this stage does not have.
+
+**Where the benchmark stops.** These domains have a *sound* verifier available — a plan's correctness usually does not. That is precisely why the skill asks for named missing context rather than a verdict, and why an unresolved gap has to be reported as an open item instead of quietly passing self-review. The sampling result also has no obvious analogue: nobody has tested whether generating several plans and comparing them beats critiquing one.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
