@@ -151,7 +151,26 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 **Why `hi` works this way.** The precedents stage asks what competitors ship today, whether an API already covers the case, whether the thing already exists. Those answers age, and a model's memory is frozen at training time. FreshQA is the benchmark built for exactly that class of question, which is why `hi` requires a current search there and states that model memory is not evidence.
 
-**Where the benchmark stops.** [When Not to Trust Language Models](https://arxiv.org/abs/2212.10511) (Mallen et al., ACL 2023) finds unaugmented models stay competitive on popular, stable facts — searching for a settled principle costs time and buys nothing. And even with search, GPT-4 reaches only 59.2% on slow-changing questions: search shrinks the error, it does not close it. Search where the fact moves, not by reflex.
+**Where the benchmark stops.** [When Not to Trust Language Models](https://arxiv.org/abs/2212.10511) (Mallen et al., ACL 2023) finds unassisted models "remain competitive in questions about high-popularity entities" — searching a settled principle is not harmful, just unnecessary. And even with search, GPT-4 reaches only 59.2% on slow-changing questions: search shrinks the error, it does not close it. Search where the fact moves, not by reflex.
+
+</details>
+
+### `equip`
+
+<details>
+<summary><b>ClarEval</b> — what does an ambiguous instruction cost, and does the agent ask?</summary>
+
+**Used in** · [`equip` › 1. Recover intent and current state](plugins/utevo-lux/skills/equip/SKILL.md#1-recover-intent-and-current-state) — resolving open decisions one at a time instead of hiding them inside steps — and the handoff test in [`equip` › 5. Deliver the plan](plugins/utevo-lux/skills/equip/SKILL.md#5-deliver-the-plan): could another agent execute this without inventing decisions?
+
+**Benchmark** · [ClarEval: A Benchmark for Evaluating Clarification Skills of Code Agents under Ambiguous Instructions](https://arxiv.org/abs/2603.00187) — Li, Wu & Chang, 2026 (`arXiv:2603.00187`). 2,250 instances built from 750 source tasks — 150 from HumanEval, 600 from LiveCodeBench — each injected with one of three realistic ambiguity types: missing goals, missing premises, ambiguous terminology.
+
+**What it measures.** Two things at once. Whether the agent still produces correct code when the instruction is underspecified, and whether it asks well: Average Turns to Clarify, for how few turns it needs, and Key Question Coverage, for whether it asked about the thing that actually mattered.
+
+**What it reports.** "GPT-4o achieves a state-of-the-art Pass@1 of 89.02% on clarified tasks, its performance plummets to 8.94% under ambiguity." Ambiguous terminology is the worst case, at 6.71%. Same model, same problems — the gap is the instruction. The paper also finds that coding ability does not carry over: models that excel at code "often lack the strategic communication skills required for efficient partnership."
+
+**Why `equip` works this way.** A plan is a handoff. `equip` never writes the code, so the only thing it controls is how little the executor has to invent — the exact variable ClarEval isolates. That is why open product decisions get settled during planning instead of buried in a step, and why the plan is measured against "could another agent execute this without inventing decisions?" before it is delivered.
+
+**Where the benchmark stops.** The tasks are function-level, not repository-scale, and the ambiguity is injected rather than naturally occurring — a real feature request is messier than a stripped premise. It also scores asking without pricing it: a low turn count is rewarded, the cost of interrupting a human is not modelled.
 
 </details>
 
