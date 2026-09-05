@@ -384,6 +384,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 **Why `hunt` works this way.** An agent editing until the checks pass is running the same search, with better priors and the same failure mode. Deleting a guard, widening a type, catching and swallowing an exception — each turns a red check green while destroying something. That is why the skill requires the exact error to be recorded and the cause located before an edit, and why two failed attempts on one hypothesis force a reassessment instead of another mutation.
 
+<details>
+<summary><b>Regression test selection</b> — is it enough to retest what you touched?</summary>
+
+**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) and [the verification matrix](plugins/utevo-lux/skills/hunt/verification.md) — "retest affected consumers".
+
+**Source** · [An Empirical Study of Regression Test Selection Techniques](https://www.cs.umd.edu/users/aporter/Docs/p184-graves.pdf) — Graves, Harrold, Kim, Porter & Rothermel, *ACM TOSEM* 10(2), April 2001. Nine C programs with seeded faults; the design "required us to run over 264,400 test suites".
+
+**What it measures.** After a change, which tests do you rerun? The study compares strategies against retest-all: **minimization**, which selects the smallest set covering the modified code itself, and **safe**, which also includes tests reaching anything that depends on it. Both cost and fault detection are reported, so a strategy cannot win by simply running more.
+
+**What it reports.** Retesting only what you touched is close to not testing. "In 84% of the cases minimization chose exactly one test case, and it never chose more than 12", and "on the median, test suites selected by minimization found **16% of the faults** that would have been found by retest-all". Following the dependencies instead: the safe technique "found **all faults** for which we had fault-revealing test cases while selecting 60% of the test cases on the median" — everything, for 40% less work than retest-all.
+
+**Why `hunt` works this way.** The change is not where the damage shows up. A shared function edited to satisfy one step breaks a caller nobody was looking at, and the test that would have caught it is not in the file you edited. That is why verification extends to consumers rather than stopping at the diff, and why the plan's impact map from `equip` is what makes it possible to know who they are.
+
+**Where the source stops.** Pre-LLM, and the authors qualify their own result: "only slightly larger random test suites could be nearly as effective", so part of what safe selection buys is simply running more tests. Nine C programs with seeded faults is also not a modern service, and nobody has run this comparison on agent-generated patches — where the edit is less predictable than a human's and the case for retesting consumers is, if anything, stronger.
+
+</details>
+
 **Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
 
 </details>
