@@ -354,6 +354,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>ClarifyGPT</b> — how do you know the requirement is ambiguous before you build it?</summary>
+
+**Used in** · [`equip` › 1. Recover intent and current state](plugins/utevo-lux/skills/equip/SKILL.md#1-recover-intent-and-current-state) — resolving open product decisions one at a time instead of hiding an unresolved question inside a step.
+
+**Benchmark** · [ClarifyGPT: Empowering LLM-based Code Generation with Intention Clarification](https://arxiv.org/abs/2310.10996) — Mu, Shi, Wang, Yu, Zhang, Wang, Liu & Wang, 2023 (`arXiv:2310.10996`). Evaluated across four code-generation benchmarks.
+
+**What it measures.** ClarEval shows what ambiguity costs; this shows whether the ambiguity can be *found* without anyone pointing at it. The method does not judge the wording. It "first detects whether a given requirement is ambiguous by performing a code consistency check" — generate several solutions from the same requirement and see whether they agree. Solutions that diverge are evidence the requirement admitted more than one reading. Only then does it generate a targeted question, take the answer, and produce the code.
+
+**What it reports.** GPT-4 Pass@1 on MBPP-sanitized rises from **70.96% to 80.80%**. Averaged over the four benchmarks, GPT-4 goes **68.02% → 75.75%** and ChatGPT **58.55% → 67.22%**.
+
+**Why `equip` works this way.** A plan built on an unresolved question does not fail at planning time; it fails later, in an executor that had to guess. The skill therefore settles those questions in step 1 and keeps them out of the steps, and the closing check asks step by step what an executor would still have to invent — the same divergence test, run against a reader instead of against generated code.
+
+**Where the benchmark stops.** The detection mechanism costs several generations of the same task, and `equip` does not do that — it asks the agent to notice ambiguity by reading, which is a different and unmeasured act. The benchmark's questions are also answered by a cooperative simulated user rather than a person with finite patience, so nothing here prices the interruption. And this is code generated from a specification, not a plan handed to another agent; the transfer is by analogy.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
