@@ -371,6 +371,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Plausible versus correct patches</b> — what does "the tests pass now" actually prove?</summary>
+
+**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "do not make random changes until checks turn green", and fixing the cause rather than the symptom.
+
+**Source** · [An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems](https://people.csail.mit.edu/rinard/paper/issta15.pdf) — Qi, Long, Achour & Rinard (MIT CSAIL), ISSTA 2015. A manual audit of every patch reported by GenProg, RSRepair and AE on the GenProg/ManyBugs benchmark.
+
+**What it measures.** Generate-and-validate repair is exactly the policy the skill forbids, run mechanically: mutate the program until the test suite goes green, then declare victory. The audit asks a question the test suite cannot — is the patch *correct*?
+
+**What it reports.** "The overwhelming majority of the patches are not correct." GenProg produced a correct patch for **2 of the 105** defects considered, RSRepair for **2 of 24**, AE for **3 of 105**. And the shape of the failure is the lesson: **104 of the 110** plausible GenProg patches, 37 of 44 for RSRepair and 22 of 27 for AE, "are equivalent to a single modification that deletes functionality". Green tests were bought by removing the behaviour the tests did not cover.
+
+**Why `hunt` works this way.** An agent editing until the checks pass is running the same search, with better priors and the same failure mode. Deleting a guard, widening a type, catching and swallowing an exception — each turns a red check green while destroying something. That is why the skill requires the exact error to be recorded and the cause located before an edit, and why two failed attempts on one hypothesis force a reassessment instead of another mutation.
+
+**Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
+
+</details>
+
 ### `equip`
 
 <details>
