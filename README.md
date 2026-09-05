@@ -19,11 +19,11 @@ hi → mission → equip → hunt → look → exura
 
 <img src="plugins/utevo-lux/assets/hunt-dragon.gif" alt="Dragon" width="20"> **[hunt](plugins/utevo-lux/skills/hunt/SKILL.md)** — Attacks the code: executes the plan and loots the proof that it works.
 
-<img src="plugins/utevo-lux/assets/bug.gif" alt="Bug" width="20"> **[bug](plugins/utevo-lux/skills/bug/SKILL.md)** — Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`.
-
 <img src="plugins/utevo-lux/assets/look-golden-helmet.gif" alt="Golden Helmet" width="20"> **[look](plugins/utevo-lux/skills/look/SKILL.md)** — Looks at the item a friend found: PR, issues, and discussions; points out demonstrable problems.
 
 <img src="plugins/utevo-lux/assets/exura-health-potion.gif" alt="Health Potion" width="20"> **[exura](plugins/utevo-lux/skills/exura/SKILL.md)** — Heals the PR wounded on the hunt: one commit per change, with a reply at the source.
+
+<img src="plugins/utevo-lux/assets/bug.gif" alt="Bug" width="20"> **[bug](plugins/utevo-lux/skills/bug/SKILL.md)** — Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`.
 
 Use the step the work needs. The sequence is not mandatory.
 
@@ -104,32 +104,6 @@ Adapt the prefix to your install mode. A new session needs to receive the previo
 
 GitHub reviews need access through the connector or the `gh` CLI. External research needs search/web access. UI verification needs a real browser; unavailability is stated.
 
-## Structure and maintenance
-
-```text
-.claude-plugin/marketplace.json
-.agents/plugins/marketplace.json
-.cursor-plugin/marketplace.json
-plugins/utevo-lux/
-  .claude-plugin/plugin.json
-  .codex-plugin/plugin.json
-  .cursor-plugin/plugin.json
-  assets/logo.png
-  skills/{hi,mission,equip,hunt,bug,look,exura}/SKILL.md
-```
-
-The seven skills have a single source. The three manifests package the same files. The GitHub references ship with both `look` and `exura` to allow individual installs; the validator checks that the two copies stay identical.
-
-Local validation:
-
-```sh
-python scripts/check.py
-claude plugin validate .
-claude plugin validate plugins/utevo-lux
-```
-
-When publishing a plugin update, bump the version in the three manifests and in the catalogs that declare it. Direct-skill users can run `npx skills check` and `npx skills update`; plugin users update through their agent.
-
 ## Evidence
 
 Each skill instructs an agent to work a certain way. Those instructions are claims about how a model behaves, and most of them have been measured by someone.
@@ -173,6 +147,32 @@ This section collects the papers and benchmarks behind them, one entry per bench
 **Where the benchmark stops.** The tasks are function-level, not repository-scale, and the ambiguity is injected rather than naturally occurring — a real feature request is messier than a stripped premise. It also scores asking without pricing it: a low turn count is rewarded, the cost of interrupting a human is not modelled.
 
 </details>
+
+## Structure and maintenance
+
+```text
+.claude-plugin/marketplace.json
+.agents/plugins/marketplace.json
+.cursor-plugin/marketplace.json
+plugins/utevo-lux/
+  .claude-plugin/plugin.json
+  .codex-plugin/plugin.json
+  .cursor-plugin/plugin.json
+  assets/logo.png
+  skills/{hi,mission,equip,hunt,bug,look,exura}/SKILL.md
+```
+
+The seven skills have a single source. The three manifests package the same files. The GitHub references ship with both `look` and `exura` to allow individual installs; the validator checks that the two copies stay identical.
+
+Local validation:
+
+```sh
+python scripts/check.py
+claude plugin validate .
+claude plugin validate plugins/utevo-lux
+```
+
+When publishing a plugin update, bump the version in the three manifests and in the catalogs that declare it. Direct-skill users can run `npx skills check` and `npx skills update`; plugin users update through their agent.
 
 ## <img src="plugins/utevo-lux/assets/ferumbras-hat.gif" alt="Ferumbras' Hat" width="24"> Acknowledgments
 
