@@ -371,6 +371,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Agentless localization</b> — how do you find the right place to change?</summary>
+
+**Used in** · [`equip` › 2. Map dependencies and impact](plugins/utevo-lux/skills/equip/SKILL.md#2-map-dependencies-and-impact) — reading actual contracts and schemas before proposing edits, and naming files and symbols rather than line numbers.
+
+**Benchmark** · [Agentless: Demystifying LLM-based Software Engineering Agents](https://arxiv.org/abs/2407.01489) — Xia, Deng, Dunn & Zhang, 2024 (`arXiv:2407.01489`). A three-phase pipeline — localization, repair, patch validation — with "no letting the LLM decide future actions or operate with complex tools". It reached **32.00%** on SWE-bench Lite at **$0.70** per issue, beating the autonomous agents of its moment while being simpler.
+
+**What it measures.** Table 2 scores each localization step by "Contains GT" — whether the ground-truth location survives into the context handed to the next stage. That isolates finding the place from fixing the thing, which is the half `equip` is responsible for.
+
+**What it reports.** Three findings, all about how you narrow. Combining beats choosing: embedding retrieval alone contains the target **70.33%** of the time, an LLM reading repository structure **78.67%**, the two together **81.67%**. Condensing beats dumping: handing the model a **skeleton** of the file rather than the complete file raises related-element localization from **53.67% to 58.33%** — less context, better aim. And staging beats jumping: going directly from file level to an edit location contains the target **47.00%** of the time, against **56.33%** when the narrowing happens in stages.
+
+**Why `equip` works this way.** The plan names where the work lands, and everything downstream inherits that choice — a step pointed at the wrong file cannot be rescued by a good executor. So the skill maps the real contracts and consumers before writing steps rather than inferring them, and it points at files and symbols rather than line numbers, which is the skeleton-over-full-file result in a form that survives a commit.
+
+**Where the benchmark stops.** This localizes for a repair pipeline, not for a plan a human will read and another agent will execute; nothing here evaluates a plan. Agentless is also a fixed pipeline, so the staging is enforced by construction — the numbers say staged narrowing works, not that an instruction to narrow in stages produces it.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
