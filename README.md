@@ -354,6 +354,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Fault localization context</b> — how much of the codebase should the fix see?</summary>
+
+**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "record the exact error, locate the defect and fix its cause", and the ban on changing things at random until the checks go green.
+
+**Benchmark** · [On the Role of Fault Localization Context for LLM-Based Program Repair](https://arxiv.org/abs/2604.05481) — Sepidband, Pham & Hemmati, 2026 (`arXiv:2604.05481`). 61 context configurations, GPT-5-mini, 500 SWE-bench Verified instances.
+
+**What it measures.** Repair success as a function of what the model is shown: which files, which elements inside them, which lines — and, critically, how much of each. It varies the context rather than the model, so the result is about the setup rather than the reasoning.
+
+**What it reports.** Knowing which file to open is close to everything: file-level localization gives a **15–17× improvement over a no-file baseline**. But the curve turns. "Line-level context expansion frequently degrades performance due to noise amplification", successful repairs cluster at **roughly 6–10 relevant files**, and the paper's own summary is that "more context does not consistently improve repair performance" — what works is "a broad semantic understanding at higher abstraction levels with precise line-level localization".
+
+**Why `hunt` works this way.** Locating the defect before touching it is not tidiness, it is the largest single lever measured anywhere in this section. And the second half is why the instruction says *locate the defect*, not *read everything nearby*: piling adjacent code into the window makes the fix worse, not safer. Find the place precisely, understand the surroundings broadly, and do not confuse the two.
+
+**Where the benchmark stops.** One model on one benchmark, and localization is supplied to the repairer rather than earned by it — the study shows that good localization pays, not that an agent instructed to localize achieves it. The 6–10 file figure is a property of SWE-bench-shaped tasks and should not be read as a rule for a monorepo.
+
+</details>
+
 ### `equip`
 
 <details>
