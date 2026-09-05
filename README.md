@@ -214,6 +214,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Contrastive reflection</b> — does showing the intended version beat naming the mistake?</summary>
+
+**Used in** · [`hi` › 6. Don'ts](plugins/utevo-lux/skills/hi/SKILL.md#6-donts-make-plausible-mistakes-explicit) — "when useful, use a short `wrong → intended` example".
+
+**Benchmark** · [Contrastive Reflection for Iterative Prompt Optimization](https://arxiv.org/html/2606.30840v1) — Koh, Mo, Le, Zhan, Zheng, Bevis, Owen, Charney, Liu & Wu (LinkedIn), KDD 2026 Workshop on AI Agents for Information Retrieval (`arXiv:2606.30840`). Measured on HotpotQA exact match.
+
+**What it measures.** Not exemplars inside a prompt — prompt revision. The method locates error-heavy regions of a task, then pairs each failure with a nearby success from the same region before handing both to a teacher model that proposes an edit. The control is the same loop given failures alone. The paper's own framing: "failures decide where the optimizer should look, but successes decide what the edit must preserve."
+
+**What it reports.** Test accuracy goes from a 51.4% baseline to **60.4%** with contrastive pairs (+9.0pp), against **54.6%** for failure-only reflection (+3.2pp) — contrast beats naming the failure by **5.8 points**. The regression count matters as much: contrastive breaks **9** previously correct examples, failure-only breaks **19**.
+
+**Why `hi` works this way.** A constraint that only names the mistake tells the executor what to stop doing and nothing about what to keep. The `wrong → intended` shape carries both halves, which is the same asymmetry this paper isolates: the failure locates the problem, the paired success is what stops the fix from destroying something that already worked.
+
+**Where the benchmark stops.** This optimizes prompts across a dataset; it does not test a `wrong → intended` example written inside a single instruction, which is what `hi` actually does. One benchmark, one task family, a workshop paper. And the margin over an existing optimizer is thin — MIPROv2-light reaches +8.0pp against contrastive's +9.0pp, so the honest claim is that contrast beats failure-only, not that it beats everything.
+
+</details>
+
 ### `equip`
 
 <details>
