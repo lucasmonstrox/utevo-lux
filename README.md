@@ -129,6 +129,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>FollowBench</b> — how many rules can a model hold at once?</summary>
+
+**Used in** · [`hi` › 6. Don'ts](plugins/utevo-lux/skills/hi/SKILL.md#6-donts-make-plausible-mistakes-explicit) — the ban on quotas, and the rule that a constraint only earns its place if a plausible failure justifies it.
+
+**Benchmark** · [FollowBench: A Multi-level Fine-grained Constraints Following Benchmark for Large Language Models](https://arxiv.org/abs/2310.20410) — Jiang, Wang, Zeng, Zhong, Li, Mi, Shang, Jiang, Liu & Wang, ACL 2024 (`arXiv:2310.20410`, [ACL Anthology](https://aclanthology.org/2024.acl-long.257/)). 820 instructions across five constraint categories — content, situation, style, format, example — evaluated over 13 models at temperature 0.
+
+**What it measures.** Constraints are added to a base instruction one at a time, giving five difficulty levels. Hard Satisfaction Rate "measures the average rate at which all constraints of individual instructions are fully satisfied"; Soft Satisfaction Rate "calculates the average satisfaction rate of individual constraints across all instructions". The gap between the two is the interesting part: it separates failing one rule from failing to hold the set.
+
+**What it reports.** GPT-4's average HSR falls from **84.7% at level 1 to 61.9% at level 5**, while its SSR only falls 84.7% → 72.3% — individual rules keep being honoured well after the model stops satisfying all of them together. GPT-3.5-Turbo drops harder, 80.3% → 53.2%. The steepest category is example constraints, where GPT-4 goes from 87.5% to 42.5%.
+
+**Why `hi` works this way.** Step 6 emits a set: invariants, out-of-scope items, unwanted use, prohibited shortcuts, rejected options. Each is a constraint, and the executor has to hold all of them at once. That is why `hi` refuses to write constraints to fill a quota and requires each one to trace back to a plausible failure found in the scenarios — every rule added past what the risk justifies makes the whole set less likely to survive.
+
+**Where the benchmark stops.** It stacks constraints inside a single instruction in one turn, which is not the same shape as a brief handed to a separate agent later. It also varies count, not quality — nothing here says a well-written constraint survives better than a vague one. And it does not separate prohibitions from requirements, so it cannot answer whether a "don't" costs more than a "do".
+
+</details>
+
 ### `equip`
 
 <details>
