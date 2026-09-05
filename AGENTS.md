@@ -1,11 +1,12 @@
 # Utevo Lux
 
-Coleção de sete skills de software, distribuída como Agent Skills e como plugin para Claude Code, Codex e Cursor.
+A collection of seven software skills, distributed as Agent Skills and as a plugin for Claude Code, Codex and Cursor.
 
-- Fonte: `plugins/utevo-lux/skills/`. Nomes: `hi`, `exiva`, `pl`, `hunt`, `bug`, `look`, `exura`.
-- As skills entregam briefs, pesquisa, planos e relatórios na conversa. Não adicionar criação/atualização automática de documentação nos projetos consumidores.
-- Manter instruções portáveis: sem paths de projetos particulares, modelos obrigatórios, injeção de shell específica de harness ou dependências implícitas de outras skills.
-- Referências devem permanecer dentro da pasta de cada skill, porque a instalação pode ser individual. As duas cópias de `references/github-pr.md` devem permanecer iguais.
-- `pl` planeja; `hunt` executa; `look` revisa; `exura` aplica feedback. Não misturar responsabilidades ou ampliar autorizações remotas.
-- Preservar os três formatos de manifesto e os catálogos. Não duplicar as skills por agente.
-- Executar `python scripts/check.py` depois de mudanças; validar manifestos Claude com `claude plugin validate .` e `claude plugin validate plugins/utevo-lux` quando a CLI estiver disponível.
+- Source: `plugins/utevo-lux/skills/`. Names: `hi`, `exiva`, `pl`, `hunt`, `bug`, `look`, `exura`.
+- Keep all repository content in English: instructions, descriptions, references, templates and README.
+- Skills deliver briefs, research, plans and reports in the conversation. Do not add automatic documentation, wishlist or feature-record creation or updates in consumer projects.
+- Keep instructions portable: no private project paths, mandatory models, agent-specific shell injection or implicit dependencies on other skills.
+- References must stay inside each skill's directory because skills can be installed individually. Keep both copies of `references/github-pr.md` identical.
+- `pl` plans; `hunt` executes; `look` reviews; `exura` addresses feedback. Preserve their responsibilities and the scope of remote authorization.
+- Preserve all three manifest formats and catalogs. Share the skill source across agents.
+- Run `python scripts/check.py` after changes; validate Claude manifests with `claude plugin validate .` and `claude plugin validate plugins/utevo-lux` when the CLI is available.

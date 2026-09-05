@@ -1,39 +1,39 @@
-# Dados, schema e consultas
+# Data, schemas and queries
 
-Leia esta referência quando a direção cria, altera, deriva, migra ou retém estado persistente.
+Read this reference when a direction creates, changes, derives, migrates or retains persistent state.
 
-## Ontologia do dado
+## Data meaning
 
-Antes de discutir tabela ou coluna, esclareça:
+Before discussing tables or columns, clarify:
 
-- qual fato do domínio está sendo representado e quem é seu dono;
-- fonte da verdade versus projeção, cache, snapshot ou evento;
-- identidade, escopo de tenant e relações;
-- estados válidos, transições, temporalidade e histórico necessário;
-- ausência versus desconhecido versus não aplicável;
-- autoria, proveniência, auditabilidade e explicabilidade;
-- sensibilidade, finalidade, retenção, exportação e exclusão;
-- quem lê, quem escreve e com qual consistência.
+- which domain fact is represented and who owns it;
+- source of truth versus projection, cache, snapshot or event;
+- identity, tenant scope and relationships;
+- valid states, transitions, time semantics and required history;
+- missing versus unknown versus not applicable;
+- authorship, provenance, auditability and explainability;
+- sensitivity, purpose, retention, export and deletion;
+- who reads, who writes and with what consistency.
 
-## Cenários que expõem o modelo
+## Scenarios that expose the model
 
-Inclua criação, correção, duplicata, concorrência, leitura antiga, backfill, exclusão, restauração, importação, reprocessamento e evolução de schema somente quando forem plausíveis. Para estado derivado, pergunte como detectar e reparar divergência da origem.
+Include creation, correction, duplication, concurrency, stale reads, backfills, deletion, restoration, import, reprocessing and schema evolution only when plausible. For derived state, ask how divergence from the source can be detected and repaired.
 
-## Opções de modelagem
+## Modeling options
 
-Compare modelos pelas invariantes e acessos que precisam sustentar, não por preferência estética. Exemplos de eixos legítimos: normalizado versus snapshot, evento versus estado atual, referência versus cópia histórica, cálculo na leitura versus materialização, campo estruturado versus payload extensível.
+Compare models by the invariants and access patterns they must support. Relevant dimensions include normalized data versus snapshots, events versus current state, references versus historical copies, computation on read versus materialization, and structured fields versus extensible payloads.
 
-Para cada opção, torne explícitos:
+For each option, make explicit:
 
-- o que ela consegue garantir;
-- consultas principais e volume/cardinalidade esperados;
-- custo de escrita, leitura e operação;
-- compatibilidade e caminho de evolução;
-- comportamento durante migração e rollback;
-- informação que se perde ou fica ambígua.
+- what it can guarantee;
+- main queries and expected volume/cardinality;
+- write, read and operational costs;
+- compatibility and evolution path;
+- behavior during migration and rollback;
+- information lost or made ambiguous.
 
-No debate, feche a semântica e as garantias. Índices, constraints, migrações expand/backfill/contract e queries exatas são trabalho do `/exiva` e `/pl`, guiados pelos acessos decididos aqui.
+Settle semantics and guarantees in the discussion. Exact indexes, constraints, expand/backfill/contract migrations and queries belong to `/exiva` and `/pl`, guided by the access patterns decided here.
 
-## Don’ts a derivar
+## Derive concrete constraints
 
-Verifique se seria inaceitável perder autoria/histórico, misturar tenants, sobrescrever fonte da verdade, tornar estados inválidos representáveis, apagar dado necessário para auditoria ou reter dado sem finalidade. Não registre nenhum deles por reflexo; vincule cada um a cenário e impacto reais.
+Determine whether losing authorship/history, mixing tenants, overwriting the source of truth, allowing invalid states, deleting audit data or retaining data without a purpose would be unacceptable. Do not record these automatically; connect each to a real scenario and impact.

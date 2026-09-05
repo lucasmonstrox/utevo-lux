@@ -1,35 +1,35 @@
-# Infra, configuração e tooling
+# Infrastructure, configuration and tooling
 
-Leia esta referência para deploy, runtime, rede, observabilidade, lint, formatação, build, CI, automação interna e developer experience.
+Read this reference for deployment, runtime, networking, observability, linting, formatting, builds, CI, internal automation and developer experience.
 
-## Público não é necessariamente cliente final
+## The audience can be internal
 
-Mapeie developers, reviewers, CI, operadores, suporte, segurança, serviços dependentes e a pessoa de plantão. Diga quem recebe o benefício, quem paga o custo e quem mantém a solução.
+Map developers, reviewers, CI, operators, support, security, dependent services and the person on call. Identify who benefits, who pays the cost and who maintains the solution.
 
-Para uma regra de lint ou config nova, a transformação pode ser criar feedback ou impedir uma classe de erro que hoje não é detectada; não é necessário fingir uma feature existente.
+For a new lint rule or configuration, the transformation may be providing feedback or preventing an error class that currently goes undetected. Do not invent an existing feature.
 
-## Cenários úteis
+## Useful scenarios
 
-- execução local, CI, preview/staging e produção;
-- primeira configuração e uso repetido;
-- sucesso, warning, erro verdadeiro e falso positivo;
-- falha parcial, retry, timeout e recuperação;
-- rollout gradual, rollback e compatibilidade entre versões;
-- credenciais ausentes/rotacionadas e permissões insuficientes;
-- diagnóstico por alguém sem contexto da implementação;
-- exceção legítima, bypass auditável e expiração da exceção;
-- custo, quota, saturação e dependência de fornecedor.
+- local execution, CI, preview/staging and production;
+- first setup and repeated use;
+- success, warnings, true errors and false positives;
+- partial failures, retries, timeouts and recovery;
+- gradual rollout, rollback and compatibility across versions;
+- missing/rotated credentials and insufficient permissions;
+- diagnosis by someone unfamiliar with the implementation;
+- legitimate exceptions, auditable bypasses and exception expiry;
+- cost, quotas, saturation and vendor dependence.
 
-## Opções e critérios
+## Options and criteria
 
-Compare prevenção versus detecção, enforcement local versus CI, erro versus warning, automação versus passo manual, managed versus self-hosted, síncrono versus fila/workflow e configuração central versus por workspace quando esses eixos forem materiais.
+Compare prevention versus detection, local versus CI enforcement, errors versus warnings, automation versus manual steps, managed versus self-hosted services, synchronous execution versus queues/workflows, and central versus per-workspace configuration when these dimensions matter.
 
-Julgue por tempo de feedback, determinismo, falsos positivos/negativos, blast radius, operabilidade, rollback, custo total, lock-in e ownership. “Mais rigoroso” não é automaticamente melhor se a equipe aprende a ignorar o sinal.
+Judge feedback time, determinism, false positives/negatives, affected consumers, operability, rollback, total cost, lock-in and ownership. Stricter rules lose value if the team learns to ignore the signal.
 
-## Don’ts a investigar
+## Constraints to investigate
 
-Procure bypass silencioso, regra que só funciona numa máquina, segredo em config/log, deploy sem rollback, alerta sem dono, automação não idempotente e falha que bloqueia todo o workspace sem proporcionalidade. Registre apenas os riscos plausíveis e descreva o comportamento desejado em contraste.
+Look for silent bypasses, rules that work on only one machine, secrets in configuration/logs, deployments without rollback, alerts without owners, non-idempotent automation and failures that disproportionately block the workspace. Record only plausible risks and describe the desired behavior.
 
-## Não decidir aqui
+## Leave for research and implementation planning
 
-Arquivo exato, comando final, provider API, configuração literal, sequência de rollout e prova executável pertencem ao `/exiva`/`/pl`. O `hi` decide a política, os públicos e as garantias operacionais.
+Exact files, final commands, provider APIs, literal configuration, rollout sequences and executable proofs belong to `/exiva` and `/pl`. `hi` decides policies, audiences and operational guarantees.

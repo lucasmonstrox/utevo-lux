@@ -1,49 +1,49 @@
-# Backend e API
+# Backend and API
 
-Leia esta referência para endpoints, serviços, integrações, webhooks, jobs, eventos ou contratos entre sistemas.
+Read this reference for endpoints, services, integrations, webhooks, jobs, events or contracts between systems.
 
-## Atores e cenários
+## Actors and scenarios
 
-Considere como público o cliente da API, serviços chamadores, integrações externas, operadores, suporte, mantenedores e atores hostis. Modele o ciclo completo quando material:
+Consider API clients, calling services, external integrations, operators, support, maintainers and hostile actors. Model the full lifecycle where material:
 
-- chamada válida e resultado observável;
-- entrada inválida e erro útil;
-- identidade válida sem autorização suficiente;
-- duplicata, retry e idempotência;
-- concorrência e ordem de eventos;
-- timeout, indisponibilidade externa e falha parcial;
-- volume grande, paginação/filtros e limites;
-- compatibilidade de clientes durante evolução;
-- operação, reconciliação e auditoria.
+- valid request and observable result;
+- invalid input and useful error;
+- valid identity with insufficient authorization;
+- duplicates, retries and idempotency;
+- concurrency and event ordering;
+- timeouts, external outages and partial failures;
+- large volumes, pagination/filters and limits;
+- client compatibility as the system evolves;
+- operations, reconciliation and auditing.
 
-## Decisões de contrato
+## Contract decisions
 
-Explore alternativas somente onde mudam garantias ou consumidores:
+Explore alternatives only where they change guarantees or consumers:
 
-- síncrono, assíncrono ou híbrido;
-- recurso, comando, evento ou webhook;
-- unidade de atomicidade e consistência percebida;
-- formato de entrada/saída e semântica de ausência, `null`, default e erro;
-- taxonomia de erros, retryability e idempotency key;
-- paginação, ordenação, filtros e estabilidade do cursor;
-- versionamento, compatibilidade e depreciação;
-- ownership, autenticação, autorização e escopo do tenant;
-- observabilidade e reconciliação de efeitos externos.
+- synchronous, asynchronous or hybrid;
+- resource, command, event or webhook;
+- unit of atomicity and perceived consistency;
+- input/output shape and semantics of absence, `null`, defaults and errors;
+- error taxonomy, retryability and idempotency keys;
+- pagination, ordering, filters and cursor stability;
+- versioning, compatibility and deprecation;
+- ownership, authentication, authorization and tenant scope;
+- observability and reconciliation of external effects.
 
-Pode esboçar de 2 a 3 contratos comportamentais comparáveis quando isso tornar a decisão concreta. Introduza uma hipótese por vez e compare somente os finalistas num passo posterior; mantenha os mesmos cenários em todos e não transforme o esboço em código final.
+Sketch two or three comparable behavioral contracts when that makes a decision concrete. Introduce one hypothesis at a time and compare finalists in a later step; use the same scenarios for all and keep sketches separate from final code.
 
-## Validação, consultas e performance
+## Validation, queries and performance
 
-- Defina quais invariantes são validadas na borda e quais pertencem ao domínio ou ao armazenamento.
-- Dê ao erro um consumidor e uma ação possível; “400 genérico” raramente fecha o cenário.
-- Derive consultas dos acessos reais: cardinalidade, filtros, ordenação, consistência e frequência. Não prescreva índice ou cache sem workload.
-- Troque “rápido” por orçamento ou ordem de grandeza quando performance puder decidir a opção: latência, throughput, payload, fan-out, volume e custo.
-- Trate cache, batch, fila e denormalização como opções com invalidação, atraso e operação — não como virtudes automáticas.
+- Define which invariants are validated at the boundary and which belong to the domain or storage.
+- Give each error a consumer and a possible next action; a generic 400 rarely completes the scenario.
+- Derive queries from actual access patterns: cardinality, filters, ordering, consistency and frequency. Do not prescribe indexes or caches without a workload.
+- Replace "fast" with a budget or order of magnitude when performance could determine the option: latency, throughput, payload, fan-out, volume and cost.
+- Treat caching, batching, queues and denormalization as options with invalidation, delay and operational costs.
 
-## Don’ts típicos a investigar, não copiar
+## Constraints to investigate, not copy
 
-Procure efeitos duplicados em retry, autorização baseada apenas na UI, confiança em payload externo, erro que vaza segredo, mudança quebradora silenciosa, operação sem trilha e consulta sem limite. Só registre o que for plausível nesta tarefa.
+Look for duplicate effects on retries, authorization enforced only in the UI, trust in external payloads, errors that leak secrets, silent breaking changes, untraceable operations and unbounded queries. Record only what is plausible for this task.
 
-## Não decidir aqui
+## Leave for implementation planning
 
-Paths, nomes de funções, detalhes do framework, SQL final, testes e sequência de implementação pertencem ao `/pl`. O `hi` fixa as garantias que esses mecanismos terão de cumprir.
+Paths, function names, framework details, final SQL, tests and implementation order belong to `/pl`. `hi` establishes the guarantees those mechanisms must satisfy.

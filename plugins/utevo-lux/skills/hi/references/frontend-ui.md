@@ -1,36 +1,36 @@
-# UI e frontend
+# UI and frontend
 
-Leia esta referência quando a tarefa altera tela, navegação, formulário, visualização ou interação. Use apenas os ramos que mudam a decisão.
+Read this reference when the task changes a screen, navigation, form, visualization or interaction. Use only branches that affect the decision.
 
-## O que explorar
+## What to explore
 
-- **Público e contexto:** papel, frequência de uso, conhecimento, dispositivo, ambiente, urgência e autoridade. Diferencie quem opera da pessoa que recebe o benefício.
-- **Job e entrada:** o que disparou a visita, qual informação já existe, o que a pessoa tenta decidir/fazer e para onde precisa seguir.
-- **Hierarquia:** informação primária, secundária e progressivamente revelada; densidade; navegação; relação com fluxos adjacentes.
-- **Estados reais:** inicial, loading, vazio, parcial, erro, sem permissão, conflito, sucesso, repetição e recuperação/undo quando material.
-- **Interação e feedback:** ação principal, ações perigosas, prevenção de erro, confirmação, latência percebida, edição, teclado, mobile e continuidade entre sessões.
-- **Acessibilidade e linguagem:** ordem de foco, leitura por tecnologia assistiva, contraste, alvos, alternativas não visuais e copy que explique consequência em vez de jargão interno.
-- **Confiança:** origem e frescor dos dados, automação versus ação humana, reversibilidade e explicação quando o sistema toma decisões.
+- **Audience and context:** role, frequency, knowledge, device, environment, urgency and authority. Distinguish the operator from the beneficiary.
+- **Job and entry point:** what triggered the visit, what information is already available, what the person wants to decide/do and where they need to go next.
+- **Hierarchy:** primary, secondary and progressively revealed information; density; navigation; relationships with adjacent flows.
+- **Real states:** initial, loading, empty, partial, error, unauthorized, conflict, success, repetition and recovery/undo when material.
+- **Interaction and feedback:** primary action, dangerous actions, error prevention, confirmation, perceived latency, editing, keyboard, mobile and continuity across sessions.
+- **Accessibility and language:** focus order, assistive technology, contrast, target sizes, nonvisual alternatives and copy that explains consequences instead of internal jargon.
+- **Trust:** data source and freshness, automation versus human action, reversibility and explanations for system decisions.
 
-## Precedentes de UI
+## UI precedents
 
-Olhe primeiro o design system e fluxos internos comparáveis; depois concorrentes e produtos análogos. Compare o fluxo inteiro e os estados, não apenas o screenshot feliz. Registre o que o precedente pressupõe sobre público, volume de dados e plataforma.
+Start with the design system and comparable internal flows, then look at competitors and analogous products. Compare entire flows and states, beyond the successful screenshot. Record the precedent's assumptions about audience, data volume and platform.
 
-## Exploração com mocks
+## Exploration through mockups
 
-Quando houver pelo menos duas estruturas plausíveis e a escolha for material, produza **de 3 a 5 mocks estruturalmente distintos** antes de fechar a opção. Não fabrique cinco variações para uma mudança trivial.
+When at least two plausible structures exist and the choice is material, produce **three to five structurally distinct mockups** before settling on an option. Do not manufacture five variants for a trivial change.
 
-Fixe antes um mini-brief comum: mesmo público, cenário, conteúdo/dados, plataforma e restrições. Varie hipóteses como navegação, hierarquia, densidade, disclosure ou modelo de interação — não apenas cor, borda ou posição de um botão.
+First fix a shared mini-brief: the same audience, scenario, content/data, platform and constraints. Vary navigation, hierarchy, density, disclosure or interaction hypotheses, beyond colors, borders or button positions.
 
-Para cada mock, declare:
+For each mockup, state:
 
-- hipótese que ele testa;
-- cenário em que é melhor e em que falha;
-- custo cognitivo e operacional;
-- don’ts respeitados ou tensionados.
+- the hypothesis it tests;
+- the scenario where it works best and where it fails;
+- cognitive and operational cost;
+- constraints it respects or puts under pressure.
 
-Apresente-os progressivamente: **uma hipótese visual e uma pergunta por mensagem**. Só depois de o usuário entender as direções compare os finalistas; não despeje cinco mocks acompanhados de cinco análises. Use ferramenta visual disponível; sem ela, faça wireframes de baixa fidelidade. O mock é descartável e serve para decidir, não autoriza código de produção. Após a escolha, preserve a direção e o motivo; não preserve todas as variações como requisitos.
+Present them progressively: **one visual hypothesis and one question per message**. Compare finalists after the user understands the directions; do not dump five mockups with five analyses. Use an available visual tool, or low-fidelity wireframes if none is available. Mockups are disposable decision aids and do not authorize production code. After the choice, preserve the direction and reason; do not turn every variation into a requirement.
 
-## Não decidir aqui
+## Leave for implementation planning
 
-Não transforme a conversa em escolha de componente, arquivo, hook, state manager ou classe CSS, salvo quando isso altera uma restrição visível já decidida. Esses mecanismos pertencem ao `/pl`.
+Do not turn the discussion into choosing components, files, hooks, state managers or CSS classes unless that changes an already identified visible constraint. These mechanisms belong to `/pl`.

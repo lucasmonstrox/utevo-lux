@@ -4,103 +4,103 @@
 
 <h1 align="center">Utevo Lux</h1>
 
-<p align="center">Skills de software inspiradas em Tibia. Da primeira conversa ao PR corrigido.</p>
+<p align="center">Software skills inspired by Tibia. From the first conversation to the fixed PR.</p>
 
 ```text
 hi → exiva → pl → hunt → look → exura
                   bug ↗
 ```
 
-| Skill | O que faz |
+| Skill | What it does |
 |---|---|
-| [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Debate a ideia, uma decisão por vez, até fechar o problema e a direção. |
-| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Rastreia código, histórico e fontes para investigar com evidências. |
-| [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Prepara passos, dependências, critérios de aceite e verificações. |
-| [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Executa o plano e prova o resultado. |
-| [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Investiga a causa-raiz; corrige quando solicitado ou com `--fix`. |
-| [look](plugins/utevo-lux/skills/look/SKILL.md) | Revisa PR, descrição, issues e discussões; aponta problemas demonstráveis. |
-| [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Corrige feedback de revisão, com um commit por mudança e resposta na origem. |
+| [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Discusses the idea, one decision at a time, until the problem and direction are settled. |
+| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Tracks code, history, the web, and other sources to investigate with evidence. |
+| [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Prepares steps, dependencies, acceptance criteria, and verifications. |
+| [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Executes the plan and proves the result. |
+| [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Investigates the root cause; fixes it when asked or with `--fix`. |
+| [look](plugins/utevo-lux/skills/look/SKILL.md) | Reviews the PR, description, issues, and discussions; points out demonstrable problems. |
+| [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR from review feedback, one commit per change, with a reply at the source. |
 
-Use a etapa que o trabalho precisa. A sequência não é obrigatória, e `pl` mantém esse nome por enquanto.
+Use the step the work needs. The sequence is not mandatory, and `pl` keeps that name for now.
 
-Briefs, pesquisas, planos, progresso e relatórios ficam **na conversa**. As skills leem documentação existente, mas não criam nem atualizam docs, wishlist ou registros de features. Não exigem uma stack, sistema de IDs, MCP ou modelo específico.
+Briefs, research, plans, progress, and reports stay **in the conversation**. The skills read existing documentation but do not create or update docs, wishlists, or feature records. They do not require a specific stack, ID system, MCP, or model.
 
-## Instalar como skills — nomes curtos
+## Install as skills — short names
 
-No projeto em que deseja usar as skills, com Node.js 22.20+ e Git disponíveis:
+In the project where you want to use the skills, with Node.js 22.20+ and Git available:
 
 ```sh
 npx skills add lucasmonstrox/utevo-lux --agent claude-code codex cursor --skill '*'
 ```
 
-O instalador permite escolher o destino e o método. Para instalar em todos os seus projetos, acrescente `--global`. Para instalar apenas em um agente, deixe só seu nome depois de `--agent`.
+The installer lets you choose the destination and method. To install in all your projects, add `--global`. To install for a single agent, keep only its name after `--agent`.
 
-Para escolher uma skill ou conferir o catálogo antes de instalar:
+To pick one skill or check the catalog before installing:
 
 ```sh
 npx skills add lucasmonstrox/utevo-lux --list
 npx skills add lucasmonstrox/utevo-lux --agent codex --skill exiva
 ```
 
-No Claude Code e Cursor, use `/hi`, `/exiva`, `/pl` etc. No Codex, selecione a skill no seletor ou mencione `$hi`, `$exiva`, `$pl` etc. O formato de invocação é do agente; as instruções são as mesmas.
+In Claude Code and Cursor, use `/hi`, `/exiva`, `/pl`, etc. In Codex, select the skill in the picker or mention `$hi`, `$exiva`, `$pl`, etc. The invocation format belongs to the agent; the instructions are the same.
 
-O instalador é o [Skills CLI da Vercel](https://github.com/vercel-labs/skills). Cada skill inclui suas referências e pode ser instalada separadamente.
+The installer is the [Vercel Skills CLI](https://github.com/vercel-labs/skills). Each skill ships with its references and can be installed separately.
 
-## Instalar como plugin pelo marketplace
+## Install as a plugin from the marketplace
 
-**Repositório** é onde os arquivos vivem. **Plugin** é o pacote das sete skills. **Marketplace** é o catálogo que indica onde encontrar esse pacote. Não é necessário criar um site ou servidor.
+The **repository** is where the files live. The **plugin** is the package of the seven skills. The **marketplace** is the catalog that says where to find that package. No website or server is needed.
 
-Este repositório fornece os catálogos dos três agentes, apontando para o mesmo pacote em `plugins/utevo-lux/`.
+This repository provides the catalogs for the three agents, all pointing to the same package in `plugins/utevo-lux/`.
 
 ### Claude Code
 
-Dentro do Claude Code:
+Inside Claude Code:
 
 ```text
 /plugin marketplace add lucasmonstrox/utevo-lux
 /plugin install utevo-lux@utevo-lux
 ```
 
-O primeiro `utevo-lux` identifica o plugin; o segundo, o marketplace. Escolha o escopo da instalação na interface e recarregue os plugins quando solicitado.
+The first `utevo-lux` identifies the plugin; the second, the marketplace. Choose the install scope in the interface and reload plugins when prompted.
 
-Plugins usam namespace no Claude: `/utevo-lux:hi`, `/utevo-lux:exiva` etc. Para manter `/hi` e os outros nomes curtos, use a instalação direta de skills acima. Evite instalar as duas formas no mesmo escopo se não quiser comandos duplicados. [Documentação oficial](https://code.claude.com/docs/en/plugins)
+Plugins are namespaced in Claude: `/utevo-lux:hi`, `/utevo-lux:exiva`, etc. To keep `/hi` and the other short names, use the direct skill install above. Avoid installing both forms in the same scope unless you want duplicate commands. [Official documentation](https://code.claude.com/docs/en/plugins)
 
 ### Codex
 
-No terminal, em uma versão com suporte a plugins:
+In the terminal, on a version with plugin support:
 
 ```sh
 codex plugin marketplace add lucasmonstrox/utevo-lux
 codex plugin add utevo-lux@utevo-lux
 ```
 
-Abra uma nova conversa e selecione a skill instalada. O catálogo fica em `.agents/plugins/marketplace.json`; o manifesto do pacote fica em `.codex-plugin/plugin.json`. [Plugins no Codex](https://learn.chatgpt.com/docs/build-plugins)
+Open a new conversation and select the installed skill. The catalog lives in `.agents/plugins/marketplace.json`; the package manifest lives in `.codex-plugin/plugin.json`. [Plugins in Codex](https://learn.chatgpt.com/docs/build-plugins)
 
 ### Cursor
 
-A instalação direta com `npx skills add` acima disponibiliza as skills no Cursor. Para testar o pacote como plugin local, clone o repositório e copie a pasta **`plugins/utevo-lux` inteira** para `~/.cursor/plugins/local/utevo-lux`, depois recarregue a janela e confira Customize.
+The direct install with `npx skills add` above makes the skills available in Cursor. To test the package as a local plugin, clone the repository and copy the **entire `plugins/utevo-lux` folder** to `~/.cursor/plugins/local/utevo-lux`, then reload the window and check Customize.
 
-O catálogo `.cursor-plugin/marketplace.json` prepara o repositório para distribuição como plugin. A listagem na loja pública do Cursor requer submissão e revisão; ter este repositório não significa estar listado nela. [Documentação oficial](https://cursor.com/docs/plugins)
+The `.cursor-plugin/marketplace.json` catalog prepares the repository for distribution as a plugin. Listing in Cursor's public store requires submission and review; having this repository does not mean it is listed there. [Official documentation](https://cursor.com/docs/plugins)
 
-## Uso
+## Usage
 
 ```text
-/hi Quero melhorar o fluxo de cadastro
-/exiva Compare as opções a partir do brief acima
-/pl Planeje a direção que escolhemos
-/hunt Execute o plano acima
-/bug O formulário envia duas vezes --fix
+/hi I want to improve the sign-up flow
+/exiva Compare the options based on the brief above
+/pl Plan the direction we chose
+/hunt Execute the plan above
+/bug The form submits twice --fix
 /look https://github.com/owner/repo/pull/123
 /exura https://github.com/owner/repo/pull/123
 ```
 
-Adapte o prefixo ao modo de instalação. Uma nova sessão precisa receber o plano/contexto anterior: as skills não geram arquivos de memória.
+Adapt the prefix to your install mode. A new session needs to receive the previous plan/context: the skills do not generate memory files.
 
-`look` entrega a revisão na conversa; `--publish` ou pedido explícito autoriza publicar no PR. A invocação explícita de `exura` inclui corrigir, testar, commitar, enviar e responder; `--local` prepara os commits e rascunhos sem push nem comentários. Cada uma respeita as autorizações e ferramentas disponíveis.
+`look` delivers the review in the conversation; `--publish` or an explicit request authorizes publishing to the PR. Explicitly invoking `exura` includes fixing, testing, committing, pushing, and replying; `--local` prepares the commits and drafts without pushing or commenting. Each one respects the available authorizations and tools.
 
-Revisões no GitHub precisam de acesso pelo conector ou pela CLI `gh`. Pesquisas externas precisam de busca/web. Verificação de UI precisa de navegador real; indisponibilidade é declarada.
+GitHub reviews need access through the connector or the `gh` CLI. External research needs search/web access. UI verification needs a real browser; unavailability is stated.
 
-## Estrutura e manutenção
+## Structure and maintenance
 
 ```text
 .claude-plugin/marketplace.json
@@ -114,9 +114,9 @@ plugins/utevo-lux/
   skills/{hi,exiva,pl,hunt,bug,look,exura}/SKILL.md
 ```
 
-As sete skills têm uma única origem. Os três manifestos empacotam os mesmos arquivos. As referências do GitHub acompanham tanto `look` quanto `exura` para permitir instalação individual; o validador verifica que as duas cópias permanecem iguais.
+The seven skills have a single source. The three manifests package the same files. The GitHub references ship with both `look` and `exura` to allow individual installs; the validator checks that the two copies stay identical.
 
-Validação local:
+Local validation:
 
 ```sh
 python scripts/check.py
@@ -124,6 +124,6 @@ claude plugin validate .
 claude plugin validate plugins/utevo-lux
 ```
 
-Ao publicar uma atualização do plugin, incremente a versão nos três manifestos e nos catálogos que a declaram. Usuários de skills diretas podem usar `npx skills check` e `npx skills update`; usuários de plugins atualizam pelo agente.
+When publishing a plugin update, bump the version in the three manifests and in the catalogs that declare it. Direct-skill users can run `npx skills check` and `npx skills update`; plugin users update through their agent.
 
-Referências: [Agent Skills](https://agentskills.io/specification), [skills no Claude](https://code.claude.com/docs/en/skills), [skills no Codex](https://learn.chatgpt.com/docs/build-skills) e [skills no Cursor](https://cursor.com/docs/skills). A separação entre requisitos e correção em `look` se inspira no [code-review de Matt Pocock](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md).
+References: [Agent Skills](https://agentskills.io/specification), [skills in Claude](https://code.claude.com/docs/en/skills), [skills in Codex](https://learn.chatgpt.com/docs/build-skills), and [skills in Cursor](https://cursor.com/docs/skills). The split between requirements and correctness in `look` is inspired by [Matt Pocock's code-review](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md).

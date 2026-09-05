@@ -1,190 +1,180 @@
 ---
 name: hi
-description: Amadurece uma ideia de software por debate estruturado, uma decisão por vez, até fechar intenção, público, cenários, precedentes, opções e trade-offs. Use para debater ou explorar uma ideia antes de pesquisar ou planejar; entregue o brief na conversa.
+description: Develop a software idea through structured discussion, one decision at a time, until intent, audience, scenarios, precedents, options and trade-offs are clear. Use to discuss or explore an idea before research or implementation planning; deliver the brief in the conversation.
 ---
 
 # Hi
 
-Debata a ideia ou tarefa apresentada pelo usuário. Uso: `/hi <ideia>` (ou a invocação de skills do agente).
+Discuss the idea or task presented by the user. Usage: `/hi <idea>` (or the agent's native skill invocation).
 
-Leia primeiro as instruções locais (`AGENTS.md`, `CLAUDE.md` ou equivalentes) e a documentação de produto que elas indicarem. Resolva os links desta skill a partir da pasta do seu `SKILL.md`.
+First read local instructions (`AGENTS.md`, `CLAUDE.md` or equivalents) and the product documentation they identify. Resolve this skill's links relative to its `SKILL.md` directory.
 
-O resultado desta skill é uma **decisão entendida e confirmada**, não código nem plano de código. Debata até conseguir explicar o problema e a direção e entregue a síntese na conversa. Não crie nem atualize documentação, wishlist ou registros de features.
+The result is an **understood and confirmed decision**. Discuss until you can explain the problem and direction, then deliver the brief in the conversation. Do not write code or create or update documentation, wishlists or feature records.
 
-## Limites de altitude
+## Responsibilities
 
-- **`/hi` decide:** por quê, para quem, em quais cenários, qual comportamento queremos, quais opções existem, o que não pode acontecer e quais custos aceitamos.
-- **`/exiva` prova:** estado real do produto/código, viabilidade, mercado, concorrentes, padrões e fatos externos com evidência. O `hi` pode fazer consultas focadas para destravar uma decisão; levantamento amplo pertence ao `/exiva`.
-- **`/pl` operacionaliza:** arquitetura aderente ao repositório, paths, símbolos, contratos finais, passos, provas, testes e `Don't:` **de código** junto de cada função ou passo.
-- **`/hunt` executa e verifica.** Não escreva código durante o `hi`.
-- Code review é outra skill e está fora deste fluxo.
+- **`/hi` decides:** why, for whom, in which scenarios, what behavior we want, which options exist, what must never happen and which costs we accept.
+- **`/exiva` establishes facts:** the actual product/code state, feasibility, market, competitors, patterns and external facts with evidence. `hi` can make focused inquiries to unblock a decision; broad investigation belongs to `/exiva`.
+- **`/pl` makes it executable:** architecture that fits the repository, paths, symbols, final contracts, steps, proofs, tests and **implementation** `Don't:` constraints next to each function or step.
+- **`/hunt` implements and verifies.** Do not write code during `hi`.
+- Code review belongs to a separate skill.
 
-Não presuma que já existe algo para “melhorar”. Primeiro classifique a transformação: capacidade nova, mudança de comportamento, correção, redução de risco, manutenção/refactor, infraestrutura ou feedback para developers. Em greenfield, o baseline pode ser simplesmente “isso ainda não existe”; procure capacidades adjacentes e restrições, não invente um estado atual.
+Do not assume something already exists to "improve." First classify the transformation: a new capability, behavior change, correction, risk reduction, maintenance/refactoring, infrastructure or developer feedback. In a new project, the baseline may simply be "this does not exist yet"; look for adjacent capabilities and constraints instead of inventing a current state.
 
-## Carregamento progressivo
+## Progressive loading
 
-Antes da primeira pergunta, identifique as superfícies e preocupações materiais. Leia **somente** as referências aplicáveis; combine mais de uma quando a tarefa cruza camadas.
+Before the first question, identify the relevant surfaces and material concerns. Read **only** applicable references; combine them when the task crosses layers.
 
-- UI, fluxo, tela ou interação: [references/frontend-ui.md](references/frontend-ui.md)
-- Endpoint, integração, serviço, webhook ou contrato: [references/backend-api.md](references/backend-api.md)
-- Persistência, schema, migração ou consulta: [references/data.md](references/data.md)
-- Infra, deploy, configuração, lint, CI ou developer experience: [references/infra-tooling.md](references/infra-tooling.md)
-- Autenticação, autorização, dados sensíveis, dinheiro, endpoint público ou abuso plausível: [references/security.md](references/security.md)
-- Performance, confiabilidade, acessibilidade, privacidade, observabilidade ou manutenibilidade material: [references/quality-attributes.md](references/quality-attributes.md)
-- Ao chegar em precedentes, para qualquer superfície: [references/web-precedents.md](references/web-precedents.md)
+- UI, flow, screen or interaction: [references/frontend-ui.md](references/frontend-ui.md)
+- Endpoint, integration, service, webhook or contract: [references/backend-api.md](references/backend-api.md)
+- Persistence, schema, migration or query: [references/data.md](references/data.md)
+- Infrastructure, deployment, configuration, lint, CI or developer experience: [references/infra-tooling.md](references/infra-tooling.md)
+- Authentication, authorization, sensitive data, money, public endpoints or plausible abuse: [references/security.md](references/security.md)
+- Material performance, reliability, accessibility, privacy, observability or maintainability concerns: [references/quality-attributes.md](references/quality-attributes.md)
+- At the precedents stage, for any surface: [references/web-precedents.md](references/web-precedents.md)
 
-Essas referências são menus de exploração, não checklists obrigatórios. Elimine uma pergunta se ela não muda decisão, risco, escopo ou critério de sucesso.
+These references are exploration menus, not mandatory checklists. Drop any question that cannot change a decision, risk, scope or success criterion.
 
-## Mecânica do debate — uma decisão por vez
+## Discussion mechanics: one decision at a time
 
-Modele a conversa como uma **árvore de decisões**, mas nunca despeje a árvore no usuário. Só pergunte uma decisão quando suas premissas estiverem resolvidas; entre as disponíveis, escolha a de maior impacto e trate **somente ela**. Profundidade vem de vários passos curtos, não de muitas decisões na mesma resposta.
+Model the conversation as a **decision tree**, but never dump the tree on the user. Ask about a decision only when its premises are settled; among those available, choose the most consequential and address **only that one**. Depth comes from several short steps.
 
-1. Preserve o pedido original como a semente. Extraia fatos declarados, preferências, restrições e termos vagos sem reinterpretá-los silenciosamente.
-2. Mantenha um registro interno com `confirmado`, `provisório`, `rejeitado`, `hipótese factual` e `aberto`.
-3. Cada passo contém **exatamente 1 pergunta e 1 decisão**. Faça a pergunta, dê contexto mínimo, recomende uma resposta e espere. Não avance, antecipe nem apresente as próximas decisões na mesma mensagem.
-4. Fatos verificáveis são trabalho do agente. Inspecione fontes disponíveis ou rotule a hipótese; não transforme “como concorrentes fazem?” ou “isso já existe?” em pergunta de preferência ao usuário. Decisões de valor, prioridade e risco aceito pertencem ao usuário.
-5. Se o usuário disser “você escolhe”, escolha, explique o critério e registre a decisão. Se a evidência não sustenta uma escolha, recomende experimento ou `/exiva`, não falsa certeza.
-6. Questione premissas vagas ou contraditórias com cenários concretos. “Simples”, “rápido”, “intuitivo”, “seguro” e “melhor prática” só contam quando viram comportamento ou critério observável.
-7. Não repita perguntas já respondidas. Uma resposta pode fechar vários ramos; descarte os que deixaram de importar.
-8. Se uma pergunta contém dois eixos que poderiam receber respostas diferentes, ela está agrupada demais: divida. Configuração, superfície, automação, escopo e risco são passos separados quando cada um pode mudar sozinho.
-9. Depois da resposta do usuário, registre a decisão **em silêncio** e vá direto à próxima pergunta. Não elogie, agradeça, diga “anotado”, repita a resposta, acrescente interpretação nem antecipe trade-offs. Só reflita a resposta quando houver ambiguidade, contradição ou uma interpretação que precise ser confirmada; nesse caso, faça apenas essa confirmação.
-10. Não entregue resumo acumulado, mapa das próximas perguntas, IDs do repositório, dependências ou ramificações laterais enquanto não forem necessários para a decisão atual. Guarde tudo para a árvore interna e para a síntese final.
+1. Preserve the original request as the starting point. Extract stated facts, preferences, constraints and vague terms without silently reinterpreting them.
+2. Keep an internal record of `confirmed`, `provisional`, `rejected`, `factual hypothesis` and `open` items.
+3. Each step contains **exactly one question and one decision**. Give minimal context, ask the question, recommend an answer and wait. Do not advance to or preview the next decisions in the same message.
+4. Verifiable facts are the agent's work. Inspect available sources or label the hypothesis; do not turn "how do competitors do this?" or "does this already exist?" into a preference question. Value, priority and accepted risk belong to the user.
+5. If the user says "you choose," choose, explain the criterion and record the decision. If evidence cannot support a choice, recommend an experiment or `/exiva` instead of false certainty.
+6. Challenge vague or contradictory premises with concrete scenarios. "Simple," "fast," "intuitive," "secure" and "best practice" only count when expressed as observable behavior or criteria.
+7. Do not repeat answered questions. One answer may close several branches; discard those that no longer matter.
+8. If a question contains two dimensions that could receive different answers, split it. Configuration, surface, automation, scope and risk are separate steps when each can change independently.
+9. After the user's answer, record the decision **silently** and move directly to the next question. Do not praise, thank, say "noted," repeat the answer, add interpretation or preview trade-offs. Reflect the answer only to clarify ambiguity, contradiction or an interpretation that needs confirmation; ask only for that confirmation.
+10. Do not deliver cumulative summaries, maps of upcoming questions, repository IDs, dependencies or side branches until needed for the current decision. Keep them in the internal tree and final brief.
 
-**Regra de hiperfoco:** cada mensagem de debate deve ser respondível olhando para uma única escolha. Mesmo que três decisões estejam prontas, faça uma agora e deixe as outras invisíveis até a resposta. Só agrupe se o usuário pedir explicitamente para receber tudo de uma vez.
+**Focus rule:** each discussion message must be answerable by making one choice. Even if three decisions are ready, ask one now and keep the others out of the message. Group them only if the user explicitly asks to receive everything at once.
 
-**Regra de densidade:** escreva o mínimo necessário para o usuário entender e decidir corretamente — nem mais, nem menos.
+**Density rule:** write the minimum needed for the user to understand and decide correctly.
 
-- Corte preâmbulo, repetição, conclusão duplicada e explicação de processo. Não abra com “perfeito”, “brutal”, “entendi” ou “anotado”.
-- Não recapitule a decisão anterior. Se a próxima pergunta depender dela, mencione somente a consequência indispensável.
-- Contexto: no máximo 1 frase curta e apenas fatos que mudam esta escolha.
-- Recomendação + motivo: preferencialmente 1 frase. Dê a conclusão e a razão decisiva, não todo o raciocínio.
-- Alternativas são opcionais. Mostre somente opções reais, em uma linha cada; se exigirem muita explicação, apresente-as progressivamente.
-- Não cite IDs, paths, dependências, benchmarks ou exemplos só para demonstrar pesquisa. Inclua-os apenas quando mudarem a decisão atual.
-- Compacto não é superficial: se retirar uma informação puder mudar a escolha ou causar entendimento errado, mantenha-a. Se duas frases ensinam a mesma coisa, fique com a mais clara.
-- Cada frase deve fazer pelo menos uma destas coisas: trazer um fato decisivo, distinguir opções, recomendar ou perguntar. Caso contrário, remova.
+- Cut preambles, repetition, duplicate conclusions and process narration. Do not open with "perfect," "great," "understood" or "noted."
+- Do not recap the previous decision. If the next question depends on it, mention only the indispensable consequence.
+- Context: at most one short sentence containing only facts that change this choice.
+- Recommendation and reason: preferably one sentence. Give the conclusion and decisive reason, not the whole reasoning process.
+- Alternatives are optional. Show only real options, one line each; introduce them progressively if they need more explanation.
+- Do not cite IDs, paths, dependencies, benchmarks or examples just to demonstrate research. Include them only when they change the current decision.
+- Concision must preserve meaning: keep information whose removal could change the choice or cause misunderstanding. If two sentences teach the same thing, keep the clearer one.
+- Every sentence should supply a decisive fact, distinguish options, recommend or ask. Otherwise, remove it.
 
-Formato preferido por mensagem:
+Preferred message format:
 
 ```markdown
-<contexto indispensável em 1 frase, se necessário>
+<One sentence of indispensable context, if needed.>
 
-**Pergunta:** <uma escolha que realmente muda a direção>
+**Question:** <One choice that actually changes the direction.>
 
-**Recomendo:** <resposta concreta>, porque <razão decisiva>.
+**Recommendation:** <Concrete answer>, because <decisive reason>.
 
-<alternativas curtas, somente se necessárias para responder>
+<Brief alternatives, only if needed to answer.>
 ```
 
-Após esse bloco, **pare e espere a resposta**. Não acrescente “e também precisamos decidir...” nem uma segunda pergunta disfarçada nas alternativas.
+After this block, **stop and wait for the answer**. Do not add "and we also need to decide..." or hide a second question in the alternatives.
 
-**Antipadrão `ack-recap`:** gastar o começo de cada mensagem celebrando, recontando ou analisando a resposta anterior. Isso não avança a decisão e se multiplica ao amadurecer várias ideias. O fluxo normal é `resposta do usuário → registro silencioso → próxima pergunta`.
+**The `ack-recap` anti-pattern:** spending the start of every message celebrating, retelling or analyzing the previous answer. It does not advance the decision and compounds across ideas. The normal flow is `user answer → silent record → next question`.
 
-## Ordem da ontologia
+## Exploration order
 
-Siga esta ordem de dependência, voltando quando uma resposta invalidar uma premissa:
+Follow this dependency order, revisiting earlier stages when an answer invalidates a premise.
 
-### 1. Intenção — por que mudar e qual transformação buscamos
+### 1. Intent: why change, and what transformation do we want?
 
-Descubra o gatilho, dor ou oportunidade; o resultado que deve passar a ser possível ou verdadeiro; por que isso importa e por que agora. Não aceite uma solução sugerida como intenção (`“criar um modal”` ainda não diz qual resultado buscamos).
+Find the trigger, pain or opportunity; the outcome that should become possible or true; why it matters and why now. A proposed solution is not an intent: "create a modal" does not explain the desired outcome.
 
-**Por que primeiro:** sem intenção, todo o resto otimiza uma solução sem saber qual mudança precisa produzir.
+**Why first:** without intent, the remaining work optimizes a solution without knowing what change it must produce.
 
-### 2. Público e atores — para quem e com quem
+### 2. Audience and actors: for whom, and with whom?
 
-Mapeie quem recebe o valor e quem participa ou é afetado: usuário direto, beneficiário, comprador/decisor, operador, suporte, mantenedor, sistema consumidor, terceiro, pessoa afetada indiretamente, ator hostil e não-público. Para tooling/config, developers, CI e operadores são públicos legítimos.
+Map who receives value and who participates or is affected: direct user, beneficiary, buyer/decision maker, operator, support, maintainer, consuming system, third party, indirectly affected person, hostile actor and excluded audience. Developers, CI and operators are legitimate audiences for tooling and configuration.
 
-**Por que agora:** o mesmo objetivo muda de forma conforme autoridade, conhecimento, frequência, contexto e incentivo do ator.
+**Why now:** the same objective changes with the actor's authority, knowledge, frequency, context and incentives.
 
-### 3. Cenários — quando e onde a intenção vira comportamento
+### 3. Scenarios: when and where intent becomes behavior
 
-Escreva cada cenário como `ator + gatilho + contexto + ação + resultado observável`. Cubra primeiro o cenário principal e depois somente os alternativos relevantes: erro, recuperação, borda, repetição/retry, concorrência, permissão, abuso e anti-use-case.
+Write each scenario as `actor + trigger + context + action + observable result`. Cover the main scenario first, then only relevant alternatives: error, recovery, boundary, repetition/retry, concurrency, permission, abuse and unwanted use.
 
-**Por que antes da solução:** cenários impedem uma ideia abstrata de parecer completa e revelam requisitos que uma tela feliz ou endpoint feliz esconderia.
+**Why before solutions:** scenarios make abstract ideas testable and expose requirements hidden by a successful screen or endpoint.
 
-### 4. Precedentes — quem já resolveu algo comparável
+### 4. Precedents: who has solved something comparable?
 
-Faça uma **busca web obrigatória e atual** seguindo [references/web-precedents.md](references/web-precedents.md). Não use memória do modelo como evidência. Procure concorrentes, produtos análogos, padrões públicos, APIs maduras, bibliotecas e configurações consolidadas; combine com precedentes internos quando existirem. Um precedente é **evidência para pensar**, não uma decisão. Registre fonte, contexto, o que funciona, onde diverge do nosso público/cenário e classifique como `adotar`, `adaptar`, `rejeitar` ou `experimentar`.
+Perform a **mandatory, current web search** following [references/web-precedents.md](references/web-precedents.md). Model memory is not evidence. Look for competitors, analogous products, public patterns, mature APIs, libraries and established configurations; combine with internal precedents where available. A precedent is **evidence for a decision**. Record the source, context, what works, differences from our audience/scenario, and classify it as `adopt`, `adapt`, `reject` or `experiment`.
 
-**Por que depois dos cenários:** sem público e situação fixos, copiamos a aparência de uma solução feita para outro problema. O `/hi` sempre faz uma busca focada suficiente para decidir; pesquisa competitiva ampla, viabilidade profunda ou evidência inconclusiva seguem para `/exiva`.
+**Why after scenarios:** without an audience and situation, we copy solutions built for another problem. `/hi` always performs a focused search sufficient to support the decision; broad competitive research, deep feasibility work or inconclusive evidence belong to `/exiva`.
 
-### 5. Opções — maneiras realmente diferentes de satisfazer a intenção
+### 5. Options: meaningfully different ways to satisfy the intent
 
-Gere alternativas que mudem experiência, contrato, garantia, risco, custo ou reversibilidade; não conte microvariações cosméticas como opções. Inclua manter o estado atual quando isso for uma alternativa honesta e inclua experimento quando a incerteza for o ponto central. Compare todas contra os mesmos cenários e critérios.
+Generate alternatives that change experience, contracts, guarantees, risk, cost or reversibility; cosmetic variations do not count. Include keeping the current state when that is an honest option, and an experiment when uncertainty is central. Compare all options against the same scenarios and criteria.
 
-**Por que depois dos precedentes:** opções passam a combinar evidência e contexto, em vez de reinventar ou copiar. Aqui se consolida **o quê** será feito e o **como comportamental**; mecanismos de código ficam para `/pl`.
+**Why after precedents:** options combine evidence with context. Settle **what** to do and **how it should behave** here; implementation mechanisms belong to `/pl`.
 
-### 6. Don’ts — o espaço de erro que precisa ficar explícito
+### 6. Don'ts: make plausible mistakes explicit
 
-Derive don’ts de falhas plausíveis descobertas nos cenários e opções. Separe:
+Derive constraints from plausible failures discovered in scenarios and options. Distinguish:
 
-- **invariante:** nunca pode ser violado;
-- **fora de escopo:** não será resolvido nesta iniciativa;
-- **anti-use-case:** comportamento que não queremos incentivar ou suportar;
-- **atalho proibido:** caminho tentador já vetado por produto, segurança ou regra do repositório;
-- **opção rejeitada:** decisão arquivada com motivo — não a trate como proibição eterna.
+- **Invariant:** must never be violated.
+- **Out of scope:** will not be addressed in this initiative.
+- **Unwanted use:** behavior we do not want to encourage or support.
+- **Prohibited shortcut:** a tempting path already ruled out by product, security or repository rules.
+- **Rejected option:** a decision recorded with its reason; do not treat it as a permanent prohibition.
 
-Cada don’t deve ser concreto, local e observável. Quando ajudar, use contraste mínimo `errado → desejado`. Não use cotas nem frases como “não quebrar nada”, “não ficar lento” ou “não ter bugs”; excesso de instruções vagas dilui as importantes.
+Each constraint must be concrete, local and observable. When useful, use a short `wrong → intended` example. Do not impose quotas or write "don't break anything," "don't be slow" or "don't have bugs"; vague instructions dilute the useful ones.
 
-Há duas camadas relacionadas, mas distintas:
+There are two related layers:
 
-| Camada | Pergunta que responde | Exemplo | Onde fica |
+| Layer | Question it answers | Example | Location |
 |---|---|---|---|
-| **Don’t do debate** | Que comportamento, resultado ou fronteira o produto/sistema não pode cruzar? | “não enviar ao lead sem confirmação humana” | brief do `/hi` na conversa |
-| **`Don't:` do plano** | Que erro de implementação esta função ou passo não pode cometer? | “o handler não envia mensagem; chama o service que aplica autorização e idempotência” | passo/função no `/pl` |
+| **Discussion constraint** | Which behavior, outcome or boundary must the product/system avoid? | "Do not message a lead without human confirmation." | `/hi` brief in the conversation |
+| **Plan `Don't:`** | Which implementation mistake must this function or step prevent? | "Do not dispatch before the transaction commits." | The relevant `/pl` step |
 
-Um don’t do debate pode originar vários `Don't:` de código, mas não existe tradução mecânica nem relação obrigatoriamente 1:1. O `/pl` também acrescenta restrições técnicas vindas do repositório; não rebaixe o don’t comportamental a detalhe de código nem copie a mesma frase genericamente em todos os passos.
+Keep behavioral constraints here. Do not anticipate function names, file paths or implementation details unless they change the actual decision.
 
-**Por que depois das opções:** comparar alternativas torna visíveis os atalhos e efeitos colaterais reais. Se um limite surgir antes, registre-o imediatamente e consolide aqui.
+## Stress test and 5W1H audit
 
-### 7. Trade-offs e decisão — qual preço aceitamos
+Before the final brief, challenge the chosen direction with material error, boundary, recovery, abuse and growth scenarios. Then use 5W1H as a **coverage audit**, not a mechanical questionnaire:
 
-Para cada finalista, explicite ganho, custo, risco, complexidade, reversibilidade, lock-in, impacto futuro e confiança da evidência. Trade-off é um custo **aceito conscientemente**; don’t é um limite que não pode ser trocado sem reabrir a decisão. Se um custo não é aceitável, descarte ou altere a opção.
+- **Why:** are intent and value clear?
+- **Who:** are audiences, technical actors, affected people and exclusions clear?
+- **When / Where:** do scenarios identify triggers, contexts and surfaces?
+- **What:** are the transformation and chosen behavior clear?
+- **How:** can the user/system understand the behavior without pretending this is an implementation plan?
+- **Don'ts:** are the boundaries explicit?
 
-Registre a opção escolhida, por que venceu, desvantagens aceitas, mitigação, confiança e gatilhos que justificariam revisitar a decisão.
+Do not force an artificial answer for an irrelevant dimension. The audit should expose gaps.
 
-**Por que por último:** trade-offs só existem entre opções concretas julgadas para um público e cenários conhecidos.
+## Shared understanding gate
 
-## Stress test e auditoria 5W1H
+Stop opening branches when:
 
-Antes da síntese final, ataque a direção escolhida com os cenários de erro, borda, recuperação, abuso e crescimento que forem materiais. Depois use 5W1H como **auditoria de cobertura**, não como roteiro mecânico:
+- no remaining owner decision materially changes experience, contracts, scope or risk;
+- remaining factual uncertainties are named and assigned to a lookup, experiment or `/exiva`;
+- direction, constraints and trade-offs are consistent;
+- future ideas are separate from the current scope.
 
-- **Why:** a intenção e o valor estão claros?
-- **Who:** públicos, atores técnicos, afetados e excluídos estão claros?
-- **When / Where:** gatilhos, contextos e superfícies aparecem nos cenários?
-- **What:** a transformação e o comportamento escolhido estão claros?
-- **How:** o usuário/sistema percebe o funcionamento, sem fingir um plano de implementação?
-- **Don’ts:** a fronteira negativa está explícita?
-
-Não force uma resposta artificial para uma dimensão irrelevante. A auditoria deve encontrar lacunas, não preencher um formulário.
-
-## Gate de entendimento compartilhado
-
-Pare de abrir ramos quando:
-
-- não restar decisão do dono que altere materialmente experiência, contrato, escopo ou risco;
-- incertezas factuais restantes estiverem nomeadas e roteadas para lookup, experimento ou `/exiva`;
-- direção, don’ts e trade-offs não se contradisserem;
-- ideias futuras estiverem separadas do escopo atual.
-
-Apresente então uma síntese compacta e completa no formato abaixo e peça confirmação explícita. Use uma linha por campo; expanda somente conflitos ou riscos que ainda possam mudar a decisão. Silêncio ou mudança de assunto não são confirmação. Se o usuário corrigir algo, atualize a árvore e faça um novo passo.
+Present a compact, complete brief using the format below and request explicit confirmation. Use one line per field; expand only conflicts or risks that could still change the decision. Silence or a change of subject is not confirmation. If the user corrects something, update the tree and take another step.
 
 ```markdown
-## Brief de decisão
+## Decision brief
 
-**Intenção:** ...
-**Público e atores:** ...
-**Cenários-chave:** ...
-**Direção escolhida:** ...
-**Precedentes:** ...
-**Don’ts de produto/sistema e invariantes:** ...
-**Trade-offs aceitos:** ...
-**Fora de escopo / depois:** ...
-**Como saberemos que funcionou:** ...
-**Hipóteses e perguntas para `/exiva`:** ...
+**Intent:** ...
+**Audience and actors:** ...
+**Key scenarios:** ...
+**Chosen direction:** ...
+**Precedents:** ...
+**Product/system constraints and invariants:** ...
+**Accepted trade-offs:** ...
+**Out of scope / later:** ...
+**How we will know it worked:** ...
+**Hypotheses and questions for `/exiva`:** ...
 ```
 
-## Encaminhar
+## Handoff
 
-O brief confirmado fica na conversa. Hipóteses continuam rotuladas; não invente prioridade, urgência nem escopo aprovado.
+The confirmed brief stays in the conversation. Keep hypotheses labeled; do not invent priority, urgency or approved scope.
 
-Encaminhe perguntas factuais abertas para `exiva`; direção sustentada e pronta para codificar vai para `pl`. Se outra skill não estiver instalada, o brief deve permitir continuar sem ela. Não crie arquivos de documentação, instale skills nem invoque outra etapa automaticamente.
+Recommend `exiva` for open factual questions and `pl` when the direction is supported and ready for implementation planning. If another skill is not installed, the brief must still support continuation. Do not create documentation files, install skills or invoke the next stage automatically.

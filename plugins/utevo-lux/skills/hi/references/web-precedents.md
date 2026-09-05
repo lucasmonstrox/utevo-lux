@@ -1,30 +1,30 @@
-# Busca web de precedentes
+# Web research for precedents
 
-Leia esta referência ao chegar em **Precedentes**, depois de intenção, público e cenários estarem claros.
+Read this reference at the **Precedents** stage, after intent, audience and scenarios are clear.
 
-## Regra
+## Rule
 
-Faça busca web antes de fechar precedentes ou gerar opções, mesmo que a solução pareça conhecida. Memória ajuda a formular queries, não serve como evidência. Uma fonte fornecida pelo usuário é ponto de partida, não substitui a verificação quando a informação pode ter mudado.
+Search the web before settling precedents or generating options, even when the solution seems familiar. Memory helps formulate queries; it is not evidence. A user-provided source is a starting point and still needs verification when its information may have changed.
 
-Se a web estiver indisponível, diga isso em uma frase e mantenha os precedentes como pergunta aberta; não invente nem finja verificação.
+If web access is unavailable, say so in one sentence and leave precedents as an open question. Do not invent findings or claim verification.
 
-## Busca focada
+## Focused search
 
-1. Derive as queries do público e do cenário concreto, não apenas do nome da feature.
-2. Procure ao menos um análogo direto e um precedente adjacente ou padrão maduro quando existirem. Busque em português e inglês quando isso ampliar o mercado relevante.
-3. Abra as páginas. Não use snippet de resultado como prova.
-4. Prefira fontes primárias: produto/help center/demo do concorrente, documentação oficial, especificação, changelog, artigo de engenharia ou repositório original. Use fonte secundária apenas para localizar a primária ou cobrir experiência que o vendor não documenta.
-5. Para cada precedente útil, guarde apenas: `fonte + contexto + padrão observado + diferença para nosso cenário`.
-6. Classifique a consequência como `adotar`, `adaptar`, `rejeitar` ou `experimentar`.
+1. Derive queries from the audience and concrete scenario, beyond the feature name.
+2. Look for at least one direct analogue and one adjacent precedent or mature pattern when they exist. Search relevant market languages when that improves coverage.
+3. Open the pages. Search snippets are not proof.
+4. Prefer primary sources: competitor products/help centers/demos, official documentation, specifications, changelogs, engineering articles and original repositories. Use secondary sources to locate primary material or cover experiences the vendor does not document.
+5. For each useful precedent, keep only `source + context + observed pattern + difference from our scenario`.
+6. Classify its consequence as `adopt`, `adapt`, `reject` or `experiment`.
 
-Não procure quantidade. Pare quando novos resultados deixarem de mudar as opções ou a recomendação. Se uma afirmação decisiva continuar incerta, transforme-a em pergunta para `/exiva`.
+Do not chase a quota. Stop when new results no longer change the options or recommendation. If a decisive claim remains uncertain, make it a question for `/exiva`.
 
-## Saída enxuta
+## Concise output
 
-Pesquise em silêncio: não narre queries, páginas abertas nem todo o material encontrado. Na conversa, mostre somente os 1–3 achados que mudam a decisão atual, em uma linha cada, com links compactos. Se um precedente exigir explicação longa, apresente-o sozinho em um passo.
+Research without narrating each query, opened page or collected source. Show only the one to three findings that change the current decision, one line each with compact links. If a precedent needs a long explanation, present it alone in a step.
 
-Preserve as URLs decisivas na síntese final da conversa. Não crie arquivos de pesquisa ou wishlist.
+Preserve decisive URLs in the final conversation brief. Do not create research files or wishlists.
 
-## Limite com `/exiva`
+## Boundary with `/exiva`
 
-O `/hi` faz um scan verificável para não inventar a roda. O `/exiva` assume quando a escolha depende de levantamento amplo de mercado, arqueologia interna completa, benchmark quantitativo, viabilidade técnica profunda, regulação ou validação adversarial. A existência do `/exiva` não autoriza pular a busca web de precedentes no `/hi`.
+`/hi` performs a focused, verifiable search for existing solutions. `/exiva` takes over when the decision depends on broad market research, extensive code history, quantitative benchmarks, deep technical feasibility, regulation or adversarial validation. The existence of `/exiva` does not permit skipping the web search in `/hi`.

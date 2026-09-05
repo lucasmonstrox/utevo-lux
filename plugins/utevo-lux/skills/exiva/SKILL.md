@@ -1,74 +1,74 @@
 ---
 name: exiva
-description: Investiga um problema de software com arqueologia de código e Git, pesquisa externa e verificação de evidências. Use para descobrir o que existe, avaliar viabilidade ou comparar abordagens antes de planejar.
+description: Investigate a software problem through code and Git history, external research and evidence verification. Use to discover what exists, assess feasibility or compare approaches before planning.
 ---
 
 # Exiva
 
-Uso: `/exiva <tema ou pergunta>`, ou a invocação de skills do agente.
+Usage: `/exiva <topic or question>`, or the agent's native skill invocation.
 
-Investigue para responder ao pedido. Entregue a pesquisa **na conversa**; não crie nem atualize documentação, wishlist, registros de features ou código do produto.
+Investigate to answer the request. Deliver research **in the conversation**; do not create or update documentation, wishlists, feature records or product code.
 
-## 1. Delimitar a investigação
+## 1. Scope the investigation
 
-Leia as instruções locais e a documentação de produto relevante, quando existir. Reaproveite o brief de `hi` se estiver disponível; preserve decisões, restrições e perguntas abertas. Sem brief, extraia esses pontos do pedido. Outra skill não é pré-requisito.
+Read local instructions and relevant product documentation where available. Reuse the `hi` brief if present; preserve decisions, constraints and open questions. Otherwise, extract these from the request. Another skill is not a prerequisite.
 
-Classifique o esforço e informe o recorte:
+Classify the effort and state the scope:
 
-| Escopo | Trabalho proporcional |
+| Scope | Proportionate work |
 |---|---|
-| Consulta | Um fato verificável com evidência suficiente. |
-| Comparação | Opções concretas julgadas pelos mesmos critérios. |
-| Tema amplo | Frentes que podem mudar a recomendação. |
+| Lookup | One verifiable fact with sufficient evidence. |
+| Comparison | Concrete options assessed against the same criteria. |
+| Broad topic | Investigation tracks that could change the recommendation. |
 
-Mantenha um brief curto: pergunta central, escopo, restrições e o que conta como respondido. Ambiguidade que muda a direção merece uma pergunta por vez; não pergunte fatos que você pode verificar.
+Keep a short brief: central question, scope, constraints and what counts as answered. Ask one question at a time about ambiguity that changes the direction; verify discoverable facts yourself.
 
-Defina um orçamento proporcional de pesquisa. Delegue apenas frentes independentes quando houver ferramentas e autorização, com objetivo, limite e formato de evidência claros. Não exija provedor, modelo ou quantidade fixa de agentes.
+Set a proportionate research budget. Delegate only independent tracks when tools and authorization permit, with clear objectives, boundaries and evidence requirements. Do not require a specific provider, model or agent count.
 
-## 2. Arqueologia interna
+## 2. Investigate the repository
 
-- Confira código, testes, schemas, migrações, dependências e histórico da área. Leia investigações e decisões existentes antes de repetir trabalho.
-- Use busca conceitual/LSP disponíveis; sem eles, afunile com `rg`, busca de arquivos e leitura direcionada. Confirme referências dinâmicas, aliases e strings.
-- Separe o que funciona, o que é parcial/mock e o que só aparece na documentação. Uma assinatura não prova comportamento completo.
-- Rastreie consumidores e efeitos de contratos compartilhados. Confirme modelos no schema real; não deduza colunas pela interface.
-- Use `git log -- <paths>`, `git log --follow -- <arquivo>` e `git log -S <termo> -- <paths>` quando a história explicar uma decisão.
+- Inspect code, tests, schemas, migrations, dependencies and relevant history. Read existing investigations and decisions before repeating work.
+- Use available conceptual search/LSP tools; otherwise narrow with `rg`, file search and targeted reads. Confirm dynamic references, aliases and strings.
+- Distinguish working behavior, partial implementations/mocks and documentation-only claims. A signature does not prove complete behavior.
+- Trace consumers and effects of shared contracts. Confirm data models in the actual schema; do not infer columns from the UI.
+- Use `git log -- <paths>`, `git log --follow -- <file>` and `git log -S <term> -- <paths>` when history explains a decision.
 
-Achados internos levam arquivo/linha lidos nesta sessão; cite o hash quando o histórico sustentar a conclusão. Fatos sobre dados levam consulta e contexto, sem expor segredos ou dados pessoais desnecessários.
+Internal findings cite files/lines read in this session; cite a commit hash when history supports the conclusion. Data findings include the query and context without exposing secrets or unnecessary personal information.
 
-Uma busca vazia não prova ausência. Teste outros termos, camadas ou representações. Hipótese já refutada só volta com evidência nova.
+An empty search does not prove absence. Try other terms, layers or representations. Revisit a refuted hypothesis only with new evidence.
 
-## 3. Pesquisa externa quando necessária
+## 3. Research external facts when needed
 
-Pesquise quando a resposta depender de APIs, bibliotecas, mercado, regras ou fatos externos atuais. Consulta inteiramente interna não precisa virar levantamento de mercado.
+Search when the answer depends on current APIs, libraries, markets, rules or external facts. An entirely internal lookup does not need market research.
 
-- Derive buscas das perguntas abertas e dos atores afetados.
-- Comece amplo e afunile; mude termos, idioma ou tipo de fonte quando necessário.
-- Prefira documentação oficial, código-fonte, changelogs, issues e pesquisas primárias. Fontes secundárias ajudam a localizar ou complementar evidências.
-- Leia a página real antes de usar uma afirmação decisiva. Snippet e memória do modelo não são prova.
-- Confira compatibilidade, manutenção, licença, limitações e custo das opções quando importarem.
-- Distinga inspiração de requisito: concorrente ter algo não demonstra que o projeto precisa disso.
+- Derive searches from open questions and affected actors.
+- Start broadly and narrow; change terms, language or source type when needed.
+- Prefer official documentation, source code, changelogs, issues and primary research. Secondary sources can help locate or supplement evidence.
+- Read the actual page before relying on a decisive claim. Snippets and model memory are not proof.
+- Check compatibility, maintenance, licensing, limits and costs where they matter.
+- Distinguish inspiration from requirements: a competitor having something does not establish that this project needs it.
 
-Mantenha um registro compacto na conversa ou no raciocínio: respondido, falta verificar, próxima busca. Pare quando novos resultados deixarem de mudar a decisão ou o orçamento terminar; declare as lacunas.
+Keep a compact record in the conversation or working notes: answered, still unverified, next search. Stop when new results no longer change the decision or the research budget ends; state the gaps.
 
-## 4. Verificar e tentar refutar
+## 4. Verify and try to disprove
 
-Classifique afirmações decisivas como verificadas, refutadas, inferidas ou inconclusivas. Cite fonte e data de consulta para fatos que envelhecem.
+Classify decisive claims as verified, refuted, inferred or inconclusive. Cite sources and access dates for facts that age.
 
-Confronte números e alegações relevantes com fontes independentes quando possível. Vários textos repetindo um anúncio continuam sendo uma origem. Explique divergências entre fontes.
+Check material numbers and claims against independent sources where possible. Several articles repeating one announcement are still one origin. Explain disagreements between sources.
 
-Tente demonstrar por que sua recomendação pode falhar: cenário adverso, custo oculto, incompatibilidade ou alternativa mais simples. Revisão independente pode ajudar quando disponível e autorizada; não invente problemas para preencher cotas.
+Try to show why the recommendation could fail: an adverse scenario, hidden cost, incompatibility or simpler alternative. Independent review can help when available and authorized; do not invent problems to fill quotas.
 
-Se a evidência invalidar a direção do brief, exponha o conflito e retome a decisão com o usuário. Não substitua a intenção em silêncio.
+If evidence invalidates the brief's direction, explain the conflict and revisit the decision with the user. Do not silently replace their intent.
 
-## 5. Entregar na conversa
+## 5. Deliver in the conversation
 
-Consulta simples: resposta, fonte e limite. Investigação ampla:
+For a simple lookup: answer, source and limitation. For a broader investigation:
 
-- recomendação e confiança;
-- o que já existe, com evidências;
-- opções e diferenças relevantes;
-- lacunas, riscos e hipóteses refutadas;
-- fontes decisivas próximas das afirmações;
-- perguntas que ainda impedem decidir.
+- recommendation and confidence;
+- what already exists, with evidence;
+- options and material differences;
+- gaps, risks and refuted hypotheses;
+- decisive sources near the claims they support;
+- questions that still prevent a decision.
 
-Não escreva um plano de implementação completo aqui. Com direção sustentada, ofereça `pl`; se indisponível, entregue o contexto para continuar. Não crie arquivos de relatório nem invoque a próxima etapa automaticamente.
+Do not write a full implementation plan here. With a supported direction, suggest `pl`; if unavailable, supply enough context to continue. Do not create report files or invoke the next stage automatically.

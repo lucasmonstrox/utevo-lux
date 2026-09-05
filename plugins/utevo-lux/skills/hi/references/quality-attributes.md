@@ -1,25 +1,25 @@
-# Atributos de qualidade
+# Quality attributes
 
-Leia esta referência quando um atributo não funcional puder eliminar uma opção ou mudar o produto. Não transforme todo debate numa lista universal de NFRs.
+Read this reference when a nonfunctional attribute could eliminate an option or change the product. Do not turn every discussion into a universal requirements checklist.
 
-## Método
+## Method
 
-Para cada atributo material, defina:
+For each material attribute, define:
 
-1. cenário e público afetado;
-2. condição observável ou orçamento;
-3. consequência de falhar;
-4. como comparar opções;
-5. custo/trade-off aceito;
-6. como saberemos depois se funcionou.
+1. the scenario and affected audience;
+2. an observable condition or budget;
+3. the consequence of failure;
+4. how to compare options;
+5. the accepted cost/trade-off;
+6. how we will later know it worked.
 
-## Lentes possíveis
+## Possible perspectives
 
-- **Performance:** latência percebida e de backend, throughput, payload, volume/cardinalidade, frequência, pico, custo e degradação. Use faixa ou ordem de grandeza quando número exato ainda exigir `/exiva`.
-- **Confiabilidade:** disponibilidade necessária, consistência, perda tolerável, retry/idempotência, recuperação, RPO/RTO quando realmente aplicável e comportamento degradado.
-- **Acessibilidade:** tarefas críticas sem mouse/visão/cor/áudio, ordem de foco, semântica, zoom, contraste e tecnologia assistiva. Não trate acessibilidade como polimento posterior da opção visual.
-- **Privacidade:** finalidade, minimização, visibilidade, retenção, exclusão, exportação, consentimento e inferências sensíveis.
-- **Observabilidade:** qual pergunta operacional precisa ser respondida, por quem, com logs/métricas/traces/eventos e sem vazar dados.
-- **Manutenibilidade:** ownership, frequência de mudança, compatibilidade, capacidade de diagnosticar, superfície de configuração e custo de evolução.
+- **Performance:** perceived and backend latency, throughput, payload, volume/cardinality, frequency, peaks, cost and degradation. Use a range or order of magnitude when an exact number still requires `/exiva`.
+- **Reliability:** required availability, consistency, tolerable loss, retry/idempotency, recovery, RPO/RTO when applicable and degraded behavior.
+- **Accessibility:** critical tasks without a mouse, sight, color or audio; focus order, semantics, zoom, contrast and assistive technology. Include accessibility when choosing the interaction.
+- **Privacy:** purpose, minimization, visibility, retention, deletion, export, consent and sensitive inferences.
+- **Observability:** which operational question needs an answer, by whom, using which logs/metrics/traces/events, without leaking data.
+- **Maintainability:** ownership, frequency of change, compatibility, diagnosability, configuration surface and evolution cost.
 
-Termos vagos não fecham decisão. `rápido`, `resiliente`, `acessível` ou `fácil de manter` devem ganhar cenário e evidência observável; o `/pl` depois define a prova executável aderente ao repositório.
+Vague terms do not settle a decision. "Fast," "resilient," "accessible" and "easy to maintain" need a scenario and observable evidence; `/pl` later defines executable proof that fits the repository.

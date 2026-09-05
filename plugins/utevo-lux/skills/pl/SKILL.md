@@ -1,66 +1,66 @@
 ---
 name: pl
-description: Transforma uma direção definida em plano de implementação com passos, dependências, critérios de aceite e verificações executáveis. Entrega na conversa, sem implementar ou criar documentação.
+description: Turn a defined direction into an implementation plan with steps, dependencies, acceptance criteria and executable checks. Deliver it in the conversation without implementing or creating documentation.
 ---
 
 # Pl
 
-Uso: `/pl <tarefa, brief ou investigação>`, ou a invocação de skills do agente.
+Usage: `/pl <task, brief or investigation>`, or the agent's native skill invocation.
 
-Planeje o trabalho que `hunt` executará. Entregue o plano **na conversa**. Não crie documentos, pastas de planos, registros de features ou código.
+Plan the work that `hunt` will execute. Deliver the plan **in the conversation**. Do not create documents, plan directories, feature records or code.
 
-## 1. Recuperar intenção e estado
+## 1. Recover intent and current state
 
-Leia instruções locais, pedido e briefs/investigações disponíveis. Consulte documentação existente e código para confirmar premissas.
+Read local instructions, the request and available briefs/investigations. Consult existing documentation and code to verify assumptions.
 
-- Preserve decisões, restrições, opções rejeitadas e critérios estabelecidos.
-- Confira o que está implementado. Algo pronto não vira tarefa de reconstrução; planeje só o que falta.
-- Decisão de produto material aberta: esclareça uma por vez ou encaminhe a investigação para `exiva`. Não esconda investigação improvisada nos passos.
-- Se faltar contexto indispensável, peça-o. Nenhuma outra skill precisa estar instalada.
+- Preserve decisions, constraints, rejected options and established criteria.
+- Check what is implemented. Plan only the missing work.
+- Clarify material open product decisions one at a time, or recommend `exiva` for investigation. Do not hide unresolved research inside implementation steps.
+- Ask for indispensable missing context. No other skill needs to be installed.
 
-## 2. Mapear dependências e impacto
+## 2. Map dependencies and impact
 
-Use busca conceitual/LSP disponíveis, ou `rg` e leitura direcionada. Leia contratos, schemas e dependências reais. Investigue a história quando ela explicar a área.
+Use available conceptual search/LSP tools, or `rg` and targeted reads. Read actual contracts, schemas and dependencies. Examine history when it explains the area.
 
-Identifique arquivos/símbolos a alterar, consumidores, referências dinâmicas, pré-requisitos, superfícies que podem regredir e comandos de verificação existentes.
+Identify files/symbols to change, consumers, dynamic references, prerequisites, surfaces that could regress and existing verification commands.
 
-Código como evidência usa arquivo/linha e, quando necessário, hash. Instruções de execução preferem arquivo/símbolo: linhas mudam. Não invente paths, comandos, tabelas ou serviços.
+Code evidence uses file/line references and a hash when needed. Execution instructions prefer file/symbol references because lines move. Do not invent paths, commands, tables or services.
 
-## 3. Escrever passos executáveis
+## 3. Write executable steps
 
-Use [o formato do plano](templates/plano.md) como apoio. Adapte o tamanho ao trabalho; tarefa trivial não pede análise arquitetural extensa.
+Use [the plan format](templates/plan.md) as a guide. Scale detail to the task; trivial work does not need extensive architectural analysis.
 
-Cada passo declara intenção, resultado observável, arquivos/símbolos, dependências reais, restrições locais e prova (comando/ação → resultado esperado).
+Each step states intent, observable result, files/symbols, actual dependencies, local constraints and proof (command/action → expected result).
 
-Não antecipe a implementação. Inclua snippets somente quando a forma exata for um contrato necessário.
+Do not prewrite the implementation. Include snippets only when their exact shape is a necessary contract.
 
-- Prefira uma primeira fatia integrada que revele riscos cedo.
-- Separe mudanças independentes. Divida passos grandes demais para verificar.
-- Cole a regra importante junto ao passo que a usa, sem reproduzir o manual inteiro.
-- Declare o que preservar, o que evitar e o que ficou fora.
-- Mudança de dados distingue expansão, migração e remoção, com prova antes de cada transição.
-- Não invente stubs para mascarar dependências. Se fizerem parte do desenho, explique contrato, substituição e o que permitem testar.
+- Prefer a first integrated slice that exposes risks early.
+- Separate independent changes. Split steps that are too large to verify.
+- Put important rules next to the step that needs them without reproducing the entire manual.
+- State what to preserve, what to avoid and what is excluded.
+- For data changes, distinguish expansion, migration and removal, with proof before each transition.
+- Do not invent stubs to conceal dependencies. If stubs are part of the design, explain their contract, replacement and what they enable testing.
 
-## 4. Planejar a verificação
+## 4. Plan verification
 
-A prova exercita a superfície alterada:
+Proof must exercise the changed surface:
 
-- UI: navegador real, erros relevantes, variantes, caminho principal, console e rede.
-- API: request/handler real e efeitos; aguardar efeitos assíncronos quando existirem.
-- Dados: schema e consultas que demonstrem integridade, transformação e compatibilidade.
-- Lógica: teste que diferencie correto e incorreto, na infraestrutura existente.
-- IA: casos que avaliem contrato e comportamento da saída, não só se o modelo respondeu.
+- UI: a real browser, relevant errors, variants, the main flow, console and network.
+- API: actual requests/handlers and effects; wait for asynchronous effects where applicable.
+- Data: schemas and queries demonstrating integrity, transformation and compatibility.
+- Logic: a test that distinguishes correct from incorrect behavior using existing infrastructure.
+- AI: cases that assess output contracts and behavior, beyond whether the model responded.
 
-Typecheck/lint complementam as provas. Um teste sem infraestrutura não pode aparecer como comando pronto: planeje o preparo necessário ou declare a limitação.
+Typechecking and linting complement these proofs. A test without infrastructure cannot appear as a ready-to-run command: plan the necessary setup or state the limitation.
 
-Inclua regressões dos consumidores e fechamento do caminho principal. Nomeie o que será testado; evite “adicionar testes” sem caso concreto.
+Include affected consumer regressions and the complete main flow. Name the behavior to test; avoid "add tests" without a concrete case.
 
-## 5. Entregar o plano
+## 5. Deliver the plan
 
-Apresente na conversa objetivo, aceite, passos, riscos, verificações e pendências. Mostre o que impede executar antes de sugerir `hunt`.
+Present the objective, acceptance criteria, steps, risks, checks and open items in the conversation. Identify execution blockers before suggesting `hunt`.
 
-Para risco operacional, explique rollback e o que não pode ser desfeito. Não force essa seção para ajustes triviais.
+For operational risk, explain rollback and irreversible effects. Do not force this section onto trivial edits.
 
-Outro agente consegue executar sem inventar decisões? Inclua o contexto que faltar na mensagem. Não crie arquivos de documentação ou status.
+Could another agent execute without inventing decisions? Include any missing context in the message. Do not create documentation or status files.
 
-Em outra sessão, o usuário fornece o plano ou o contexto correspondente. Não presuma acesso à conversa anterior nem crie persistência por conta própria.
+In another session, the user supplies the plan or corresponding context. Do not assume access to earlier conversations or create persistence on your own.
