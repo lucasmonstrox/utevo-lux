@@ -1,12 +1,12 @@
-# Diagnóstico quando o runtime é Bun
+# Diagnosing when the runtime is Bun
 
-Confirme versão e scripts do projeto. Consulte a documentação antes de usar flags.
+Confirm the version and the project's scripts. Read the documentation before using flags.
 
-- Reproduza no teste/handler mais próximo. Confira opções com `bun test --help`.
-- Filtre arquivo/nome do teste; repetição de casos intermitentes depende das opções da versão.
-- Use o debugger suportado pelo Bun e o endereço informado pelo processo.
-- Logs de fetch podem expor headers e corpos. Use dados de teste, remova credenciais da evidência e desative a instrumentação depois.
-- Confira a cadeia de dependências com o comando disponível na versão.
-- Suspeita Node/Bun: rode a mesma reprodução isolada nos runtimes relevantes. A diferença é evidência para investigar, não prova automática de culpa.
+- Reproduce in the closest test or handler. Check the options with `bun test --help`.
+- Filter by file or test name; repeating intermittent cases depends on the options your version offers.
+- Use the debugger Bun supports and the address the process reports.
+- Fetch logs can expose headers and bodies. Use test data, strip credentials from the evidence and turn the instrumentation off afterwards.
+- Inspect the dependency chain with the command available in your version.
+- Node/Bun suspicion: run the same isolated reproduction on the relevant runtimes. A difference is evidence to investigate, not automatic proof of blame.
 
-Fontes: [Bun](https://bun.com/docs), [compatibilidade Node.js](https://bun.com/docs/runtime/nodejs-apis). Verifique limitações atuais.
+Sources: [Bun](https://bun.com/docs), [Node.js compatibility](https://bun.com/docs/runtime/nodejs-apis). Check the current limitations.

@@ -1,92 +1,92 @@
 ---
 name: bug
-description: Investiga a causa-raiz de bugs com reprodução, histórico Git e experimentos que refutam hipóteses. Entrega diagnóstico na conversa e aplica correção quando solicitada ou com --fix.
+description: Investigate the root cause of a bug through reproduction, Git history and experiments that refute hypotheses. Deliver the diagnosis in the conversation and apply the fix when asked or with --fix.
 ---
 
 # Bug
 
-Uso: `/bug <sintoma> [--fix]`, ou a invocação de skills do agente.
+Usage: `/bug <symptom> [--fix]`, or the agent's native skill invocation.
 
-**Evidência antes de teoria, reprodução antes de conserto, causa-raiz antes de patch.** Sintoma conhecido pode ter causa nova.
+**Evidence before theory, reproduction before repair, root cause before patch.** A familiar symptom can have a new cause.
 
-Leia instruções locais e documentação relevante existente. Diagnóstico, hipóteses e resultados ficam na conversa; não crie nem atualize documentação ou registros de features.
+Read local instructions and relevant existing documentation. Diagnosis, hypotheses and results stay in the conversation; do not create or update documentation or feature records.
 
-## 1. Triagem
+## 1. Triage
 
-Obtenha esperado, observado, erro literal e contexto necessário para reproduzir. Confira quando começou e se afeta todos os casos ou apenas dados/ambientes específicos.
+Get the expected behavior, the observed behavior, the literal error and whatever context is needed to reproduce. Find out when it started and whether it affects every case or only specific data or environments.
 
-Confira estado local, commits recentes, entrypoint executado, porta real, versões e configuração. Em variáveis de ambiente, confira presença/formato sem imprimir segredos.
+Check local state, recent commits, the entrypoint actually running, the real port, versions and configuration. For environment variables, check presence and format without printing secrets.
 
-| Sinal | Rota |
+| Signal | Route |
 |---|---|
-| Funcionava antes | Histórico e possível bisect. |
-| UI, console, rede, race | Navegador; [DevTools](devtools.md) se precisar aprofundar. |
-| API/runtime em Bun | Reprodução de rota/handler; [Bun](bun.md) somente se usado pelo projeto. |
-| Cache, HMR, logs em Next.js | [Next.js](web-next.md), conferindo a versão. |
-| Dependência após atualização | Comparar versões e isolar o uso. |
-| Dado específico | Comparar entrada que falha com entrada que funciona. |
-| IA ou conversa | Isolar entrada, estado, resposta e ação. |
-| Intermitente/desconhecido | Experimentos dirigidos por hipóteses. |
+| It used to work | History, and possibly bisect. |
+| UI, console, network, race | The browser; [DevTools](devtools.md) if you need to go deeper. |
+| API or runtime on Bun | Reproduce the route/handler; [Bun](bun.md) only if the project uses it. |
+| Cache, HMR, logs on Next.js | [Next.js](web-next.md), checking the version. |
+| A dependency after an upgrade | Compare versions and isolate the usage. |
+| One specific piece of data | Compare the input that fails against one that works. |
+| AI or conversation | Isolate input, state, response and action. |
+| Intermittent or unknown | Hypothesis-driven experiments. |
 
-Leia só referências pertinentes. Ferramentas específicas são opcionais; declare limites.
+Read only the references that apply. Specific tools are optional; state the limits.
 
-## 2. Delimitar origem e consumidores
+## 2. Bound the origin and its consumers
 
-Busque o entrypoint e siga o fluxo real. Use busca conceitual/LSP disponíveis, ou `rg` e leitura direcionada. Confirme consumidores dos contratos que podem mudar.
+Find the entrypoint and follow the real flow. Use available conceptual search or LSP tools, or `rg` and targeted reads. Confirm the consumers of any contract that might change.
 
-Consulte decisões existentes: comportamento deliberado pode ser pedido de mudança, não bug. Hipótese refutada só volta com evidência nova.
+Consult existing decisions: deliberate behavior may be a change request rather than a bug. A refuted hypothesis returns only with new evidence.
 
-Achado interno leva arquivo/linha; histórico leva hash; dado leva consulta e contexto seguro. Separe evidência de inferência.
+An internal finding carries a file and line; history carries a hash; data carries the query and safe context. Keep evidence separate from inference.
 
-## 3. Reproduzir
+## 3. Reproduce
 
-Construa o menor detector de bom/ruim na infraestrutura existente. Scripts de reprodução podem ser temporários; testes definitivos cobrem o comportamento.
+Build the smallest good/bad detector on the existing infrastructure. Reproduction scripts can be temporary; the definitive tests cover the behavior.
 
-- UI: interaja como o usuário; observe console, rede e resultado.
-- API: exercite rota/handler real; verifique resposta e efeito, inclusive assíncrono.
-- Dados: preserve a característica que causa a falha em uma amostra segura.
-- IA: fixe entrada e estado relevante; use sessão nova quando estado acumulado importar.
-- Caso grande: remova metade da entrada/etapas, repita e minimize o que é necessário para falhar.
+- UI: interact as the user does; watch the console, the network and the result.
+- API: exercise the real route or handler; check the response and the effect, including asynchronous ones.
+- Data: preserve the characteristic that causes the failure in a safe sample.
+- AI: fix the input and the relevant state; use a fresh session when accumulated state matters.
+- Large case: remove half the input or steps, repeat, and minimise to what is necessary to fail.
 
-Não reproduziu: reporte hipóteses e evidência faltante. Um bug que sumiu sozinho não foi consertado.
+If you could not reproduce it, report the hypotheses and the missing evidence. A bug that disappeared on its own was not fixed.
 
-## 4. Histórico Git
+## 4. Git history
 
-- `git log -- <paths>` delimita a janela.
-- `git log -S <trecho> -p -- <paths>` encontra mudanças de conteúdo; `-G` ajuda com expressões regulares.
-- `git blame` e `git log --follow` ajudam a atravessar refactors.
-- Leia o diff inteiro do commit suspeito para explicar a regressão.
+- `git log -- <paths>` bounds the window.
+- `git log -S <snippet> -p -- <paths>` finds content changes; `-G` helps with regular expressions.
+- `git blame` and `git log --follow` help you cross refactors.
+- Read the whole diff of the suspect commit to explain the regression.
 
-Use bisect com detector confiável em checkout/worktree isolado. Em `git bisect run`: 0 = bom; 1–127, exceto 125, = ruim; 125 = não testável. Termine com `git bisect reset`. Preserve o estado de trabalho do usuário.
+Use bisect with a reliable detector in an isolated checkout or worktree. In `git bisect run`: 0 = good; 1-127, except 125, = bad; 125 = untestable. Finish with `git bisect reset`. Preserve the user's working state.
 
-## 5. Refutar hipóteses
+## 5. Refute hypotheses
 
-Mantenha na conversa: hipótese → experimento → resultado → veredito.
+Keep this in the conversation: hypothesis -> experiment -> result -> verdict.
 
-Cada experimento responde uma pergunta clara e muda uma variável. Separe código, dados, configuração, dependência e ferramenta. Culpar uma biblioteca exige reprodução isolada.
+Each experiment answers one clear question and changes one variable. Keep code, data, configuration, dependency and tooling separate. Blaming a library requires an isolated reproduction.
 
-Valor errado sem stack: observe o meio do fluxo, determine se já está errado e continue na metade responsável até achar o primeiro produtor incorreto. A linha que recebe dado inválido pode ser apenas vítima.
+A wrong value with no stack trace: look at the middle of the flow, decide whether it is already wrong there, and keep halving into the responsible side until you find the first incorrect producer. The line that receives bad data may only be the victim.
 
-Bug que desaparece com log/espera sugere timing. Observe com menos interferência e teste com e sem instrumentação.
+A bug that disappears with a log statement or a wait suggests timing. Observe with less interference and test with and without the instrumentation.
 
-Tentativas repetidas sem evidência nova pedem outra hipótese. Delegação pode testar hipóteses independentes quando disponível e autorizada, sem modelo obrigatório.
+Repeated attempts with no new evidence call for a different hypothesis. Delegation can test independent hypotheses where available and authorized, with no mandatory model.
 
-## 6. Dependências quando necessário
+## 6. Dependencies when relevant
 
-Compare lockfile, versões instaladas e histórico. Use o gerenciador do projeto para entender a cadeia de dependências.
+Compare the lockfile, the installed versions and the history. Use the project's package manager to understand the dependency chain.
 
-Busque a mensagem de erro **literal**, não uma paráfrase: o texto exato é o que casa com o relato de quem já passou por isso. Procure na documentação oficial e no changelog da versão que você tem, nas issues e discussões do repositório da dependência **incluindo as fechadas** — bug já corrigido costuma existir só como issue fechada ou PR de correção — e na web aberta, que alcança fórum, post e changelog que o rastreador do projeto não indexa.
+Search the **literal** error message, not a paraphrase: the exact text is what matches the report of someone who already hit it. Look in the official documentation and the changelog for the version you have, in the dependency repository's issues and discussions **including the closed ones** — a bug that has already been fixed usually survives only as a closed issue or a fix PR — and on the open web, which reaches forums, posts and changelogs the project's tracker does not index.
 
-Abra a página antes de concluir; snippet de busca não é prova, e relato sem versão não serve. Confirme em reprodução mínima e compare versões em ambiente isolado quando útil.
+Open the page before concluding; a search snippet is not proof, and a report without a version is worth nothing. Confirm with a minimal reproduction and compare versions in an isolated environment where that helps.
 
-Prefira corrigir nosso uso, fixar uma versão compatível ou aplicar workaround localizado com causa e fonte. Não publique issues upstream sem solicitação.
+Prefer fixing our own usage, pinning a compatible version, or applying a localized workaround with its cause and source. Do not file upstream issues unless asked.
 
-## 7. Diagnóstico e correção
+## 7. Diagnosis and fix
 
-Entregue na conversa causa confirmada ou hipótese, origem e sintoma, commit causador quando demonstrável, reprodução, impacto, correção mínima e sua verificação.
+Deliver in the conversation: the confirmed cause or the hypothesis, the origin and the symptom, the offending commit where demonstrable, the reproduction, the impact, the smallest fix and how it was verified.
 
-Por padrão, investigue e proponha. `--fix` ou pedido explícito autoriza implementar. Não peça nova confirmação se já autorizada.
+By default, investigate and propose. `--fix` or an explicit request authorizes implementing. Do not ask again for a confirmation already given.
 
-Ao corrigir, prove o comportamento incorreto antes e o correto depois com teste proporcional. Para retirar o patch na comparação, use contexto isolado, sem stash do trabalho do usuário. Refaça o fluxo original e os checks dos consumidores e remova instrumentação temporária.
+When fixing, prove the incorrect behavior before and the correct one after, with a proportionate test. To remove the patch for that comparison, use an isolated context, without stashing the user's work. Re-run the original flow and the consumers' checks, and remove temporary instrumentation.
 
-Não crie arquivos de documentação. Commits, push, mensagens externas e deploy seguem a autorização da sessão.
+Do not create documentation files. Commits, pushes, external messages and deploys follow the session's authorization.

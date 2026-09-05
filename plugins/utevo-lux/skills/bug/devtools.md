@@ -1,15 +1,15 @@
-# Diagnóstico profundo no navegador
+# Deep diagnosis in the browser
 
-Use para races, corpo de requests, console durante redirects, hydration e emulação. Descubra as capacidades disponíveis; não invente tools ou parâmetros.
+Use this for races, request bodies, the console during redirects, hydration and emulation. Discover the capabilities available; do not invent tools or parameters.
 
-Reproduza a ação, espere uma condição observável e confira árvore de acessibilidade, console e requests. Screenshot não substitui erro ou resposta.
+Reproduce the action, wait for an observable condition, then check the accessibility tree, the console and the requests. A screenshot does not replace an error or a response.
 
-Para request falhando, compare URL, método, headers necessários, payload, resposta e efeitos. Não exponha cookies, tokens ou dados pessoais na evidência.
+For a failing request, compare URL, method, required headers, payload, response and effects. Do not expose cookies, tokens or personal data in the evidence.
 
-- Redirect: preserve console entre navegações.
-- Intermitência: simule rede/CPU mais lenta e confronte a ordem dos eventos.
-- Hydration: leia a diferença servidor/cliente e isole sua origem; esconder aviso não corrige causa.
-- Dialog: trate somente a sessão de teste; não aceite ação destrutiva para liberar a ferramenta.
-- Estado do navegador: compare sessão isolada sem apagar cookies ou fechar processos do usuário.
+- Redirect: preserve the console across navigations.
+- Intermittence: simulate a slower network or CPU and compare the order of events.
+- Hydration: read the server/client difference and isolate its origin; hiding the warning does not fix the cause.
+- Dialog: handle only the test session; do not accept a destructive action to unblock the tool.
+- Browser state: compare against an isolated session without deleting cookies or closing the user's processes.
 
-Desfaça emulação/instrumentação e feche só a sessão criada para investigar. Declare capacidades indisponíveis.
+Undo the emulation and instrumentation, and close only the session you created to investigate. State any capability that was unavailable.
