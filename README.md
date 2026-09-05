@@ -244,7 +244,7 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 **Why `hi` works this way.** The gate is that behaviour, made explicit. The brief is the verbatim display: a compact restatement handed back before anyone commits, on exactly the content that is costly to get wrong. And silence not counting as confirmation is the grounding criterion taken seriously — mutual belief has to be demonstrated, not assumed.
 
-**Where it stops.** No controlled study anywhere measures rework, disputes or completion time with a terminal confirmation gate versus without one, for humans or for agents. The 70% figure is about grounding a number mid-conversation, not a one-shot summary at the end. And the cost framework cuts against the gate being unconditional: least collaborative effort predicts its value depends on medium and purpose, so a full nine-field brief for a small, reversible decision may cost more in re-litigation than the risk it guards. `hi`'s always-on template does not model that trade-off.
+**Where it stops.** No controlled study anywhere measures rework, disputes or completion time with a terminal confirmation gate versus without one, for humans or for agents. The 70% figure is about grounding a number mid-conversation, not a one-shot summary at the end. The cost framework is also the reason `hi` reads back in full only what is costly to reverse and lets cheap, reversible fields stand on one line — but that proportionality rule is reasoning applied from the chapter, not a result measured in it.
 
 </details>
 

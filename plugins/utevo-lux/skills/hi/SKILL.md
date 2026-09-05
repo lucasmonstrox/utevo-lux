@@ -117,7 +117,9 @@ Derive constraints from plausible failures discovered in scenarios and options. 
 - **Prohibited shortcut:** a tempting path already ruled out by product, security or repository rules.
 - **Rejected option:** a decision recorded with its reason; do not treat it as a permanent prohibition.
 
-Each constraint must be concrete, local and observable. When useful, use a short `wrong → intended` example. Do not impose quotas or write "don't break anything," "don't be slow" or "don't have bugs"; vague instructions dilute the useful ones.
+Each constraint must be concrete, local and observable. Write it as a short `wrong → intended` pair whenever the intended behavior is not obvious from the prohibition alone: naming only the mistake says what to stop and nothing about what to preserve.
+
+Keep the active set small. Constraints have to hold **together**, and compliance decays multiplicatively as they accumulate, so each one added past what a scenario justifies makes the whole set less likely to survive. Merge constraints that guard the same failure, drop any that no plausible scenario produced, and move context that is not a rule out of the list. Do not impose quotas or write "don't break anything," "don't be slow" or "don't have bugs"; vague instructions dilute the useful ones.
 
 There are two related layers:
 
@@ -151,6 +153,8 @@ Stop opening branches when:
 - future ideas are separate from the current scope.
 
 Present a compact, complete brief using the format below and request explicit confirmation. Use one line per field; expand only conflicts or risks that could still change the decision. Silence or a change of subject is not confirmation. If the user corrects something, update the tree and take another step.
+
+Confirming costs the user attention, so spend it where being wrong is expensive. Read back in full what is costly to reverse — contracts, data, money, anything the user cannot undo — and let the cheap, reversible fields stand on one line each. Always ask for the confirmation; scale what you restate, not whether you ask.
 
 ```markdown
 ## Decision brief
