@@ -75,7 +75,9 @@ Tentativas repetidas sem evidência nova pedem outra hipótese. Delegação pode
 
 Compare lockfile, versões instaladas e histórico. Use o gerenciador do projeto para entender a cadeia de dependências.
 
-Consulte documentação oficial, changelog e issues da versão relevante. Confirme em reprodução mínima e compare versões em ambiente isolado quando útil.
+Busque a mensagem de erro **literal**, não uma paráfrase: o texto exato é o que casa com o relato de quem já passou por isso. Procure na documentação oficial e no changelog da versão que você tem, nas issues e discussões do repositório da dependência **incluindo as fechadas** — bug já corrigido costuma existir só como issue fechada ou PR de correção — e na web aberta, que alcança fórum, post e changelog que o rastreador do projeto não indexa.
+
+Abra a página antes de concluir; snippet de busca não é prova, e relato sem versão não serve. Confirme em reprodução mínima e compare versões em ambiente isolado quando útil.
 
 Prefira corrigir nosso uso, fixar uma versão compatível ou aplicar workaround localizado com causa e fonte. Não publique issues upstream sem solicitação.
 
