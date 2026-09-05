@@ -16,13 +16,13 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Utevo Lux",
-    "shortDescription": "Da ideia ao código, com skills inspiradas em Tibia.",
-    "longDescription": "Sete skills de software para debater, investigar, planejar, implementar, depurar, revisar PRs e corrigir feedback. Resultados na conversa, sem gerar documentação.",
+    "shortDescription": "From idea to code, with skills inspired by Tibia.",
+    "longDescription": "Seven software skills to discuss, investigate, plan, implement, debug, review PRs, and fix feedback. Results stay in the conversation, no documentation generated.",
     "developerName": "lucasmonstrox",
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Use hi para explorar esta ideia de software."
+      "Use hi to explore this software idea."
     ],
     "logo": "./assets/logo.png"
   }
