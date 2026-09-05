@@ -335,93 +335,6 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
-### `hunt`
-
-<details>
-<summary><b>Reflexion</b> — is it the reflecting that helps, or the running?</summary>
-
-**Used in** · [`hunt` › 2. Execute in dependency order](plugins/utevo-lux/skills/hunt/SKILL.md#2-execute-in-dependency-order) — making the smallest change in integrated, verifiable slices and updating each step when its proof passes, rather than batching verification to the end.
-
-**Benchmark** · [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — Shinn, Cassano, Berman, Gopinath, Narasimhan & Yao, 2023 (`arXiv:2303.11366`). The agent writes a reflection in natural language after a failure, keeps it in an episodic memory, and retries.
-
-**What it measures.** The headline is HumanEval pass@1 — **80% for GPT-4, 91% with Reflexion**. The useful part is the ablation on the 50 hardest HumanEval-Rust problems, which separates the two ingredients: reflecting on a failure, and actually running a test to find out there was one.
-
-**What it reports.** Take the tests away and leave the reflection, and the agent lands **below the baseline it started from: 52% against 60%**. The full loop reaches 68%. The paper explains why, and the explanation is the interesting part: without tests "the agent is unable to determine if the current implementation is correct", so it "must participate in all iterations of the run without the option to return early, performing harmful edits to the implementation". It keeps improving code that was already right.
-
-**Why `hunt` works this way.** This is the cleanest statement in the whole section of what the skill is built on. Verification is not a phase at the end; it is what tells the executor to stop. A step whose proof has passed is finished, and an agent with no way to learn that will keep editing until it breaks something. Hence proof attached to each step rather than a review at the end, and hence "an unexecuted check is a limitation, not approval".
-
-**Where the benchmark stops.** Fifty function-level problems in a language with unusually verbose compiler errors, which the authors themselves note makes it a favourable playground. Whether the same margin survives at repository scale, where a slice's proof is slower and less exact than a unit test, is not measured here.
-
-</details>
-
-<details>
-<summary><b>Fault localization context</b> — how much of the codebase should the fix see?</summary>
-
-**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "record the exact error, locate the defect and fix its cause", and the ban on changing things at random until the checks go green.
-
-**Benchmark** · [On the Role of Fault Localization Context for LLM-Based Program Repair](https://arxiv.org/abs/2604.05481) — Sepidband, Pham & Hemmati, 2026 (`arXiv:2604.05481`). 61 context configurations, GPT-5-mini, 500 SWE-bench Verified instances.
-
-**What it measures.** Repair success as a function of what the model is shown: which files, which elements inside them, which lines — and, critically, how much of each. It varies the context rather than the model, so the result is about the setup rather than the reasoning.
-
-**What it reports.** Knowing which file to open is close to everything: file-level localization gives a **15–17× improvement over a no-file baseline**. But the curve turns. "Line-level context expansion frequently degrades performance due to noise amplification", successful repairs cluster at **roughly 6–10 relevant files**, and the paper's own summary is that "more context does not consistently improve repair performance" — what works is "a broad semantic understanding at higher abstraction levels with precise line-level localization".
-
-**Why `hunt` works this way.** Locating the defect before touching it is not tidiness, it is the largest single lever measured anywhere in this section. And the second half is why the instruction says *locate the defect*, not *read everything nearby*: piling adjacent code into the window makes the fix worse, not safer. Find the place precisely, understand the surroundings broadly, and do not confuse the two.
-
-**Where the benchmark stops.** One model on one benchmark, and localization is supplied to the repairer rather than earned by it — the study shows that good localization pays, not that an agent instructed to localize achieves it. The 6–10 file figure is a property of SWE-bench-shaped tasks and should not be read as a rule for a monorepo.
-
-</details>
-
-<details>
-<summary><b>Plausible versus correct patches</b> — what does "the tests pass now" actually prove?</summary>
-
-**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "do not make random changes until checks turn green", and fixing the cause rather than the symptom.
-
-**Source** · [An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems](https://people.csail.mit.edu/rinard/paper/issta15.pdf) — Qi, Long, Achour & Rinard (MIT CSAIL), ISSTA 2015. A manual audit of every patch reported by GenProg, RSRepair and AE on the GenProg/ManyBugs benchmark.
-
-**What it measures.** Generate-and-validate repair is exactly the policy the skill forbids, run mechanically: mutate the program until the test suite goes green, then declare victory. The audit asks a question the test suite cannot — is the patch *correct*?
-
-**What it reports.** "The overwhelming majority of the patches are not correct." GenProg produced a correct patch for **2 of the 105** defects considered, RSRepair for **2 of 24**, AE for **3 of 105**. And the shape of the failure is the lesson: **104 of the 110** plausible GenProg patches, 37 of 44 for RSRepair and 22 of 27 for AE, "are equivalent to a single modification that deletes functionality". Green tests were bought by removing the behaviour the tests did not cover.
-
-**Why `hunt` works this way.** An agent editing until the checks pass is running the same search, with better priors and the same failure mode. Deleting a guard, widening a type, catching and swallowing an exception — each turns a red check green while destroying something. That is why the skill requires the exact error to be recorded and the cause located before an edit, and why two failed attempts on one hypothesis force a reassessment instead of another mutation.
-
-**Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
-
-</details>
-
-<details>
-<summary><b>Regression test selection</b> — is it enough to retest what you touched?</summary>
-
-**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) and [the verification matrix](plugins/utevo-lux/skills/hunt/verification.md) — "retest affected consumers".
-
-**Source** · [An Empirical Study of Regression Test Selection Techniques](https://www.cs.umd.edu/users/aporter/Docs/p184-graves.pdf) — Graves, Harrold, Kim, Porter & Rothermel, *ACM TOSEM* 10(2), April 2001. Nine C programs with seeded faults; the design "required us to run over 264,400 test suites".
-
-**What it measures.** After a change, which tests do you rerun? The study compares strategies against retest-all: **minimization**, which selects the smallest set covering the modified code itself, and **safe**, which also includes tests reaching anything that depends on it. Both cost and fault detection are reported, so a strategy cannot win by simply running more.
-
-**What it reports.** Retesting only what you touched is close to not testing. "In 84% of the cases minimization chose exactly one test case, and it never chose more than 12", and "on the median, test suites selected by minimization found **16% of the faults** that would have been found by retest-all". Following the dependencies instead: the safe technique "found **all faults** for which we had fault-revealing test cases while selecting 60% of the test cases on the median" — everything, for 40% less work than retest-all.
-
-**Why `hunt` works this way.** The change is not where the damage shows up. A shared function edited to satisfy one step breaks a caller nobody was looking at, and the test that would have caught it is not in the file you edited. That is why verification extends to consumers rather than stopping at the diff, and why the plan's impact map from `equip` is what makes it possible to know who they are.
-
-**Where the source stops.** Pre-LLM, and the authors qualify their own result: "only slightly larger random test suites could be nearly as effective", so part of what safe selection buys is simply running more tests. Nine C programs with seeded faults is also not a modern service, and nobody has run this comparison on agent-generated patches — where the edit is less predictable than a human's and the case for retesting consumers is, if anything, stronger.
-
-</details>
-
-<details>
-<summary><b>Are solved issues really solved?</b> — does the benchmark agree with the developer?</summary>
-
-**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) — "passing typechecks does not substitute for behavioral proof — and neither does a green suite when the suite never covered the behavior in question".
-
-**Benchmark** · [Are "Solved Issues" in SWE-bench Really Solved Correctly? An Empirical Study](https://arxiv.org/abs/2503.15223) — Wang, Pradel & Liu, 2025 (`arXiv:2503.15223`). Audits patches that SWE-bench counts as resolved, using PatchDiff, a differential tester that "automatically exposes behavioral discrepancies between two patches".
-
-**What it measures.** Not whether the tests pass — they do, that is the premise — but whether a patch that passes actually behaves like the fix a developer wrote. The reason to ask is stated plainly: "because testing is rarely exhaustive, a patch may pass the tests but nevertheless fail to match the developers' expectations."
-
-**What it reports.** **7.8%** of patches counted as correct fail the developer-written test suite outright, a flaw in the harness rather than the patch. Worse for the agent: **29.6%** of plausible patches induce different behavior from the ground-truth patch. Reported resolve rates are inflated by **6.2 absolute points**.
-
-**Why `hunt` works this way.** Nearly a third of the work that clears the gate is doing something other than what the fix was supposed to do, and nothing in the loop says so. That is why a passing check is treated as a filter rather than a verdict, why the surface-matched proof in the verification matrix exists, and why the skill asks what the passing test would still pass under if the fix were wrong.
-
-**Where the benchmark stops.** It audits SWE-bench specifically, whose suites are known to be uneven, and "different from the ground truth" is not the same as "wrong" — a patch can legitimately differ. What survives is narrower and still enough: a green suite is evidence about the suite as much as about the change, and the gap between the two grows with everything the suite never covered.
-
-</details>
-
 ### `equip`
 
 <details>
@@ -525,6 +438,163 @@ This section collects the papers and benchmarks behind them, one entry per bench
 **Why `equip` works this way.** The final question — could someone else execute this? — used to be answered by reading the plan back. That is the collapsing condition. It is now answered per step, by naming what an executor who never saw the conversation would still have to guess: a decomposed check with an outside referent rather than a global re-read. `hunt`'s later execution is the sound verifier this stage does not have.
 
 **Where the benchmark stops.** These domains have a *sound* verifier available — a plan's correctness usually does not. That is precisely why the skill asks for named missing context rather than a verdict, and why an unresolved gap has to be reported as an open item instead of quietly passing self-review. The sampling result also has no obvious analogue: nobody has tested whether generating several plans and comparing them beats critiquing one.
+
+</details>
+
+### `hunt`
+
+<details>
+<summary><b>Reflexion</b> — is it the reflecting that helps, or the running?</summary>
+
+**Used in** · [`hunt` › 2. Execute in dependency order](plugins/utevo-lux/skills/hunt/SKILL.md#2-execute-in-dependency-order) — making the smallest change in integrated, verifiable slices and updating each step when its proof passes, rather than batching verification to the end.
+
+**Benchmark** · [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — Shinn, Cassano, Berman, Gopinath, Narasimhan & Yao, 2023 (`arXiv:2303.11366`). The agent writes a reflection in natural language after a failure, keeps it in an episodic memory, and retries.
+
+**What it measures.** The headline is HumanEval pass@1 — **80% for GPT-4, 91% with Reflexion**. The useful part is the ablation on the 50 hardest HumanEval-Rust problems, which separates the two ingredients: reflecting on a failure, and actually running a test to find out there was one.
+
+**What it reports.** Take the tests away and leave the reflection, and the agent lands **below the baseline it started from: 52% against 60%**. The full loop reaches 68%. The paper explains why, and the explanation is the interesting part: without tests "the agent is unable to determine if the current implementation is correct", so it "must participate in all iterations of the run without the option to return early, performing harmful edits to the implementation". It keeps improving code that was already right.
+
+**Why `hunt` works this way.** This is the cleanest statement in the whole section of what the skill is built on. Verification is not a phase at the end; it is what tells the executor to stop. A step whose proof has passed is finished, and an agent with no way to learn that will keep editing until it breaks something. Hence proof attached to each step rather than a review at the end, and hence "an unexecuted check is a limitation, not approval".
+
+**Where the benchmark stops.** Fifty function-level problems in a language with unusually verbose compiler errors, which the authors themselves note makes it a favourable playground. Whether the same margin survives at repository scale, where a slice's proof is slower and less exact than a unit test, is not measured here.
+
+</details>
+
+<details>
+<summary><b>Fault localization context</b> — how much of the codebase should the fix see?</summary>
+
+**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "record the exact error, locate the defect and fix its cause", and the ban on changing things at random until the checks go green.
+
+**Benchmark** · [On the Role of Fault Localization Context for LLM-Based Program Repair](https://arxiv.org/abs/2604.05481) — Sepidband, Pham & Hemmati, 2026 (`arXiv:2604.05481`). 61 context configurations, GPT-5-mini, 500 SWE-bench Verified instances.
+
+**What it measures.** Repair success as a function of what the model is shown: which files, which elements inside them, which lines — and, critically, how much of each. It varies the context rather than the model, so the result is about the setup rather than the reasoning.
+
+**What it reports.** Knowing which file to open is close to everything: file-level localization gives a **15–17× improvement over a no-file baseline**. But the curve turns. "Line-level context expansion frequently degrades performance due to noise amplification", successful repairs cluster at **roughly 6–10 relevant files**, and the paper's own summary is that "more context does not consistently improve repair performance" — what works is "a broad semantic understanding at higher abstraction levels with precise line-level localization".
+
+**Why `hunt` works this way.** Locating the defect before touching it is not tidiness, it is the largest single lever measured anywhere in this section. And the second half is why the instruction says *locate the defect*, not *read everything nearby*: piling adjacent code into the window makes the fix worse, not safer. Find the place precisely, understand the surroundings broadly, and do not confuse the two.
+
+**Where the benchmark stops.** One model on one benchmark, and localization is supplied to the repairer rather than earned by it — the study shows that good localization pays, not that an agent instructed to localize achieves it. The 6–10 file figure is a property of SWE-bench-shaped tasks and should not be read as a rule for a monorepo.
+
+</details>
+
+<details>
+<summary><b>Plausible versus correct patches</b> — what does "the tests pass now" actually prove?</summary>
+
+**Used in** · [`hunt` › 3. Handle failures](plugins/utevo-lux/skills/hunt/SKILL.md#3-handle-failures) — "do not make random changes until checks turn green", and fixing the cause rather than the symptom.
+
+**Source** · [An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems](https://people.csail.mit.edu/rinard/paper/issta15.pdf) — Qi, Long, Achour & Rinard (MIT CSAIL), ISSTA 2015. A manual audit of every patch reported by GenProg, RSRepair and AE on the GenProg/ManyBugs benchmark.
+
+**What it measures.** Generate-and-validate repair is exactly the policy the skill forbids, run mechanically: mutate the program until the test suite goes green, then declare victory. The audit asks a question the test suite cannot — is the patch *correct*?
+
+**What it reports.** "The overwhelming majority of the patches are not correct." GenProg produced a correct patch for **2 of the 105** defects considered, RSRepair for **2 of 24**, AE for **3 of 105**. And the shape of the failure is the lesson: **104 of the 110** plausible GenProg patches, 37 of 44 for RSRepair and 22 of 27 for AE, "are equivalent to a single modification that deletes functionality". Green tests were bought by removing the behaviour the tests did not cover.
+
+**Why `hunt` works this way.** An agent editing until the checks pass is running the same search, with better priors and the same failure mode. Deleting a guard, widening a type, catching and swallowing an exception — each turns a red check green while destroying something. That is why the skill requires the exact error to be recorded and the cause located before an edit, and why two failed attempts on one hypothesis force a reassessment instead of another mutation.
+
+**Where the source stops.** These are 2015 search-based repair systems, not language models, and the benchmark is C programs with famously weak test suites — an LLM proposes far more plausible edits than random mutation. The mechanism transfers; the hit rate does not. What the paper establishes for any repair loop is narrower and still sharp: a passing suite is a filter, not a proof, and the weaker the suite the more the filter rewards deletion.
+
+</details>
+
+<details>
+<summary><b>Regression test selection</b> — is it enough to retest what you touched?</summary>
+
+**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) and [the verification matrix](plugins/utevo-lux/skills/hunt/verification.md) — "retest affected consumers".
+
+**Source** · [An Empirical Study of Regression Test Selection Techniques](https://www.cs.umd.edu/users/aporter/Docs/p184-graves.pdf) — Graves, Harrold, Kim, Porter & Rothermel, *ACM TOSEM* 10(2), April 2001. Nine C programs with seeded faults; the design "required us to run over 264,400 test suites".
+
+**What it measures.** After a change, which tests do you rerun? The study compares strategies against retest-all: **minimization**, which selects the smallest set covering the modified code itself, and **safe**, which also includes tests reaching anything that depends on it. Both cost and fault detection are reported, so a strategy cannot win by simply running more.
+
+**What it reports.** Retesting only what you touched is close to not testing. "In 84% of the cases minimization chose exactly one test case, and it never chose more than 12", and "on the median, test suites selected by minimization found **16% of the faults** that would have been found by retest-all". Following the dependencies instead: the safe technique "found **all faults** for which we had fault-revealing test cases while selecting 60% of the test cases on the median" — everything, for 40% less work than retest-all.
+
+**Why `hunt` works this way.** The change is not where the damage shows up. A shared function edited to satisfy one step breaks a caller nobody was looking at, and the test that would have caught it is not in the file you edited. That is why verification extends to consumers rather than stopping at the diff, and why the plan's impact map from `equip` is what makes it possible to know who they are.
+
+**Where the source stops.** Pre-LLM, and the authors qualify their own result: "only slightly larger random test suites could be nearly as effective", so part of what safe selection buys is simply running more tests. Nine C programs with seeded faults is also not a modern service, and nobody has run this comparison on agent-generated patches — where the edit is less predictable than a human's and the case for retesting consumers is, if anything, stronger.
+
+</details>
+
+<details>
+<summary><b>Are solved issues really solved?</b> — does the benchmark agree with the developer?</summary>
+
+**Used in** · [`hunt` › 4. Verify](plugins/utevo-lux/skills/hunt/SKILL.md#4-verify) — "passing typechecks does not substitute for behavioral proof — and neither does a green suite when the suite never covered the behavior in question".
+
+**Benchmark** · [Are "Solved Issues" in SWE-bench Really Solved Correctly? An Empirical Study](https://arxiv.org/abs/2503.15223) — Wang, Pradel & Liu, 2025 (`arXiv:2503.15223`). Audits patches that SWE-bench counts as resolved, using PatchDiff, a differential tester that "automatically exposes behavioral discrepancies between two patches".
+
+**What it measures.** Not whether the tests pass — they do, that is the premise — but whether a patch that passes actually behaves like the fix a developer wrote. The reason to ask is stated plainly: "because testing is rarely exhaustive, a patch may pass the tests but nevertheless fail to match the developers' expectations."
+
+**What it reports.** **7.8%** of patches counted as correct fail the developer-written test suite outright, a flaw in the harness rather than the patch. Worse for the agent: **29.6%** of plausible patches induce different behavior from the ground-truth patch. Reported resolve rates are inflated by **6.2 absolute points**.
+
+**Why `hunt` works this way.** Nearly a third of the work that clears the gate is doing something other than what the fix was supposed to do, and nothing in the loop says so. That is why a passing check is treated as a filter rather than a verdict, why the surface-matched proof in the verification matrix exists, and why the skill asks what the passing test would still pass under if the fix were wrong.
+
+**Where the benchmark stops.** It audits SWE-bench specifically, whose suites are known to be uneven, and "different from the ground truth" is not the same as "wrong" — a patch can legitimately differ. What survives is narrower and still enough: a green suite is evidence about the suite as much as about the change, and the gap between the two grows with everything the suite never covered.
+
+</details>
+
+### `bug`
+
+<details>
+<summary><b>What makes a good bug report</b> — does the shape of the report change the outcome?</summary>
+
+**Used in** · [`bug` › 1. Triage](plugins/utevo-lux/skills/bug/SKILL.md#1-triage) — getting the expected behavior, the observed behavior and the literal error before anything else.
+
+**Benchmark** · [What Makes a Good Bug Report for an AI Agent?](https://arxiv.org/abs/2607.07593) — Khatib, Mathews, Nagappan, Nie & Zimmermann, 2026 (`arXiv:2607.07593`). Two studies: 27 report features across 433 SWE-bench Verified issues attempted by 87 repair agents, then controlled ablations over 17 problem-statement mutations on SWE-bench Pro, holding the underlying task constant.
+
+**What it measures.** The ablations are the sharp part. They "remove or isolate selected bug-report content, delete fault-localization cues, and test structural changes that flatten lists or remove section headers" — the task never changes, only how the report is written.
+
+**What it reports.** Deleting one section label costs more than most people would guess. Removing **Observed Behavior** drops solve@3 by **40.0 points** on Qwen and 19.2 on Gemma; removing **Expected Behavior** drops it 35.0 and 42.3. Even leaving all the content in place and merely removing the section headers costs 30.4 points on Qwen, and flattening lists costs 26.6. On the association side, a **reproduction script** carries an odds ratio of **2.52** [1.41, 4.51], while natural-language **steps to reproduce** come in at **0.83** [0.47, 1.47] — no significant association at all. The paper's summary: "a good bug report for an agent overlaps with, but is not identical to, a good report for a human."
+
+**Why `bug` works this way.** Triage asks for expected, observed and the literal error as separate named things, and that separation is not bureaucracy — it is most of the signal. It is also why the skill asks for a reproduction you can run rather than a story about how to reproduce: the story is the part that measured nothing.
+
+**Where the benchmark stops.** Two models on one benchmark family, and the mutations are synthetic deletions rather than reports written badly in the wild. The odds ratios come from observational association across agents, not from an intervention — issues that arrive with a reproduction script may simply be the more tractable issues.
+
+</details>
+
+<details>
+<summary><b>Reproduction as a gate</b> — how much does an executable reproduction buy, and how often is it right?</summary>
+
+**Used in** · [`bug` › 3. Reproduce](plugins/utevo-lux/skills/bug/SKILL.md#3-reproduce) — building the smallest good/bad detector before diagnosing, and "a bug that disappeared on its own was not fixed".
+
+**Benchmark** · [Agentless: Demystifying LLM-based Software Engineering Agents](https://arxiv.org/abs/2407.01489) — Xia, Deng, Dunn & Zhang, 2024 (`arXiv:2407.01489`), on SWE-bench Lite.
+
+**What it measures.** Patch selection with progressively stronger filters: majority voting over candidates, then keeping only candidates that survive the existing regression tests, then keeping only those that flip a generated reproduction test from failing to passing.
+
+**What it reports.** Resolve rate climbs **25.67% → 27.00% → 32.00%** — and the reproduction gate is the largest single jump in the pipeline. The second number is the one that keeps the first honest. Of 300 problems, Agentless generated **213** tests that reproduced the issue on the unpatched repository; applying the official ground-truth patch, only **94** of those then reported the issue resolved. Under half of the reproductions that looked convincing could actually tell a fix from a non-fix.
+
+**Why `bug` works this way.** The reproduction is the instrument, so its calibration matters more than its existence. That is why the skill asks for the smallest good/bad detector rather than any script that fails: a detector that goes red for the wrong reason will happily go green for the wrong reason too, and then the bug is closed.
+
+**Where the benchmark stops.** These are Python repositories with existing test infrastructure, and the reproduction is generated from an issue description written for humans. Nothing here measures a reproduction built interactively by an agent that can run the program, which is the situation `bug` is actually in.
+
+</details>
+
+<details>
+<summary><b>Block-level execution tracing</b> — where should you look for the first wrong value?</summary>
+
+**Used in** · [`bug` › 5. Refute hypotheses](plugins/utevo-lux/skills/bug/SKILL.md#5-refute-hypotheses) — halving into the responsible side until you find the first incorrect producer, because "the line that receives bad data may only be the victim".
+
+**Benchmark** · [Debug like a Human: A Large Language Model Debugger via Verifying Runtime Execution Step-by-step](https://arxiv.org/abs/2402.16906) — Zhong, Wang & Shang, 2024 (`arXiv:2402.16906`). Evaluated on HumanEval, MBPP and TransCoder.
+
+**What it measures.** LDB "segments the programs into basic blocks and tracks the values of intermediate variables after each block throughout the runtime execution", so the model can "verify their correctness against the task description block by block" instead of staring at the failing output. The comparison that matters here is the granularity ablation: same method, different unit of inspection.
+
+**What it reports.** The method lifts baselines by up to **9.8%** across the three benchmarks. On granularity, block level wins but modestly: on HumanEval with GPT-3.5, **82.9%** block level against **80.5%** line level and **79.9%** function level; with CodeLlama, 55.5% against 53.7% and 53.7%. The reason given is the useful part — "line-level decomposition leads to incomplete semantics in each code unit", while function level is too coarse to locate anything.
+
+**Why `bug` works this way.** Tracing backwards to the first producer of a wrong value is the same move, done by hand: check the state at a boundary, decide whether it is already wrong there, and halve into the responsible side. The granularity result says pick boundaries that are semantically complete — a whole block, a function's return, a module edge — rather than stepping line by line.
+
+**Where the benchmark stops.** Function-level problems with runtime instrumentation available, and the margin between granularities is a few points rather than a category difference. It shows where to put a probe, not that a written hypothesis ledger helps — that claim is separately contradicted elsewhere in this section.
+
+</details>
+
+<details>
+<summary><b>SWT-Bench</b> — is a generated test good enough to gate a fix?</summary>
+
+**Used in** · [`bug` › 7. Diagnosis and fix](plugins/utevo-lux/skills/bug/SKILL.md#7-diagnosis-and-fix) — "prove the incorrect behavior before and the correct one after, with a proportionate test".
+
+**Benchmark** · [SWT-Bench: Testing and Validating Real-World Bug-Fixes with Code Agents](https://arxiv.org/abs/2406.12952) — Mündler, Müller, He & Vechev, 2024 (`arXiv:2406.12952`). Real GitHub issues, where the task is to write the test rather than the fix.
+
+**What it measures.** Whether a model can turn an issue into a test that fails before the fix and passes after — and then whether that test is a usable filter on candidate patches.
+
+**What it reports.** "Generated tests are an effective filter for proposed code fixes, doubling the precision of SWE-Agent." Concretely: "while only achieving 20% recall, this more than doubles the precision of SWE-AGENT to **47.8%**". The paper also finds that agents built for repair write better tests than systems built for test generation — "Code Agents designed for code repair exceed the performance of systems designed specifically for test generation".
+
+**Why `bug` works this way.** The fail-before/pass-after requirement is what turns a plausible explanation into a claim that can be wrong. Roughly half of what survives that gate is still not the developer's fix, which is why the skill also asks for the original flow and the consumers' checks to be re-run rather than treating the new test as the whole proof.
+
+**Where the benchmark stops.** The 20% recall is the cost: the filter throws away four correct patches in five to reach that precision. As a gate on your own work that is acceptable — you keep iterating — but it means a failed reproduction is weak evidence that the fix is wrong.
 
 </details>
 
