@@ -18,8 +18,8 @@ hi → mission → equip → hunt → look → exura
 | [equip](plugins/utevo-lux/skills/equip/SKILL.md) | Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
 | [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Attacks the code: executes the plan and loots the proof that it works. |
 | [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`. |
-| [look](plugins/utevo-lux/skills/look/SKILL.md) | Inspects the PR like a rare item: description, issues, and discussions; points out demonstrable problems. |
-| [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR from review feedback, one commit per change, with a reply at the source. |
+| [look](plugins/utevo-lux/skills/look/SKILL.md) | Looks at the item a friend found: PR, issues, and discussions; points out demonstrable problems. |
+| [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR wounded on the hunt: one commit per change, with a reply at the source. |
 
 Use the step the work needs. The sequence is not mandatory.
 
