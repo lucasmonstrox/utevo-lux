@@ -11,19 +11,19 @@ hi → mission → equip → hunt → look → exura
                   bug ↗
 ```
 
-**[hi](plugins/utevo-lux/skills/hi/SKILL.md)** — Opens the dialog with the NPC: one decision at a time until the quest and the route are clear.
+<img src="plugins/utevo-lux/assets/hi-npc.gif" alt="Cipfried" width="20"> **[hi](plugins/utevo-lux/skills/hi/SKILL.md)** — Opens the dialog with the NPC: one decision at a time until the quest and the route are clear.
 
-**[mission](plugins/utevo-lux/skills/mission/SKILL.md)** — Takes the mission from the quest log: finds answers in code, history, the web, and other sources, with evidence.
+<img src="plugins/utevo-lux/assets/mission-scroll.gif" alt="Scroll" width="20"> **[mission](plugins/utevo-lux/skills/mission/SKILL.md)** — Takes the mission from the quest log: finds answers in code, history, the web, and other sources, with evidence.
 
 <img src="plugins/utevo-lux/assets/magic-sword.gif" alt="Magic Sword" width="20"> **[equip](plugins/utevo-lux/skills/equip/SKILL.md)** — Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks.
 
-**[hunt](plugins/utevo-lux/skills/hunt/SKILL.md)** — Attacks the code: executes the plan and loots the proof that it works.
+<img src="plugins/utevo-lux/assets/hunt-dragon.gif" alt="Dragon" width="20"> **[hunt](plugins/utevo-lux/skills/hunt/SKILL.md)** — Attacks the code: executes the plan and loots the proof that it works.
 
 <img src="plugins/utevo-lux/assets/bug.gif" alt="Bug" width="20"> **[bug](plugins/utevo-lux/skills/bug/SKILL.md)** — Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`.
 
-**[look](plugins/utevo-lux/skills/look/SKILL.md)** — Looks at the item a friend found: PR, issues, and discussions; points out demonstrable problems.
+<img src="plugins/utevo-lux/assets/look-golden-helmet.gif" alt="Golden Helmet" width="20"> **[look](plugins/utevo-lux/skills/look/SKILL.md)** — Looks at the item a friend found: PR, issues, and discussions; points out demonstrable problems.
 
-**[exura](plugins/utevo-lux/skills/exura/SKILL.md)** — Heals the PR wounded on the hunt: one commit per change, with a reply at the source.
+<img src="plugins/utevo-lux/assets/exura-health-potion.gif" alt="Health Potion" width="20"> **[exura](plugins/utevo-lux/skills/exura/SKILL.md)** — Heals the PR wounded on the hunt: one commit per change, with a reply at the source.
 
 Use the step the work needs. The sequence is not mandatory.
 
