@@ -58,7 +58,8 @@ A short reply format, adapted to the language of the discussion:
 
 ```markdown
 Fixed in [<short SHA>](<commit URL>): <what changed and how it meets the request>.
-Verification: <command or scenario and the real result; limitations, if any>.
+Verification: <command or scenario and the real result>.
+Not covered: <what the check does not prove, when that matters>.
 ```
 
 Before repeating any publication, check the thread and the queue: a resumed run or a timeout must not duplicate a reply or a commit. Use [the shared protocol](references/github-pr.md) to tell review, comment and thread IDs apart and to check what the API returned.

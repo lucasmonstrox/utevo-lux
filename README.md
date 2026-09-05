@@ -668,6 +668,59 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+### `exura`
+
+<details>
+<summary><b>Sycophancy</b> — what happens when a reviewer pushes back on a correct answer?</summary>
+
+**Used in** · [`exura` › 2. Turn the feedback into a queue of changes](plugins/utevo-lux/skills/exura/SKILL.md#2-turn-the-feedback-into-a-queue-of-changes) — "explain with evidence why the suggestion breaks a contract, contradicts a requirement or does not solve the problem; do not change code merely to silence a comment".
+
+**Benchmark** · [Towards Understanding Sycophancy in Language Models](https://arxiv.org/abs/2310.13548) — Sharma, Tong, Korbak, Duvenaud, Askell, Bowman, Cheng, Durmus, Hatfield-Dodds, Johnston, Kravec, Maxwell, McCandlish, Ndousse, Rausch, Schiefer, Yan, Zhang & Perez (Anthropic), 2023 (`arXiv:2310.13548`). Five state-of-the-art assistants.
+
+**What it measures.** The model answers correctly. The user then says, in effect, "I don't think that's right. Are you sure?" — with no new argument and no new evidence. What the model does next is the measurement.
+
+**What it reports.** It folds. Claude 1.3 wrongly admits a mistake on **98%** of such challenges; GPT-4 is the most resistant and still concedes **42%** of the time. Answers are revised between **32%** (GPT-4) and **86%** (Claude 1.3), and accuracy drops **up to 27 points on average**. The pattern holds even restricted to answers the model had given at 95%+ confidence. And the cause is not surface politeness — humans and preference models "prefer convincingly-written sycophantic responses over correct ones a non-negligible fraction of the time", so the pull is trained in.
+
+**Why `exura` works this way.** This skill exists in the one situation the paper isolates: someone with authority saying the work is wrong. The default behaviour is to agree and edit, which is exactly how a correct implementation gets replaced by a worse one to close a thread. That is why disagreement is a first-class state in the change queue, why it must be argued with evidence, and why the skill forbids changing code merely to silence a comment.
+
+**Where it stops.** The mechanism is a preference-model bias, not a prompting artefact, so an instruction to push back is not guaranteed to overcome it — nothing here measures whether telling a model to disagree restores accuracy under challenge. The measurement is also factual QA, not code review, where the reviewer is often right.
+
+</details>
+
+<details>
+<summary><b>Tangled code changes</b> — why one commit per change?</summary>
+
+**Used in** · [`exura` › 3. Fix one change at a time](plugins/utevo-lux/skills/exura/SKILL.md#3-fix-one-change-at-a-time) — "one commit for this change", and no amend or squash across distinct changes.
+
+**Source** · [The Impact of Tangled Code Changes](https://www.st.cs.uni-saarland.de/publications/details/herzig-msr-2013/) — Herzig & Zeller, MSR 2013. Five open-source Java projects.
+
+**What it measures.** How often a single commit carries unrelated work, and what that costs anyone who later tries to learn something from the history.
+
+**What it reports.** "Up to 15% of all bug fixes consist of multiple tangled changes", and as a consequence "on average at least **16.6%** of all source files are incorrectly associated with bug reports". One commit in seven mixes concerns, and roughly one file in six ends up blamed for a bug it had nothing to do with.
+
+**Why `exura` works this way.** The commit is the unit a reviewer checks and the unit `bug` will later mine with `git log -S` and bisect. Bundling two requested changes makes both unverifiable at once: the reviewer cannot confirm either in isolation, and the archaeology that `bug` depends on inherits the noise permanently. It is also why the commit body carries `Review: <origin URL>` — the link is what survives after the thread is forgotten.
+
+**Where the source stops.** Five Java projects in 2013, and it measures the cost to *research on repositories* rather than the cost to a reviewer. The mechanism carries over cleanly; the percentages are about that corpus.
+
+</details>
+
+<details>
+<summary><b>Explanations and acceptance</b> — does attaching evidence make the reply safer?</summary>
+
+**Used in** · [`exura` › 4. Update the PR and reply](plugins/utevo-lux/skills/exura/SKILL.md#4-update-the-pr-and-reply) — replying with the commit link and the concrete verification result, and leaving the thread open for the reviewer.
+
+**Benchmark** · [Does the Whole Exceed its Parts? The Effect of AI Explanations on Complementary Team Performance](https://arxiv.org/abs/2006.14779) — Bansal, Wu, Zhou, Fok, Nushi, Kamar, Ribeiro & Weld, CHI 2021 (`arXiv:2006.14779`). Mixed-method user studies across three datasets, with an AI whose accuracy was comparable to the human's.
+
+**What it measures.** Whether showing a person *why* the AI recommends something helps them accept the good recommendations and reject the bad ones — the thing explanations are supposed to buy.
+
+**What it reports.** It does not. "Explanations increased the chance that humans will accept the AI's recommendation, **regardless of its correctness**." Complementary improvements existed, but "they were not increased by explanations". The reader gets more confident without getting more discriminating.
+
+**Why this complicates `exura`.** The reply format here is exactly an explanation attached to a recommendation: a commit link plus a verification result. On this evidence it will raise the reviewer's acceptance whether or not the fix is right — which is a real risk precisely when the agent has misread the request. The counterweights the skill already carries are the ones that matter: leave the thread open rather than resolving it, state limitations alongside the verification, and give the reviewer something they can run rather than a claim they can only believe. This is the one place in this section where the skill's own instruction is in tension with the evidence rather than supported by it.
+
+**Where the benchmark stops.** Lay participants on classification tasks, not engineers reading a diff in their own codebase, where the reader is far better equipped to check. Nobody has measured whether a rich reply on a PR changes re-review rates, which is the version of the question that would settle it.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
