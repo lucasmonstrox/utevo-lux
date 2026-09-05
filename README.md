@@ -130,6 +130,31 @@ claude plugin validate plugins/utevo-lux
 
 When publishing a plugin update, bump the version in the three manifests and in the catalogs that declare it. Direct-skill users can run `npx skills check` and `npx skills update`; plugin users update through their agent.
 
+## Evidence
+
+Each skill instructs an agent to work a certain way. Those instructions are claims about how a model behaves, and most of them have been measured by someone.
+
+This section collects the papers and benchmarks behind them, one entry per benchmark, grouped by skill. Each entry says what the benchmark measures, what it reports, which step of which skill relies on it, and where the finding stops holding. Every source listed here was opened and checked at the source, not recalled from memory.
+
+### `hi`
+
+<details>
+<summary><b>FreshQA</b> — does searching the web beat answering from memory?</summary>
+
+**Used in** · [`hi` › 4. Precedents](plugins/utevo-lux/skills/hi/SKILL.md#4-precedents-who-has-solved-something-comparable) and [web-precedents.md › Rule](plugins/utevo-lux/skills/hi/references/web-precedents.md#rule) — the mandatory current search, and the line that model memory is not evidence.
+
+**Benchmark** · [FreshQA](https://github.com/freshllms/freshqa), released with [FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation](https://arxiv.org/abs/2310.03214) — Vu, Iyyer, Wang, Constant, Wei, Wei, Tar, Sung, Zhou, Le & Luong, 2023 (`arXiv:2310.03214`). The dataset is still maintained; it is revised on a rolling basis so the answers stay current.
+
+**What it measures.** Questions sorted by how fast their answer decays — never-changing, slow-changing, fast-changing — plus questions built on a false premise. Grading is strict: a response counts only if every claim in it is correct and current.
+
+**What it reports.** GPT-4 answering from its own parameters scores **28.6%**. The same model with search-augmented prompting scores **75.6%** — a gap of **47.0 points**. GPT-3.5 moves 26.0% → 56.0%. Gains run from +30 points on false-premise questions to +73.6 on never-changing ones.
+
+**Why `hi` works this way.** The precedents stage asks what competitors ship today, whether an API already covers the case, whether the thing already exists. Those answers age, and a model's memory is frozen at training time. FreshQA is the benchmark built for exactly that class of question, which is why `hi` requires a current search there and states that model memory is not evidence.
+
+**Where the benchmark stops.** [When Not to Trust Language Models](https://arxiv.org/abs/2212.10511) (Mallen et al., ACL 2023) finds unaugmented models stay competitive on popular, stable facts — searching for a settled principle costs time and buys nothing. And even with search, GPT-4 reaches only 59.2% on slow-changing questions: search shrinks the error, it does not close it. Search where the fact moves, not by reflex.
+
+</details>
+
 ## <img src="plugins/utevo-lux/assets/ferumbras-hat.gif" alt="Ferumbras' Hat" width="24"> Acknowledgments
 
 Thanks to [fbuchetti](https://github.com/fbuchetti), one of the most absurd sorcerers out there: explores every corner of the map and casts pure magic on ontology. I was the knight blocking the creatures so the sorcerer could unleash all those spells and powers.
