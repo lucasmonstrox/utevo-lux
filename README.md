@@ -13,12 +13,12 @@ hi → exiva → pl → hunt → look → exura
 
 | Skill | What it does |
 |---|---|
-| [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Discusses the idea, one decision at a time, until the problem and direction are settled. |
-| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Finds answers in code, history, the web, and other sources; investigates with evidence. |
-| [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Prepares steps, dependencies, acceptance criteria, and verifications. |
-| [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Executes the plan and proves the result. |
-| [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Investigates the root cause; fixes it when asked or with `--fix`. |
-| [look](plugins/utevo-lux/skills/look/SKILL.md) | Inspects the PR, its description, issues, and discussions; points out demonstrable problems. |
+| [hi](plugins/utevo-lux/skills/hi/SKILL.md) | Opens the dialog with the NPC: one decision at a time until the quest and the route are clear. |
+| [exiva](plugins/utevo-lux/skills/exiva/SKILL.md) | Casts exiva on the problem: finds answers in code, history, the web, and other sources, with evidence. |
+| [pl](plugins/utevo-lux/skills/pl/SKILL.md) | Draws the hunt route: steps, dependencies, acceptance criteria, and verifications before anyone attacks. |
+| [hunt](plugins/utevo-lux/skills/hunt/SKILL.md) | Attacks the code: executes the plan and loots the proof that it works. |
+| [bug](plugins/utevo-lux/skills/bug/SKILL.md) | Tracks the bug to its lair and finds the root cause; slays it when asked or with `--fix`. |
+| [look](plugins/utevo-lux/skills/look/SKILL.md) | Inspects the PR like a rare item: description, issues, and discussions; points out demonstrable problems. |
 | [exura](plugins/utevo-lux/skills/exura/SKILL.md) | Heals the PR from review feedback, one commit per change, with a reply at the source. |
 
 Use the step the work needs. The sequence is not mandatory, and `pl` keeps that name for now.
