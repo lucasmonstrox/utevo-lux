@@ -128,4 +128,4 @@ When publishing a plugin update, bump the version in the three manifests and in 
 
 ## Acknowledgments
 
-Thanks to [fbuchetti](https://github.com/fbuchetti), one of the most absurd sorcerers out there: explores every corner of the map and casts pure magic on ontology. I was the knight blocking the creatures so the sorcerer could unleash all those spells and powers.
+<img src="plugins/utevo-lux/assets/ferumbras-hat.gif" alt="Ferumbras' Hat" width="20"> Thanks to [fbuchetti](https://github.com/fbuchetti), one of the most absurd sorcerers out there: explores every corner of the map and casts pure magic on ontology. I was the knight blocking the creatures so the sorcerer could unleash all those spells and powers.
