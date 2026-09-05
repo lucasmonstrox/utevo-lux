@@ -388,6 +388,23 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Format restrictions</b> — what does a fixed schema cost the thinking that fills it?</summary>
+
+**Used in** · [`equip` › 3. Write executable steps](plugins/utevo-lux/skills/equip/SKILL.md#3-write-executable-steps) and the [plan format](plugins/utevo-lux/skills/equip/templates/plan.md) — the per-step fields, their order, and the rule that they record a decision rather than make one.
+
+**Benchmark** · [Let Me Speak Freely? A Study on the Impact of Format Restrictions on Performance of Large Language Models](https://arxiv.org/abs/2408.02442) — Tam, Wu, Tsai, Lin, Lee & Chen, 2024 (`arXiv:2408.02442`). Free-form natural language compared against JSON-mode, XML and YAML across reasoning and classification tasks.
+
+**What it measures.** Not whether structure is good, but what happens to the reasoning when the output has to arrive in a fixed shape.
+
+**What it reports.** On GSM8K, Claude-3-Haiku falls from **86.5% in natural language to 23.4% in JSON-mode**; GPT-3.5-turbo from 76.6% to 49.3%, and to 45.1% in XML. The mechanism is not mysterious, and it is entirely about ordering: "100% of GPT 3.5 Turbo JSON-mode responses placed the 'answer' key before the 'reason' key, resulting in zero-shot direct answering instead of zero-shot chain-of-thought reasoning." The form asked for the conclusion first, so the model produced one first. And the finding does not generalise to structure as such — on classification, JSON-mode *improved* results, "by constraining possible answers".
+
+**Why `equip` works this way.** Two consequences, both now written into the skill. Field order is not cosmetic: the plan template used to list `Targets` above `Action`, asking which file before asking what the change was, which is the same shape as answer-before-reason. Intent now comes first. And because the damage lands on reasoning rather than on recording, the fields are described as the record of a decision already taken in steps 1 and 2 — when a step is still unsettled, it gets worked out in prose and the form is filled afterwards.
+
+**Where the benchmark stops.** These are single-answer reasoning tasks scored automatically, not multi-step plans read by a person. Nobody has run the comparison `equip` would actually need — the same plan content rendered as fields versus as prose, scored on how far an executor deviates. The classification result is the reason not to read this as "schemas are harmful", and the reason the fix was ordering rather than removal.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
