@@ -14,11 +14,13 @@ Necessary decisions, constraints and evidence. Distinguish facts from hypotheses
 
 **P1 — concrete outcome**
 
+- Action: intent of the change and its observable result.
 - Targets: files and symbols.
 - Depends on: actual prerequisites.
-- Action: intent of the change.
 - Constraints: specific boundaries.
 - Proof: command/action → expected result.
+
+Intent comes first on purpose. A field naming the target before the change has been stated invites picking a file and reasoning backwards from it.
 
 Repeat only for necessary steps.
 

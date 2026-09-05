@@ -30,7 +30,9 @@ Code evidence uses file/line references and a hash when needed. Execution instru
 
 Use [the plan format](templates/plan.md) as a guide. Scale detail to the task; trivial work does not need extensive architectural analysis.
 
-Each step states intent, observable result, files/symbols, actual dependencies, local constraints and proof (command/action → expected result).
+Each step states intent, observable result, files/symbols, actual dependencies, local constraints and proof (command/action → expected result), in that order.
+
+The fields record a decision already taken in steps 1 and 2; they are not where the thinking happens. When a step's shape is still unsettled, work it out in prose first and fill the fields afterwards — a form filled top to bottom will produce a target before an intent, and the rest of the step will bend to fit it.
 
 Do not prewrite the implementation. Include snippets only when their exact shape is a necessary contract.
 
@@ -61,6 +63,6 @@ Present the objective, acceptance criteria, steps, risks, checks and open items 
 
 For operational risk, explain rollback and irreversible effects. Do not force this section onto trivial edits.
 
-Could another agent execute without inventing decisions? Include any missing context in the message. Do not create documentation or status files.
+Could another agent execute without inventing decisions? Do not answer that by re-reading the plan — reviewing your own work tends to ratify it. Answer it one step at a time: for each step, name what an executor who never saw this conversation would still have to guess. Every name that surfaces is missing context, and it goes in the message. Do not create documentation or status files.
 
 In another session, the user supplies the plan or corresponding context. Do not assume access to earlier conversations or create persistence on your own.
