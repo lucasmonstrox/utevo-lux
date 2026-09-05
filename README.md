@@ -284,6 +284,40 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>BrowseComp</b> — when nothing turns up, is it missing or did you search badly?</summary>
+
+**Used in** · [`mission` › 2. Investigate the repository](plugins/utevo-lux/skills/mission/SKILL.md#2-investigate-the-repository) — "an empty search does not prove absence", and the rule to change the strategy rather than the words after two failed formulations.
+
+**Benchmark** · [BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents](https://arxiv.org/abs/2504.12516) — Wei, Sun, Papay, McKinney, Han, Fulford, Chung, Passos, Fedus & Glaese (OpenAI), 2025 (`arXiv:2504.12516`). 1,266 questions after 21 were removed for ambiguous or incorrect ground truth.
+
+**What it measures.** Questions whose answers are verifiable but buried — they require "persistently navigating the internet in search of hard-to-find, entangled information". Difficulty is real rather than rhetorical: human trainers solved only **29.2%** within a two-hour limit.
+
+**What it reports.** GPT-4o with browsing scores **1.9%**. Deep Research scores **51.5%** — same web, a 27× gap, and the difference is persistence rather than access. Running 64 attempts and picking the best recovers roughly **15 to 25 further points**. The decisive experiment is the diagnostic one: the researchers took the unsolved questions, handed the model the ground-truth answer, and asked it to go find supporting evidence. "In most cases, the model succeeded" — those questions were "simply extremely difficult to crack without guidance", not unanswerable.
+
+**Why `mission` works this way.** That last result is the whole argument. A failed search is evidence about the search, not about the world. So the skill treats an empty result as a limitation to report rather than a conclusion to draw, and after two failed formulations it changes the strategy — another layer, the consumer instead of the definition, history instead of the working tree — rather than rephrasing the same query again.
+
+**Where the benchmark stops.** This is open-web browsing, not repository archaeology, and best-of-64 is a sampling result rather than a search-strategy result: it shows persistence pays, not that varying the strategy is what pays. Nobody has run the equivalent experiment on code search, where the space is smaller and the naming conventions are the actual obstacle.
+
+</details>
+
+<details>
+<summary><b>Intrinsic self-correction</b> — can a model find its own mistake?</summary>
+
+**Used in** · [`mission` › 4. Verify and try to disprove](plugins/utevo-lux/skills/mission/SKILL.md#4-verify-and-try-to-disprove) — attacking the recommendation "from outside the work that produced it", and preferring a check with an independent source of truth.
+
+**Benchmark** · [Large Language Models Cannot Self-Correct Reasoning Yet](https://arxiv.org/abs/2310.01798) — Huang, Chen, Mishra, Zheng, Yu, Song & Zhou (Google DeepMind), ICLR 2024 (`arXiv:2310.01798`). Evaluated on GSM8K, CommonSenseQA and HotpotQA.
+
+**What it measures.** Two conditions, side by side. **Intrinsic** self-correction is the model reviewing its own answer "based solely on its inherent capabilities, without the crutch of external feedback". **Oracle** self-correction gives it one bit from outside: whether the answer was wrong. Cost is tracked as model calls, so a round of reviewing is visibly not free.
+
+**What it reports.** Reviewing itself makes GPT-4 worse on GSM8K: **95.5% at one call, 91.5% at three, 89.0% at five** — five times the calls for 6.5 fewer points. GPT-3.5 on CommonSenseQA collapses **75.8% → 38.1%** after a single round. Told merely *that* it was wrong, the same GPT-4 improves instead, **95.5% → 97.5%** on GSM8K and 49.0% → 59.0% on HotpotQA. The capacity to fix an error is there; the capacity to notice one is not.
+
+**Why `mission` works this way.** The skill's fourth step asks the agent to attack its own recommendation, which is exactly the condition that degrades — unless the attack is anchored to something the agent did not write. So the instruction sends it outside: run the thing, query the data, open the competing document, or hand the attack to a track that never saw the draft and has to find its own evidence. Re-reading is not verification.
+
+**Where it stops.** These are reasoning benchmarks with a single correct answer, where an oracle is well defined. A research recommendation has no oracle — which is why the skill asks for an independent *source of truth* rather than a verdict, and why "no external check was available" has to be reportable as a limitation instead of quietly becoming a self-review.
+
+</details>
+
 ### `equip`
 
 <details>
