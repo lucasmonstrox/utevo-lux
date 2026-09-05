@@ -253,7 +253,7 @@ This section collects the papers and benchmarks behind them, one entry per bench
 <details>
 <summary><b>Adaptive-RAG</b> — is it worth sizing the investigation before starting it?</summary>
 
-**Used in** · [`mission` › 1. Scope the investigation](plugins/utevo-lux/skills/mission/SKILL.md#1-scope-the-investigation) — the lookup / comparison / broad-topic table, and "set a proportionate research budget".
+**Used in** · [`mission` › 1. Scope the investigation](plugins/utevo-lux/skills/mission/SKILL.md#1-scope-the-investigation) — writing one line on what would settle the question before the first tool call, and spending to that line.
 
 **Benchmark** · [Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models through Question Complexity](https://arxiv.org/abs/2403.14403) — Jeong, Baek, Cho, Hwang & Park, NAACL 2024 (`arXiv:2403.14403`). Evaluated on open-domain QA, including multi-hop sets.
 
@@ -261,9 +261,9 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 **What it reports.** With FLAN-T5-XL, routing reaches **F1 46.94 at 2.17 retrieval steps and 3.60 seconds per query**, against **F1 48.85 at 4.69 steps and 8.81 seconds** for always running the iterative pipeline. Under half the steps and **2.16× faster**, for 1.91 F1. The pattern holds across model sizes.
 
-**Why `mission` works this way.** The skill classifies the request before touching a tool, and the tiers exist so a single verifiable fact does not get the treatment a market comparison deserves. The classifier's labels come from which strategy actually succeeded most cheaply — the same judgement the skill asks the agent to make in one line before it starts.
+**Why `mission` works this way.** The skill decides what would settle the question before touching a tool, so a single fact does not get the treatment a market comparison deserves. The classifier's labels come from which strategy actually succeeded most cheaply — the same judgement, made once, up front.
 
-**Where the benchmark stops.** The routing there is a trained classifier; `mission` routes on the model's own reading of a three-row table, and nobody has measured that version. The tasks are open-domain QA, not code archaeology or market research, so the tiers transfer as an idea and not as calibration. And the honest shape of the result is a trade: routing is cheaper and slightly *less* accurate than always doing the expensive thing. It wins on cost per answer, not on answers.
+**Where the benchmark stops.** The routing there is a trained classifier; `mission` routes on the model's own judgement of its own question, and nobody has measured that version. The tasks are open-domain QA, not code archaeology or market research, so the tiers transfer as an idea and not as calibration. And the honest shape of the result is a trade: routing is cheaper and slightly *less* accurate than always doing the expensive thing. It wins on cost per answer, not on answers.
 
 </details>
 
