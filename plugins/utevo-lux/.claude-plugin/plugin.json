@@ -1,0 +1,17 @@
+{
+  "name": "utevo-lux",
+  "version": "0.1.0",
+  "description": "Software skills inspired by Tibia: discuss, investigate, plan, implement, debug, review and fix.",
+  "author": {
+    "name": "lucasmonstrox"
+  },
+  "homepage": "https://github.com/lucasmonstrox/utevo-lux",
+  "repository": "https://github.com/lucasmonstrox/utevo-lux",
+  "keywords": [
+    "skills",
+    "tibia",
+    "software",
+    "code-review"
+  ],
+  "skills": "./skills/"
+}

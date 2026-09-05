@@ -1,0 +1,17 @@
+{
+  "name": "utevo-lux",
+  "owner": {
+    "name": "lucasmonstrox"
+  },
+  "plugins": [
+    {
+      "name": "utevo-lux",
+      "source": "./plugins/utevo-lux",
+      "description": "Software skills inspired by Tibia: discuss, investigate, plan, implement, debug, review and fix.",
+      "version": "0.1.0"
+    }
+  ],
+  "metadata": {
+    "description": "Software skills inspired by Tibia, from the first conversation to reviewed code."
+  }
+}
