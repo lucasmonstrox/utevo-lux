@@ -13,7 +13,7 @@ hi → mission → equip → hunt → look → exura
 
 <img src="plugins/utevo-lux/assets/hi-npc.gif" alt="Cipfried" width="20"> **[hi](plugins/utevo-lux/skills/hi/SKILL.md)** — Opens the dialog with the NPC: one decision at a time until the quest and the route are clear.
 
-<img src="plugins/utevo-lux/assets/mission-scroll.gif" alt="Scroll" width="20"> **[mission](plugins/utevo-lux/skills/mission/SKILL.md)** — Takes the mission from the quest log: finds answers in code, history, the web, and other sources, with evidence.
+<img src="plugins/utevo-lux/assets/mission-scroll.gif" alt="Scroll" width="20"> **[mission](plugins/utevo-lux/skills/mission/SKILL.md)** — Takes the mission from the quest log: finds answers in code, history, and the web, with evidence.
 
 <img src="plugins/utevo-lux/assets/magic-sword.gif" alt="Magic Sword" width="20"> **[equip](plugins/utevo-lux/skills/equip/SKILL.md)** — Gears up for the hunt: steps, dependencies, acceptance criteria, and verifications before anyone attacks.
 
