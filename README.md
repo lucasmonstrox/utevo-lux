@@ -405,6 +405,25 @@ This section collects the papers and benchmarks behind them, one entry per bench
 
 </details>
 
+<details>
+<summary><b>Code review at Cisco</b> — how big can a unit of work be and still be checked?</summary>
+
+**Used in** · [`equip` › 3. Write executable steps](plugins/utevo-lux/skills/equip/SKILL.md#3-write-executable-steps) — "split steps that are too large to verify".
+
+**Source** · Cohen, Teleki & Brown, *Best Kept Secrets of Peer Code Review* — the [Cisco Systems case study](https://static1.smartbear.co/support/media/resources/cc/book/code-review-cisco-case-study.pdf), SmartBear Software, 2006. An industrial observation, not a controlled experiment: "2500 reviews of 3.2 million" lines of code at Cisco, instrumented by the review tool itself.
+
+**What it measures.** Defect density found per thousand lines, plotted against how much code the reviewer was handed at once. The question is not whether review works but where attention stops scaling.
+
+**What it reports.** "Our reviews had an average 32 defects per 1000 lines of code", and the ceiling is sharp: "no review larger than 250 lines produced more than 37 defects per 1000 lines of code". The authors' recommendation is to "review between 100 and 300 lines of code at a time".
+
+**Why `equip` works this way.** A plan step is a unit of attention in the same sense. Past some size the reviewer — or the executor checking their own work against the step's proof — stops finding what is there, and the step's verification becomes ceremonial. Splitting until each step has a proof that can actually fail is what keeps the acceptance criteria load-bearing.
+
+**Where the source stops.** This is correlational, single-company, and the authors say so: they do not know how the same reviews would have fared under a different process. It is human review of code, not an agent checking a plan step, and the line counts do not transfer to steps directly — the transferable claim is that a verification unit has a size beyond which it stops working.
+
+**A caution about this citation in particular.** Two figures are widely attributed to this study — "70–90% defect discovery" and "9 hours per 200 lines" — and neither appears anywhere in it. A full-text search of the primary PDF returns zero matches for both. The first circulates on secondary pages attributed only to unnamed "research". While writing this entry, an automated summary of that same PDF reported the study as 215 reviews over 61,000 lines, recommended 200–400 lines, and asserted that "70–90%" appears in the document. All three are false. Opening the source is not a formality.
+
+</details>
+
 ## Structure and maintenance
 
 ```text
