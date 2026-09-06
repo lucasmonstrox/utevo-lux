@@ -1,0 +1,28 @@
+[mcp_servers.cocoindex-code]
+command = "ccc"
+args = ["mcp"]
+startup_timeout_sec = 120
+tool_timeout_sec = 180
+
+[mcp_servers.cocoindex-code.env]
+COCOINDEX_CODE_ROOT_PATH = "."
+PYTHONUTF8 = "1"
+OLLAMA_API_BASE = "http://127.0.0.1:11434"
+
+[mcp_servers.serena]
+command = "serena"
+args = ["start-mcp-server", "--context", "claude-code", "--project", ".", "--enable-web-dashboard", "false", "--open-web-dashboard", "false"]
+startup_timeout_sec = 120
+tool_timeout_sec = 180
+
+[mcp_servers.serena.env]
+PYTHONUTF8 = "1"
+
+[mcp_servers.graphify]
+command = "graphify-mcp"
+args = ["--graph", "graphify-out/graph.json"]
+startup_timeout_sec = 120
+tool_timeout_sec = 180
+
+[mcp_servers.graphify.env]
+PYTHONUTF8 = "1"

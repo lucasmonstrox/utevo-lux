@@ -6,3 +6,7 @@ node_modules/
 .env
 .env.*
 !.env.example
+.cocoindex_code/*
+!.cocoindex_code/settings.yml
+.serena/cache/
+graphify-out/

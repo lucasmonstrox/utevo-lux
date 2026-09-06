@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "cocoindex-code": {
+      "command": "ccc",
+      "args": [
+        "mcp"
+      ],
+      "env": {
+        "COCOINDEX_CODE_ROOT_PATH": ".",
+        "PYTHONUTF8": "1",
+        "OLLAMA_API_BASE": "http://127.0.0.1:11434"
+      }
+    },
+    "serena": {
+      "command": "serena",
+      "args": [
+        "start-mcp-server",
+        "--context",
+        "ide",
+        "--project",
+        ".",
+        "--enable-web-dashboard",
+        "false",
+        "--open-web-dashboard",
+        "false"
+      ],
+      "env": {
+        "PYTHONUTF8": "1"
+      }
+    },
+    "graphify": {
+      "command": "graphify-mcp",
+      "args": [
+        "--graph",
+        "graphify-out/graph.json"
+      ],
+      "env": {
+        "PYTHONUTF8": "1"
+      }
+    }
+  }
+}
