@@ -8,6 +8,7 @@ A collection of seven software skills, distributed as Agent Skills and as a plug
 
 - Source: `plugins/utevo-lux/skills/`. Names: `hi`, `mission`, `equip`, `hunt`, `bug`, `look`, `exura`.
 - Keep all repository content in English: instructions, descriptions, references, templates and README.
+- Always write commit messages in English, including the subject and body.
 - Skills deliver briefs, research, plans and reports in the conversation. Do not add automatic documentation, wishlist or feature-record creation or updates in consumer projects.
 - Keep instructions portable: no private project paths, mandatory models, agent-specific shell injection or implicit dependencies on other skills.
 - References must stay inside each skill's directory because skills can be installed individually. Keep both copies of `references/github-pr.md` identical.
