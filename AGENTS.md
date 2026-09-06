@@ -1,9 +1,5 @@
 # Utevo Lux — agents
 
-## Product vision
-
-Before creating, investigating or changing a feature, read the [product vision](docs/produto/visao.md). It defines the Utevo Lux philosophy, the seven skills (hi, mission, equip, hunt, look, exura, bug), portability requirements and the repository's scope.
-
 A collection of seven software skills, distributed as Agent Skills and as a plugin for Claude Code, Codex and Cursor.
 
 - Source: `plugins/utevo-lux/skills/`. Names: `hi`, `mission`, `equip`, `hunt`, `bug`, `look`, `exura`.
