@@ -14,10 +14,17 @@ Invoking the command explicitly asks for the whole cycle: read the requests, fix
 Read [the GitHub context protocol](references/github-pr.md) and gather the same material as `look`: description, linked issues and their comments, relevant specs and plans, commits, diff, complete reviews, general comments, inline discussions with every reply, and checks.
 
 - Record the current base and head, the PR's source repository and branch, and the state of the local tree. Confirm the PR is open and that the branch you will change is its own, including when it comes from a fork.
-- Check for merge conflicts with the PR's base branch now and before pushing. If found, summarize the affected files and proposed resolution, then ask the user whether to fix them unless conflict resolution was already authorized. Continue independent changes while waiting. Once authorized, resolve the conflicts preserving both sides' intended changes and run the relevant checks.
+- Check whether the PR branch is behind its actual base branch (`out-of-date`) and whether it has merge conflicts: a branch can be behind without conflicts. Use fresh base/head data and treat an unknown status as unverified.
+- If either needs attention, summarize the incoming changes, known conflicts and proposed integration, then ask the user whether to update the branch and resolve conflicts unless those actions were already authorized. Continue independent changes while waiting. Respect a refusal or deferral and report the remaining branch state.
 - Read the repository's instructions and the affected files. Read the product documentation and the feature/impact record where they exist; follow the search flow the local instructions describe.
 - Do not rely on `reviewDecision` or the latest review alone. Read the bodies of the **`CHANGES_REQUESTED`** reviews, the requests inside `COMMENTED` reviews, the general comments and the threads, taking later replies and decisions into account.
 - An old or dismissed review and a resolved thread are history; do not reopen them without evidence that the request still stands. `isOutdated` only means the position went stale: **it does not prove the problem was fixed**.
+
+When synchronization is authorized, perform it locally before fixes that depend on it, in this order:
+
+1. Use a clean PR-head checkout or worktree. Refresh the PR's source branch and actual base, then reconcile with the current remote head, preserving other people's commits.
+2. Merge the latest base into the PR branch and resolve authorized conflicts, preserving both sides' intended changes. Keep the integration commit separate from review-fix commits. `--local` keeps this integration local too.
+3. Run the relevant checks and re-evaluate the feedback against the integrated code before making dependent fixes; incoming changes may already satisfy a request.
 
 ## 2. Turn the feedback into a queue of changes
 
@@ -49,7 +56,7 @@ One comment carrying several requests can receive several commit links. A reques
 ## 4. Update the PR and reply
 
 - Run the final checks over the whole set of commits and the impact list. Fix failures your work caused before announcing success; pre-existing or external failures need evidence and must appear in the result.
-- Before pushing, re-read the remote head. If it moved, preserve the new commits, reconcile without rewriting anyone else's history, and revalidate what changed; never overwrite the head you observed earlier. Push only the expected commits to the PR's source branch, with a normal push.
+- Before pushing, re-read the remote head and base. Preserve and reconcile any new head commits without rewriting history. If the base moved or conflicts appeared, revisit the synchronization decision above, respecting prior authorization or deferral. After any integration, re-evaluate affected feedback and rerun the relevant checks before pushing. Push only the expected commits to the PR's source branch, with a normal push.
 - Confirm the PR contains the commits you pushed. **Only then** reply in each discussion with the commit link and the concrete result of the verification. If the push fails, or you are in `--local`, keep the drafts; do not publish "fixed" pointing at a commit the reviewer cannot reach.
 - Reply to inline comments in the original thread. Requests in a review body or a general comment get a reply on the PR with a direct link to the origin and the item addressed; do not open an artificial inline discussion.
 - For duplicates, reply at each origin pointing to the same commit. For "already met", a disagreement or a clarification, reply according to the evidence, without simulating a fix.
