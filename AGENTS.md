@@ -1,4 +1,8 @@
-# Utevo Lux
+# Utevo Lux — agentes
+
+## Visão do produto
+
+Antes de criar, investigar ou alterar uma feature, leia a [visão do produto](docs/produto/visao.md). Ela define a filosofia do Utevo Lux, as 7 skills (hi, mission, equip, hunt, look, exura, bug), a exigência de portabilidade e os limites do repositório.
 
 A collection of seven software skills, distributed as Agent Skills and as a plugin for Claude Code, Codex and Cursor.
 
