@@ -50,7 +50,7 @@ Model the conversation as a **decision tree**, but never dump the tree on the us
 - Do not recap the previous decision. If the next question depends on it, mention only the indispensable consequence.
 - Context: at most one short sentence containing only facts that change this choice.
 - Recommendation and reason: preferably one sentence. Give the conclusion and decisive reason, not the whole reasoning process.
-- Alternatives are optional. Show only real options, one line each; introduce them progressively if they need more explanation.
+- Always one recommendation, then none, one or two alternatives. Show only real options, one line each; drop a second that restates the first. Introduce them progressively if they need more explanation.
 - Do not cite IDs, paths, dependencies, benchmarks or examples just to demonstrate research. Include them only when they change the current decision.
 - Concision must preserve meaning: keep information whose removal could change the choice or cause misunderstanding. If two sentences teach the same thing, keep the clearer one.
 - Every sentence should supply a decisive fact, distinguish options, recommend or ask. Otherwise, remove it.
@@ -64,7 +64,8 @@ Preferred message format:
 
 **Recommendation:** <Concrete answer>, because <decisive reason>.
 
-<Brief alternatives, only if needed to answer.>
+- <Optional alternative, one line.>
+- <Optional second alternative, one line, only if genuinely different.>
 ```
 
 After this block, **stop and wait for the answer**. Do not add "and we also need to decide..." or hide a second question in the alternatives.
